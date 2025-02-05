@@ -3,11 +3,11 @@ title: Madex API doc
 
 language_tabs:
 - javascript
-- python
+- Python
 - csharp
 
 toc_footers:
-- <a href='https://www.madex.com'>开始交易</a>
+- <a href = 'https: //www.madex.com'> Start Trading </a>
 
 includes:
 - errors
@@ -17,82 +17,80 @@ search: true
 code_clipboard: true
 
 ---
-# 基本信息
+# Basic information
 
 ## API
 
-**使用API开发应用程序，您可以准确地获取Madex现货市场的行情数据，快速进行自动化交易。API包含众多接口，按功能大致分为以下几组：**
+**Use API to develop applications, you can accurately obtain market data of Madex spot market and quickly conduct automated trading. The API contains many interfaces, which are roughly divided into the following groups according to their functions:**
 
-* Market Data Endpoints 用于获取行情数据的REST接口
-* User Data Endpoints 用于获取用户私有数据的REST接口
-* Market Data Streams 用于获取行情数据的WebSocket接口
-* User Data Streams 用于获取用户私有数据的WebSocket接口
+* Market Data Endpoints is used to obtain the REST interface of the market data
+* User Data Endpoints is used to obtain the REST interface of the user's private data
+* Market Data Streams WebSocket interface used to obtain market data
+* User Data Streams is used to obtain the WebSocket interface that obtains the user's private data
 
-**API使用如下Base URL：**
+**API uses the following Base URL:**
 
 * Market Data Endpoints: https://ma-tapi.tonetou.com/api
 * User Data Endpoints: https://api-user.tonetou.com/api
 * Market Data Stream: wss://stream-market.tonetou.com
 * User Data Stream: wss://madex-user.tonetou.com
 
-**备用api域名列表**
+**Add API domain name list**
 
-[https://api.madex.tel/v1/public/queryApiDomain](https://api.madex.tel/v1/public/queryApiDomain)
+**API's REST interface uses the following http method:**
 
-**API的REST接口使用以下HTTP方法：**
+* GET is used to obtain market or private data
 
-* GET 用于获取行情或私有数据
-* POST 用于提交委托等操作
+* POST is used to submit delegates and other operations
+ **The parameters required for the REST interface of the API should be attached to the request according to the following rules:**
 
-**API的REST接口所需的参数应根据以下规则附加于请求中：**
+* The interface parameters of GET type should be attached to Query String
 
-* GET类型的接口参数应附加于Query String中
-* POST类型的接口参数应以JSON格式附加于Request Body中
+* The interface parameters of POST type should be attached to the Request Body in JSON format
+ **Response**
 
-**Response**
-
-API的响应数据都以JSON格式返回，具体格式请参考各接口的描述。
+The API's response data is returned in JSON format. For the specific format, please refer to the description of each interface.
 
 **Error**
 
-API的错误以如下JSON格式返回：
+The error of the API is returned in the following JSON format:
 
 {<br/>
 &nbsp;&nbsp;"state": error code,<br/>
 &nbsp;&nbsp;"msg": "error message"<br/>
 }
 
-*其中，state表示错误的类型，msg包含错误产生的原因或如何避免错误的提示。具体的错误类型请参考[Error](#errors)章节的内容。*
+*Where, state represents the type of error, msg contains the cause of the error or how to avoid the error prompt. For specific error types, please refer to the [Error](#errors) chapter.*
 
 **Time or Timestamp**
 
-API接口参数和响应数据中所涉及的时间值都是UNIX时间，单位为毫秒。
+The time values involved in the API interface parameters and response data are UNIX time, and the unit is milliseconds.
 
 ---
 
-## 流量限制
+## traffic restriction
 
-**Madex对来自于同一IP的请求做以下访问限制:**
+**Madex The following access restrictions on the request from the same IP:**
 
-1. Access Limits 访问频率限制
-2. Usage Limits CPU用量限制
+1. Access Limits access frequency limit
+2. Usage Limits CPU usage limit
 
-* Access Limits访问频率限制
-  1. 同一IP每10秒最多10000次请求，超出限制的请求会收到-20007错误。
-  2. 用户可以根据需要在10秒内以任意频率发送最多10000次请求，可以大约每10ms发送一次，也可以在1秒内连续发送10000次，然后等待9秒。
-     <br/>
-     <br/>
-* Usage Limits用量限制
-  1. 同一IP每10秒最多消耗10000点CPU 时间，超出限制的请求会收到-20006错误。
-  2. 不同API消耗的CPU时间不同，这取决于API如何访问数据。
-  3. 在本文中, 每个API接口访问数据的方式会以“缓存”, “数据库”的形式标明。访问缓存的API消耗的CPU时间较少，访问数据库的API消耗的CPU时间较多。根据用户发送的参数，API可能混合访问缓存和数据库，甚至多次访问数据库，这会增加API消耗的CPU时间。
-  4. 每次API请求消耗的CPU时间会包含在响应头Madex-Usage中，其格式为t1:t2:t3，其中，t1表示本次API请求消耗的CPU时间，t2表示最近10秒内当前IP消耗的CPU时间，t3表示最近10秒内当前IP剩余的可用CPU时间。
+* Access Limits access frequency limit
+1. At the same IP, the request of up to 10,000 times per 10 seconds will receive-20007 errors that exceed restricted requests.
+2. Users can send up to 10,000 requests at any frequency within 10 seconds. They can send about once every 10ms, or they can be sent 10,000 times in 1 second, and then wait for 9 seconds.
+   <br/>
+   <br/>
+* USAGE LIMITs limit
+1. The same IP consumes up to 10,000 CPU time every 10 seconds. Requests that exceed the limit will receive a -20006 error.
+2. Different APIs consume different CPU time, which depends on how the API accesses the data.
+3. In this article, the method of accessing the data of each API interface will be marked in the form of "cache" and "database". The CPU consumed by the cache API has less time, and the CPU consumed by the API consumed by the database is more time. According to the parameters sent by the user, the API may mix the cache and database, and even access the database multiple times, which will increase the CPU time consumed by the API.
+4. The CPU time consumed by the API request will be included in Madex-USAGE in response header. The format is T1: T2: T3. Among them, T1 represents the CPU time consumed by the API request. T2 represents the current IP within 10 seconds in the last 10 seconds The CPU time consumed, T3 indicates that the current IP remains available CPU time in the last 10 seconds.
 
 ---
 
 ## Authentication
 
-> 完整例子
+> Complete Example
 
 ```javascript
 let CryptoJS = require("crypto-js");
@@ -154,45 +152,45 @@ if __name__ == '__main__':
     do_request()
 ```
 
-**身份验证**
+**Identity verification**
 
-* 私有接口用于访问账户、委托等私有信息，在请求时需要附加签名，以满足Madex进行身份验证。本节将描述如何创建签名。
+* Private interfaces are used to access accounts such as accounts and commissioned private information. When request, additional signatures need to be added to meet Madex for authentication. This section will describe how to create signatures.
 
-**生成Api Key**
+**Generate API Key**
 
-* 要创建签名，首先需要生成Api Key和Secret Key组合。请牢记在此过程中生成的Secret Key，因为该值仅显示一次，如果忘记了Secret Key，请删除该Api Key，并生成新的Api Key和Secret Key组合。
+* To create a signature, you need to generate a combination of API Key and Secret Key. Please keep in mind the Secret Key generated in this process, because the value is only displayed once. If you forget the Secret Key, delete the API Key and generate a new API Key and Secret Key combination.
 
-**HTTP 请求头**
+**http request header**
 
-**访问私有接口的请求都必需附加以下HTTP请求头：**
+**After requests to access private interfaces, the following HTTP request header must be attached:**
 
-* api-key 已生成的Api Key
-* api-sign 签名
+* API Key that has been generated by API-Key
+* API-SIGN signature
 
-**如果需要，也可以附加以下HTTP请求头：**
+**If necessary, you can also add the following http request head:**
 
 * api-expire-time
-  1. 接口过期时间。
-  2. 该值是以毫秒为单位的Unix时间，服务器会忽略该时间之后收到的请求，这主要用于避免网络延迟带来的影响。
+1. Interface expiration time.
+2. This value is a UNIX time in milliseconds. The server will ignore the request received after the time, which is mainly used to avoid the impact of network delay.
 
-**创建签名**
+**Create a signature**
 
-在发送请求前，首先确定用于签名的消息体。对于GET类型的请求，Query String是需要签名的消息体，对于POST请求，Body String是需要签名的消息体。签名的具体方法如下：
+Before sending the request, first determine the message used for the signature. For GET type requests, Query String is the message body that needs to be signed, and for POST requests, Body String is the message body that needs to be signed. The specific method of signing is as follows:
 
-* 第一步：以Secret Key作为Key对需要签名的消息体执行HmacSHA256算法
-* 第二步：将以上结果转化为Hex String
-* 第三步：将Hex String作为请求头api-sign的值
+* The first step: use Secret Key as a key to perform a message to the signature of the HMACSHA256 algorithm
+* Step 2: Convert the above results to hex string
+* Step 3: Use Hex String as the value of the request header api-sign
 
-## Api Key权限
+## Api Key Permissions
 
-**私有接口需要特定的权限才能执行。可以为Api Key授予适当的权限。如果Api Key未被授予某个接口需要的权限，那么使用该Api Key提交的请求将被拒绝。**
+**Private interface requires specific permissions to execute. Appropriate authority can be granted for API Key. If the API Key is not awarded the permissions required by an interface, the request submitted to the API Key will be rejected.**
 
-**可以授予Api Key以下权限：**
+**You can grant API Key below permissions:**
 
-* View权限允许Api Key获取私有数据。
-* Trade权限允许Api Key提交或撤销委托，并允许Api Key获取交易相关的数据。
+* View permissions allow API Key to obtain private data.
+* Trade permissions allow the API Key to submit or revoke the commission and allow the API Key to obtain data related data.
 
-*接口需要的权限将在每个接口的描述中给出。*
+*The permissions required by the interface will be given in the description of each interface. *
 
 ---
 
@@ -238,40 +236,40 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "id": 5 // id
-    "market": "lpc", // spot or lpc 现货或者合约
-    "symbol": "BTC_USDT_SWAP", // 交易对
-    "takerFee": "0.001", // taker手续费
-    "makerFee": "0.001", // maker 手续费
-    "minOrderSize": "0.0001", // 最小下单数量
-    "maxOrderSize": "10000000",// 最大下单数量
-    "quantityScale": 4, // 数量精度
-    "priceScale": 4, // 价格精度
-    "minOrderValue": "0.0001", // 最小下单价值
-    "maxOrderValue": "10000000000", // 最大下单价值
-    "fundingRate": "0.0001" // 资金费率
-    "nextFundingTime": "1733472000000", // 资金费率结算时间
-    "predictedFundingRate": "0.0001", // 预期资金费率
-    "markPrice": "98042.3405", // 标记价格
+    "ID": 5 // ID
+    "market": "lpc", // spot orlpc spot or contract
+    "Symbol": "BTC_USDT_SWAP", // Transaction pair
+    "takerFee": "0.001", // Taker handling fee
+    "Makerfee": "0.001", // Maker's handling fee
+    "minOrderSize": "0.0001", // Minimum order quantity
+    "maxOrderSize": "10000000", // Maximum order quantity
+    "quantityScale": 4, // Quantity accuracy
+    "priceScale": 4, // Price accuracy
+    "minOrderValue": "0.0001", // Minimum order value
+    "maxOrderValue": "1000000000", // Maximum order value
+    "Fundingrate": "0.0001" // capital rate
+    "NextFundingtime": "1733472000000", // Funding rate settlement time
+    "predictedFundingRate": "0.0001", // Expected funding rate
+    "Markprice": "98042.3405", // Label price
   }
 ]
 ```
 
-**获取币种列表**
+**Get the currency list**
 
-* 请求方式 GET
-* 请求路径 /v1/products
-* 请求参数
+* Request method get
+* Request path /v1/products
+* Request parameters
 
 
-| 参数名称   | 参数类型 | 是否必传 | 说明                                      |
-|--------| ---------- |------|-----------------------------------------|
-| market | string   | 是    | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol | string   | 否    | 交易对代码，如 BTC_USDT, ETH_USDT 等，不指定返回全部交易对 |
+| Parameter name | Parameter type | Whether to pass it? | Description |
+|--------| ---------------------------------------------------------------------------------------------------------------------- ---------------------|
+| market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
+| Symbol | String | No | Transaction to code, such as BTC_USDT, ETH_USDT, etc.
 
 * Data source
 
-  Cache
+Cache
 
 ## Get Order Book
 
@@ -303,67 +301,67 @@ def do_request():
     print(resp.text)
   
 if __name__ == '__main__':
-    do_request()
+do_request()
 ```
 
 > Response
 
 ```json
 {
-  "i": "1027024", // update id
-  "t": "1644558642100", // update time
-  "b": [ // 买盘
-    [
-      "46125.7", // 委托价格
-      "0.079045" // 委托量
-    ],
-    [
-      "46125.7", // 委托价格
-      "0.079045" // 委托量
-    ],
-    [
-      "46125.7", // 委托价格
-      "0.079045" // 委托量
-    ]
-    ...
+"i": "1027024", // update id
+"t": "1644558642100", // update time
+"b": [// Buy the market
+  [
+  "46125.7", // The commission price
+  "0.079045" // quantity
+  ],,,
+  [
+  "46125.7", // The commission price
+  "0.079045" // quantity
+  ],,,
+  [
+  "46125.7", // The commission price
+  "0.079045" // quantity
+  ]
+  ...
   ],
-  "a": [ // 卖盘
-    [
-      "46125.7", // 委托价格
-      "0.079045" // 委托量
-    ],
-    [
-      "46125.7", // 委托价格
-      "0.079045" // 委托量
-    ],
-    [
-      "46125.7", // 委托价格
-      "0.079045" // 委托量
-    ]
-    ...
+"a": [// Selling the disk
+  [
+  "46125.7", // The commission price
+  "0.079045" // quantity
+  ],,,
+  [
+  "46125.7", // The commission price
+  "0.079045" // quantity
+  ],,,
+  [
+  "46125.7", // The commission price
+  "0.079045" // quantity
+  ]
+  ...
   ]
 }
 ```
 
-**获取深度数据**
+**Get in-depth data**
 
-* 请求方式 GET
-* 请求路径 /v1/order_book
-* 请求参数
+* Request method get
+* Request path /v1/order_book
+* Request parameters
 
 
-| 参数名称    | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Parameter Name | Parameter Type | Whether it must be passed | Description |
 | ------------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| market | string   | 是    | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol      | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| level       | int32    | 否       | 指定最多返回多少级深度<br/>有效值 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000<br/>默认值 100                                                                                                                                                                                                                                                                                                                                                                                                 |
-| price_scale | integer  | 否       | 指定按价格合并深度，如指定交易对的价格最多含4位小数<br/>price_scale=0 时返回的价格最多含4位小数,<br/>price_scale=1 时返回的价格最多含3位小数, 委托量是价格区间0.0010中全部委托量的和<br/>price_scale=2 时返回的价格最多含2位小数, 委托量是价格区间0.0100中全部委托量的和<br/>price_scale=3 时返回的价格最多含1位小数, 委托量是价格区间0.1000中全部委托量的和<br/>price_scale=4 时返回的价格最多含0位小数, 委托量是价格区间1.0000中全部委托量的和<br/>有效值 0, 1, 2, 3, 4, 5<br/>默认值 0 |
+| market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
+| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. |
+| Level | int32 | No | How many level depth is specified? <br/> Effective value 1, 2, 5, 10, 20, 50, 100, 500, 1000 <br/> The default value 100 |
+| Price_scale | Integer | No | Specify the depth of the price by the price, such as the price of the specified transaction pair contains up to 4 digits <br/> Price_scale = 0 The price returned to the price up to 4 digits, <br/> price_scale = 1 to return to return. The price contains a maximum of 3 decimal numbers. The entrusted measurement is the price range of the price range 0.0010 and the price of <br/> price_scale = 2 to 2 contains up to 2 decimal numbers. br/> price_scale = 3 to 3 to include a maximum number of decimal numbers. The sum of all delegations in 1.0000<br/>Valid values ​​0, 1, 2, 3, 4, 5<br/>Default value 0 |
 
-> 注意: 数据按价格最优排序, 即买侧深度按价格由大到小排序, 卖侧深度按价格由小到大排序
+> Note: The data are sorted by the best price, that is, the buy side depth is sorted from large to small, and the sell side depth is sorted from small to large
 
 * Data source
 
-  Cache
+Cache
 
 ## Get Candles
 
@@ -402,61 +400,60 @@ if __name__ == '__main__':
 
 ```json
 {
-  "t": 60000, // 时间周期
-  "e": [
-    [
-      "1644224940000", // 起始时间
-      "10190.53", // 开盘价格
-      "10192.5", // 最高价格
-      "9806.82", // 最低价格
-      "10127.37", // 收盘价格
-      "0.834", // 成交量
-      "8370.40506", // 成交价值
-      "1", // 首个成交的id
-      278 // 区间内总成交次数
-    ],
-    [
-      "1644224940000",
-      "10190.53",
-      "10192.5",
-      "9806.82",
-      "10127.37",
-      "0.834",
-      "8370.40506",
-      "1",
-      278
-    ],
-    ...
+"t": 60000, // Time cycle
+"e": [
+  [
+    "1644224940000", // start time
+    "10190.53", // Opening price
+    "10192.5", // The highest price
+    "9806.82", // Minimum price
+    "10127.37", // Close price
+    "0.834", // Trading volume
+    "8370.40506", // transaction value
+    "1", // The ID of the first transaction
+    278 // Total transactions in the interval
+  ],
+  [
+    "1644224940000",
+    "10190.53",
+    "10192.5",
+    "9806.82",
+    "10127.37",
+    "0.834",
+    "8370.40506",
+    "1",
+    278
   ]
+]
 }
 ```
 
-**获取K线数据**
+**Get K-line data**
 
-* 请求方式 GET
-* 请求路径 /v1/candles
-* 请求参数
+* Request method get
+* Request path /v1 /candles
+* Request parameters
 
 
-| 参数名称   | 参数类型 | 是否必传 | 说明                                                                                   |
+| Parameter Name | Parameter Type | Whether it must be passed | Description |
 | ------------ | ---------- | ---------- | ---------------------------------------------------------------------------------------- |
-| market | string   | 是    | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol     | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等                                                   |
-| time_frame | string   | 是       | K线数据的时间周期<br/>有效值 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 3d, 1W或1M |
-| before     | int64    | 否       | utc时间<br/>限定返回K线记录的最近时间                                                  |
-| after      | int64    | 否       | utc时间<br/>限定返回K线记录的最早时间                                                  |
-| limit      | integer  | 否       | 获取K线记录的最大数量<br/>默认值100，最大值1000                                        |
+| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. |
+| Time_frame | String | Yes | The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1H, 2H, 4H, 6H, 12H, 1d, 3D, 1W or 1m |
+| before | int64 | No | utc time<br/>Limit the latest time of return to the K-line record |
+| after | int64 | No | UTC Time <br/> Limited to return the earliest time of the K -line records |
+| Limit | Integer | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000 |
 
-* 该接口支持的参数组合和数据源
+* The parameter combination and data source supported by the interface
 
-  1. symbol + time_frame  --> cache
-  2. symbol + time_frame + limit  --> cache
-  3. symbol + time_frame + before  --> database
-  4. symbol + time_frame + before + limit  --> database
-  5. symbol + time_frame + after  --> database
-  6. symbol + time_frame + after + limit  --> database
+1. symbol + time_frame  --> cache
+2. symbol + time_frame + limit  --> cache
+3. symbol + time_frame + before  --> database
+4. symbol + time_frame + before + limit  --> database
+5. symbol + time_frame + after  --> database
+6. symbol + time_frame + after + limit  --> database
 
-> 返回结果按时间由早及近排序
+> Return results from early and nearly sorted by time
 
 ## Get Trades
 
@@ -488,7 +485,7 @@ def do_request():
     print(resp.text)
   
 if __name__ == '__main__':
-    do_request()
+do_request()
 ```
 
 > Response
@@ -496,74 +493,67 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "i": "17122255", // 交易 id
-    "p": "46125.7", // 成交价格
-    "q": "0.079045", // 成交量
-    "s": "1", // Taker 的成交方向 1代表买 -1代表卖
-    "t": "1628738748319" // 成交时间
+  "i": "17122255", // Transaction ID
+  "p": "46125.7", // The transaction price
+  "q": "0.079045", // Transaction volume
+  "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
+  "t": "1628738748319" // Transaction time
   },
   {
-    "i": "17122255", // 交易 id
-    "p": "46125.7", // 成交价格
-    "q": "0.079045", // 成交量
-    "s": "-1", // Taker 的成交方向 1代表买 -1代表卖
-    "t": "1628738748319" // 成交时间
-  },
-  {
-    "i": "17122255", // 交易 id
-    "p": "46125.7", // 成交价格
-    "q": "0.079045", // 成交量
-    "s": "1", // Taker 的成交方向 1代表买 -1代表卖
-    "t": "1628738748319" // 成交时间
+    "i": "17122254", // Transaction ID
+    "p": "46125", // The transaction price
+    "q": "0.079047", // Transaction volume
+    "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
+    "t": "1628738748318" // Transaction time
   }
   ...
 ]
 ```
 
-**获取交易记录**
+**Get the transaction record**
 
-* 请求方式 GET
-* 请求路径 /v1/trades
-* 请求参数
+* Request method get
+* Request path /v1 /trades
+* Request parameters
 
 
-| 参数名称   | 参数类型 | 是否必传 | 说明                                         |
+| Parameter Name | Parameter Type | Whether it must be passed | Description |
 | ------------ | ---------- | ---------- | ---------------------------------------------- |
-| market | string   | 是    | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol     | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等         |
-| start_time | int64    | 否       | 限定返回交易记录的最早时间                   |
-| end_time   | int64    | 否       | 限定返回交易记录的最近时间                   |
-| before     | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最大id     |
-| after      | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最大id     |
-| limit      | integer  | 否       | 获取记录的最大数量<br/>默认值100，最大值1000 |
+| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| symbol | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, etc. |
+| Start_time | int64 | No | The earliest time of limited returning transaction records |
+| END_TIME | int64 | No | Limited recent time of returning transaction records |
+| before | int64 | No | Transaction record id<br/> Limited to return the maximum id of the transaction record |
+| after | int64 | No | Trading record ID <br/> Limit the maximum ID of returning transaction records |
+| Limit | Integer | No | The maximum number of obtaining records <br/> The default value is 100, the maximum value is 1000 |
 
-* 该接口支持的参数组合和数据源
+* Parameter combinations and data sources supported by this interface
 
-  1. symbol  --> cache
-  2. symbol + limit  --> cache
-  3. symbol + start_time  --> database
-  4. symbol + start_time + limit  --> database
-  5. symbol + end_time  --> database
-  6. symbol + end_time + limit  --> database
-  7. symbol + start_time + end_time  --> database
-  8. symbol + start_time + end_time + limit  --> database
-  9. symbol + before  --> database
-  10. symbol + before + limit  --> database
-  11. symbol + after  --> database
-  12. symbol + after + limit  --> database
+1. symbol  --> cache
+2. symbol + limit  --> cache
+3. symbol + start_time  --> database
+4. symbol + start_time + limit  --> database
+5. symbol + end_time  --> database
+6. symbol + end_time + limit  --> database
+7. symbol + start_time + end_time  --> database
+8. symbol + start_time + end_time + limit  --> database
+9. symbol + before  --> database
+10. symbol + before + limit  --> database
+11. symbol + after  --> database
+12. symbol + after + limit  --> database
 
-  *数据源为cache的参数组合用于获取最近1000条交易记录*
+*The parameter combination of the data source is Cache to obtain the last 1,000 transaction records*
 
-  *数据源为database的参数组合用于获取较早的交易记录*
+*The parameter combination of the data source is DataBase to obtain earlier transaction records*
 
-  *如果用数据源为database的参数组合获取最新交易记录，其结果要比cache数据源稍有延迟*
+*If you use the parameter combination of the data source as database to obtain the latest transaction record, the result will be slightly delayed than the cache data source*
 * Usage
-  **用法举例：获取三个月内某交易对的全部交易记录**
+**Usage Example: Get all the transaction records of a transaction pair within three months**
 
-  1. 首先使用symbol + limit 参数组合获取最新的交易记录
-  2. 将取到的首条记录的tradeId作为before参数的值，反复使用symbol + before + limit参数组合获取更多记录，直至获取三个月内的全部交易记录后停止
+1. First use the symbol + limit parameter combination to obtain the latest transaction record
+2. Tradeid the first recorded as the value of the BeFore parameter, use Symbol + BeFore + Limit parameter combination to get more records, until the all transaction records within three months stop stopped stopped stopping
 
-> 返回结果按交易记录id由小到大排序
+> Return results sorted from small to large by transaction record id
 
 ## Get Tickers
 
@@ -603,37 +593,37 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "askPrice": "98100", // 卖一价
-    "product": "BTC_USDT", // 交易对
-    "amount": "922635", // 24成交价值
-    "last": "98000", // 最新成交价
-    "firstTradeId": 1, // 第一笔交易id
-    "change": "0", // 价格变化
-    "bidQty": "1.7", // 卖一数量
-    "bidPrice": "98000", // 买一价
-    "volume": "9.41", // 24h成交数量
-    "lastQty": "0.3", // 24h最新成交
-    "askQty": "0.5", // 卖一数量
-    "high": "98100", // 24最高价
-    "tradeCount": 30, // 成交次数
-    "low": "98000", // 24h最低价
-    "time": "1733474204000", // 时间
-    "open": "98000" // 开盘价格
+  "askPrice": "98100", // Sell for one price
+  "product": "BTC_USDT", // Transaction pair
+  "amount": "922635", // 24 transaction value
+  "Last": "98000", // The latest transaction price
+  "firstTradeId": 1, // The first transaction id
+  "change": "0", // Price changes
+  "bidQty": "1.7", // Sell a quantity
+  "bidPrice": "98000", // Buy one price
+  "volume": "9.41", // 24h transaction quantity
+  "Lastqty": "0.3", // 24h latest transactions
+  "askqty": "0.5", // Sell a number
+  "high": "98100", // The highest price of 24
+  "tradeCount": 30, // Number of transactions
+  "Low": "98000", // 24h the lowest price
+  "time": "1733474204000", // time
+  "open": "98000" // Opening price
   }
 ]
 ```
 
-**获取报价数据**
+**Get the quotation data**
 
-* 请求方式 GET
-* 请求路径 /v1/ticker
-* 请求参数
+* Request method get
+* Request path /v1 /ticker
+* Request parameters
 
 
-| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                                 |
+| Parameter name | Parameter type | Whether to pass it? | Description |
 | ---------- | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| market | string   | 是    | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol   | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等，<br/>可按如下两种形式指定多个交易对代码<br/> 1. /pairs?symbol=BTC_USDT,ETH_USDT<br/> 2. /pairs?symbol=BTC_USDT&symbol=ETH_USDT |
+| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1./PAIRS? Symbol = btc_usdt, ETH_USDT <br/ > 2. /pairs?symbol=BTC_USDT&symbol=ETH_USDT |
 
 * Data Source
 
@@ -643,7 +633,7 @@ Cache
 
 ## Overview
 
-> 例子
+> Example
 
 ```javascript
 const WebSocket = require('ws');
@@ -742,395 +732,374 @@ if __name__ == "__main__":
 
 ```
 
-**使用 Websocket 推送服务可以及时获取行情信息。**
+**Use the WebSocket push service to get the market information in time.**
 
-* 连接 Websocket 服务器
-  请使用以下 URL 连接 Websocket 服务器：
-  <br/>
-  wss://stream-market.tonetou.com
+* Connect to the WebSocket server
+Please use the following URL to connect to the Websocket server:
+<br/>
+wss://stream-market.tonetou.com
 
-> 在连接后，客户端可以发送以下JSON格式的请求给服务器
+> After connecting, the client can send the following JSON format request to the server
 
 ```json
 {
-  "id": 123, // 由客户端给定的请求id
-  "method":"SUBSCRIBE", // 请求类型
-  "params":["spot.BTC_USDT.order_book.5"]
+"id": 123, // Request ID given by the client
+"method": "Subscribe", // Request type
+"params":["spot.BTC_USDT.order_book.5"]
 }
 ```
 
-> 在收到请求后，服务器会发送以下JSON格式的响应给客户端
+> After receiving the request, the server will send the following json format response to the client
 
 ```json
 {
-  "result":"success", // 返回结果
-  "op":"SUBSCRIBE", 
-  "id": 123, // 由客户端给定的请求id
+  "result": "success", // Back results
+  "op":"SUBSCRIBE",
+  "id": 123, // Request ID given by the client
   "events":["spot.BTC_USDT.order_book.5"]
 }
 ```
 
-> 如果发生错误，服务器会发送以下错误信息给客户端
+> If an error occurs, the server will send the following error message to the client
 
 ```json
 {
-  "id": 123, // 请求id
-  "error": -1003, // 错误代码
-  "message": "..." // 错误描述
+"id": 123, // Request ID
+"error": -1003, // Error code
+"message": "..." // Error description
 }
 ```
 
-> 同时，服务器还会发送以下JSON格式的数据流给客户端, 数据流包含市场行情的变化信息
+> At the same time, the server will also send the following JSON format data stream to the client, which contains information about market changes
 
 ```json
 {
-  "stream": "spot.BTC_USDT.order_book.5", // 数据流名称
-  "data": ..., // 数据
+"stream": "spot.BTC_USDT.order_book.5", // Data flow name
+"data": ..., // data
 }
 ```
 
-> 请求：订阅数据流
+> Request: Subscribe data stream
 
 ```json
 {
   "id": 1,
   "method": "SUBSCRIBE",
   "params": [
-    "stream name",
-    "stream name",
+  "stream name",
+  "stream name",
     ...
-  ]
+   ]
 }
 ```
 
-> 在连接后，请首先发送该请求给服务器，随后，服务器会在行情变化时发送相应的数据流给客户端。
+> After the connection, please send the request to the server first, and then the server will send the corresponding data stream to the client when the market changes.
 
-> "data stream name" 是数据流名称，数据流名称是以下格式的字符串。
+> "Data Stream name" is the name of the data stream, and the data stream name is a string in the following format.
 > market.symbol.data_type.param1.param2...
 
-> 其中，market是交易对市场，如spot和lpc
-> symbol是交易对名称，如 BTC_USDT、ETH_USDT 等。
-> data_type是数据类型，目前仅支持以下数据类型
-> order_book: 深度
-> trades: 交易列表
-> candles: K线
-> ticker: 最新成交信息
+> Where, market is a trading-to-market, such as spot and lpc
+> Symbol is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+> Data_type is a data type, and currently only supports the following data types
+> Order_Book: Deep
+> trades: trading list
+> Candles: K line
+> TICKER: The latest transaction information
 
-> 在data_type之后是参数列表，不同的数据类型有不同的参数列表，这些将在后续介绍
+> After data_type is the parameter list, different data types have different parameter lists, these will be introduced in the following context
 
-> 请求: 取消订阅数据流
+> Request: Cancel the subscription data stream
 
 ```javascript
 {
   "id": 1,
   "method": "UNSUBSCRIBE",
   "params": [
-    "data stream name",
-    "data stream name",
-    ...
+  "data stream name",
+  "data stream name", 
+    ... 
   ]
 }
 ```
 
-> 如果请求被服务器正确处理，客户端会收到以下响应:
-
-```javascript
-  {
-    "result":"success", // 返回结果
-    "op":"SUBSCRIBE",
-    ... 
-    }
-```
-
-> 如果请求出错，客户端会收到以下错误响应:
+> If the request is properly handled by the server, the client will receive the following response:
 
 ```javascript
 {
-  "error": -1003, // 错误代码
-  "message": "..." // 错误描述
+  "result": "success", // Back results
+  "op":"SUBSCRIBE",
+}
+```
+
+> If the request is wrong, the client will receive the following error response:
+
+```javascript
+{
+"error": -1003, // Error code
+"message": "..." // Error description
 }
 ```
 
 ## Request Methods
 
-> 请求类型及参数
+> Request type and parameter
 
-> 客户端可以发送以下请求给服务器
+> The client can send the following requests to the server
 
 ```javascript
 {
-  "id": 123, // 由客户端给定的请求id
-  "method": "..." // 请求类型
-  "params": [ // 请求参数列表
+  "id": 123, // Request ID given by the client
+  "method": "..." // Request type
+  "params": [// Request parameter list
     "...",
     "...",
-  ]
+]
 }
 ```
 
-* 其中method字段的值是以下请求类型之一:
+* Where the value of the method field is one of the following request types:
 
 
-| 可选值      | 说明                                                                                                      |
+| Optional Values | Description |
 | ------------- | ----------------------------------------------------------------------------------------------------------- |
-| SUBSCRIBE   | 1.订阅数据流<br/> 2.参数是数据流名称列表 <br/> 3.在成功订阅后，服务器会在行情发生变化时发送数据流给客户端 |
-| UNSUBSCRIBE | 1.取消订阅数据流<br/> 2.参数是数据流名称列表 <br/> 3.在成功取消订阅后，客户端不会再收到相应的数据流       |
+| SUBSCRIBE | 1. Subscribe to data flow<br/> 2. Parameters are data flow name list <br/> 3. After a successful subscription, the server will send data flow to the client when the market changes |
+| UnSubscripe | 1. Cancel the subscription data stream <br/> 2. The parameter is the list of data stream names <br/> 3. After successfully canceling the subscription, the client will no longer receive the corresponding data flow |
 
 ## Subscribe Order Book
 
-**订阅深度信息**
+**Subscribe in-depth information**
 
-> 发送以下请求可订阅深度信息
+> Send the following request to subscribe to the in-depth information
 
 ```javascript
 {
   "id": 123,
   "method": "SUBSCRIBE",
   "params": [
-    "spot.BTC_USDT.order_book.20",
-    "spot.ETH_USDT.order_book.20",
+  "spot.BTC_USDT.order_book.20",
+  "spot.ETH_USDT.order_book.20",
     ...
-  ]
+]
 }
 ```
 
-* 参数
+* Parameters
 
-  1. 该请求的参数是深度流名称，格式如下：
+1. The parameter of the request is the depth stream name, and the format is as follows:
 
-  * \<market><symbol>.order_book.\<max depth>
-    1. \<market> 是交易对市场，如spot，lpc
-    2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
-    3. \<max depth> 是最大深度，有效值是5, 10, 20, 50, 100, 200, 500, 1000
+* \<market><symbol>.order_book.\<max depth>
+1. \<market> is a trading-to-market, such as spot, lpc
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+3. \<max depth> is the maximum depth, the effective value is 5, 10, 20, 50, 100, 200, 500, 1000
 
-> 数据流
+> Data flow
 
 ```javascript
-  {
-    "stream": "spot.BTC_USDT.order_book.20",
-    "data": {
-      "i": "1027024", // update id
+{
+"stream": "spot.BTC_USDT.order_book.20",
+"data": {
+    "i": "1027024", // update id
       "t": "1644558642100", // update time
-      "b": [ // 买盘
-        [
-            "46125.7", // 委托价格
-            "0.079045" // 委托量
-          ],
-        [
-            "46125.7", // 委托价格
-            "0.079045" // 委托量
-          ],
-        [
-            "46125.7", // 委托价格
-            "0.079045" // 委托量
-          ],
-        ...
-      ],
-      "a": [ // 卖盘
-        [
-            "46125.7", // 委托价格
-            "0.079045" // 委托量
-          ],
-        [
-            "46125.7", // 委托价格
-            "0.079045" // 委托量
-          ],
-        [
-            "46125.7", // 委托价格
-            "0.079045" // 委托量
-          ],
-       ...
+      "b": [// Buy the market
+      [
+        "46125.7", // The commission price
+        "0.079045" // quantity
+      ],,,
+      [
+        "46125.7", // The commission price
+        "0.079045" // quantity
+      ],,,
+      [
+        "46125.7", // The commission price
+        "0.079045" // quantity
       ]
-    }
+      ...
+    ],
+      "a": [// Selling the disk
+      [
+        "46125.7", // The commission price
+        "0.079045" // quantity
+      ],,,
+      [
+        "46125.7", // The commission price
+        "0.079045" // quantity
+      ],,,
+      [
+        "46125.7", // The commission price
+        "0.079045" // quantity
+      ]
+      ...
+    ]
   }
+
+}
 ```
 
-> 在成功订阅后，客户端会首先收到一个完整深度的数据流，之后会收到增量变化数据流，请按以下方法合成完整的深度，或使用SDK.
->
+> After successful subscriptions, the client will first receive a complete depth of data flow, and then receive an incremental change data flow. Please follow the following methods to synthesize the complete depth, or use SDK.
+"
 
-  ```javascript
+```javascript
   ...
-  ```
+```
 
 ## Subscribe Trades
 
-**订阅交易列表**
+**Subscribe to transaction list**
 
-> 发送以下请求可订阅交易列表
+> Send the following request to subscribe to the transaction list
 
 ```javascript
 {
   "id": 123,
   "method": "SUBSCRIBE"
   "params": [
-    "spot.BTC_USDT.trades",
-    "spot.ETH_USDT.trades",
-    ...
+  "Spot.Btc_usdt.trades",
+  "spot.ETH_USDT.trades",
+      ...
   ]
 }
 ```
 
-* 参数
+* Parameter
 
-  1. 该请求的参数是交易流名称，格式如下：
+1. The parameter of the request is the transaction flow name, and the format is as follows:
 
-  * \<symbol>.trades
-    1. \<market> 是交易对市场，如spot，lpc
-    2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
+* \<symbol>.trades
+1. \ <market> is a transaction to the market, such as Spot, LPC
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 
-> 数据流
+> Data flow
 
 ```javascript
 {
-  "stream": "spot.BTC_USDT.trades",
-  "data": [
-    {
-      "i": "17122255", // 交易 id
-      "p": "46125.7", // 成交价格
-      "q": "0.079045", // 成交量
-      "s": "buy", // Taker 的成交方向
-      "t": "1628738748319" // 成交时间
-    },
-    {
-      "i": "17122255", // 交易 id
-      "p": "46125.7", // 成交价格
-      "q": "0.079045", // 成交量
-      "s": "buy", // Taker 的成交方向
-      "t": "1628738748319" // 成交时间
-    },
-    {
-      "i": "17122255", // 交易 id
-      "p": "46125.7", // 成交价格
-      "q": "0.079045", // 成交量
-      "s": "buy", // Taker 的成交方向
-      "t": "1628738748319" // 成交时间
-    },
-    ...
-  ]
+"stream": "spot.BTC_USDT.trades",
+"data":  {
+    "i": "17122255", // Transaction ID
+      "p": "46125.7", // The transaction price
+      "q": "0.079045", // Transaction volume
+      "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
+      "t": "1628738748319" // Transaction time
+  },
+  {
+    "i": "17122254", // Transaction ID
+    "p": "46125", // The transaction price
+    "q": "0.079047", // Transaction volume
+    "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
+    "t": "1628738748318" // Transaction time
+  }
+...
 }
 ```
 
 ## Subscribe Candles
 
-**订阅K线**
+**Subscribe to K -line**
 
-> 发送以下请求可订阅K线
+> Send the following request to subscribe to the K-line
 
 ```javascript
 {
   "id": 123,
   "method": "SUBSCRIBE"
   "params": [
-    "spot.BTC_USDT.candles.1m",
-    "spot.ETH_USDT.candles.1h",
-    ...
+  "spot.BTC_USDT.candles.1m",
+  "spot.ETH_USDT.candles.1h",
+      ...
   ]
 }
 ```
 
-* 参数
+* Parameter
 
-  1. K线流名称格式如下：
+1. The K-line stream name format is as follows:
 
-  * \<symbol>.candles.\<time_frame>
-    1. \<market> 是交易对市场，如spot，lpc
-    2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
-    3. \<time_frame> 是K线周期，有效值是1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
-> 数据流
+* \<symbol>.candles.\<time_frame>
+1. \ <market> is a transaction to the market, such as Spot, LPC
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+3. \<time_frame> is the K-line period, the effective value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
+> Data flow
 
 ```javascript
 {
-  "stream": "spot.BTC_USDT.candles.1m",
-  "data": {
-      "t":60000, // 时间周期
-      "e":[
+"stream": "spot.BTC_USDT.candles.1m",
+"data": {
+"t":60000, // Time period
+"e":[
       [
-        "1644224940000", // 起始时间
-        "10190.53", // 开盘价格
-        "10192.5", // 最高价格
-        "9806.82", // 最低价格
-        "10127.37", // 收盘价格
-        "0.834", // 成交量
-        "8370.40506", // 成交价值
-        "1", // 首个成交的id
-        278 // 区间内总成交次数
+        "1644224940000", // start time
+        "10190.53", // Opening price
+        "10192.5", // The highest price
+        "9806.82", // Minimum price
+        "10127.37", // Close price
+        "0.834", // Trading volume
+        "8370.40506", // transaction value
+        "1", // The ID of the first transaction
+        278 // Total transactions in the interval
       ],
       [
-        "1644224940000", // 起始时间
-        "10190.53", // 开盘价格
-        "10192.5", // 最高价格
-        "9806.82", // 最低价格
-        "10127.37", // 收盘价格
-        "0.834", // 成交量
-        "8370.40506", // 成交价值
-        "1", // 首个成交的id
-        278 // 区间内总成交次数
-      ],
-      [
-        "1644224940000", // 起始时间
-        "10190.53", // 开盘价格
-        "10192.5", // 最高价格
-        "9806.82", // 最低价格
-        "10127.37", // 收盘价格
-        "0.834", // 成交量
-        "8370.40506", // 成交价值
-        "1", // 首个成交的id
-        278 // 区间内总成交次数
-      ],
-      ...
-    ]}
+        "1644224940000",
+        "10190.53",
+        "10192.5",
+        "9806.82",
+        "10127.37",
+        "0.834",
+        "8370.40506",
+        "1",
+        278
+      ]
+    ]
   }
 }
 ```
 
 ## Subscribe Tickers
 
-**订阅K线**
+**Subscribe to K -line**
 
-> 发送以下请求可订阅Ticker
+> Send the following request to subscribe to Ticker
 
 ```javascript
 {
   "id": 123,
   "method": "SUBSCRIBE"
   "params": [
-    "spot.BTC_USDT.ticker",
-    "spot.ETH_USDT.ticker",
+  "spot.BTC_USDT.ticker",
+  "spot.ETH_USDT.ticker",
     ...
   ]
 }
 ```
 
-* 参数
+* Parameters
 
-  1. Ticker流名称格式如下：
+1. The Ticker stream name format is as follows:
 
-  * \<symbol>.ticker
-    1. \<market> 是交易对市场，如spot，lpc
-    2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
-> 数据流
+* \<symbol>.ticker
+1. \<market> is a trading-to-market, such as spot, lpc
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+> Data flow
 
 ```javascript
 {
-  "stream": "spot.BTC_USDT.ticker",
-  "data": {   
-    "askPrice": "98100", // 卖一价
-    "product": "BTC_USDT", // 交易对
-    "amount": "922635", // 24成交价值
-    "last": "98000", // 最新成交价
-    "firstTradeId": 1, // 第一笔交易id
-    "change": "0", // 价格变化
-    "bidQty": "1.7", // 卖一数量
-    "bidPrice": "98000", // 买一价
-    "volume": "9.41", // 24h成交数量
-    "lastQty": "0.3", // 24h最新成交
-    "askQty": "0.5", // 卖一数量
-    "high": "98100", // 24最高价
-    "tradeCount": 30, // 成交次数
-    "low": "98000", // 24h最低价
-    "time": "1733474204000", // 时间
-    "open": "98000" // 开盘价格
-  }
+"stream": "spot.BTC_USDT.ticker",
+  "data": {
+    "askPrice": "98100", // Sell for one price
+    "product": "BTC_USDT", // Transaction pair
+    "amount": "922635", // 24 transaction value
+    "last": "98000", // Latest transaction price
+    "firstTradeId": 1, // The first transaction id
+    "change": "0", // Price changes
+    "bidQty": "1.7", // Sell a quantity
+    "bidPrice": "98000", // Buy one price
+    "volume": "9.41", // 24h transaction quantity
+    "lastQty": "0.3", // 24h latest deal
+    "askQty": "0.5", // Sell a quantity
+    "high": "98100", // The highest price of 24
+    "tradeCount": 30, // Number of transactions
+    "low": "98000", // 24h lowest price
+    "time": "1733474204000", // Time
+    "Open": "98000" // Opening price
+    }
 }
 ```
 
@@ -1208,34 +1177,34 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "asset":"USDT",  // 资产代码
-    "balance":10000,  // 总额
-    "holds":0  // 冻结额
+  "asset":"USDT", // Asset code
+  "balance":10000, // Total amount
+  "holds":0 // Freeze amount
   },
   {
-    "asset":"USDT",  // 资产代码
-    "balance":10000,  // 总额
-    "holds":0  // 冻结额
+  "asset": "USDT", // Asset code
+  "balance":10000, // Total amount
+  "holds":0 // Freeze amount
   },
   ...
 ]
 ```
 
-**获取 API Key 对应账户中各种资产的余额, 冻结等信息**
+**Get the balance, freeze and other information of various assets in the corresponding account by API Key**
 
-* 请求方式 GET
-* 请求路径 /v1/accounts
-* 权限: View, Trade
-* 请求参数
+* Request method get
+* Request path /v1 /accounts
+* Permissions: View, Trade
+* Request parameters
 
 
-| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                 |
+| Parameter name | Parameter type | Whether to pass it? | Description |
 | ---------- | ---------- | ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------|
-| asset    | string   | 否       | 资产代码，如 BTC, ETH 等<br/>可按以下两种形式指定多个资产代码<br/>1. /v1/accounts?asset=BTC,ETH<br/> 2. /v1/accounts?asset=BTC&asset=ETH <br/> 如果不指定 asset 参数, 则返回全部资产的信息 |
+| asset | string | No | Asset code, such as BTC, ETH, etc.<br/> Multiple asset codes can be specified in the following two forms<br/>1. /v1/accounts?asset=BTC,ETH<br/> 2. /v1/accounts?asset=BTC&asset=ETH <br/> If the asset parameter is not specified, the information of all assets will be returned |
 
 * Data Source
 
-  Cache
+Cache
 
 ## Get an account's ledger
 
@@ -1305,38 +1274,38 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "amount":"10000",   // 变化数量
-    "balance":"10000",  // 余额
-    "id":"1125899906842624029", // id
-    "time":"1733468814795", // 时间
-    "asset":"USDT",   // 资产代码
-    "type":"transfer" // 账单类型
+  "amount": "10000", // The number of changes
+  "balance": "10000", // balance
+  "id": "1125899906842624029", // ID
+  "time": "1733468814795", // time
+  "asset": "USDT", // Asset code
+  "type": "Transfer" // Bill type
   }
   ...
 ]
 ```
 
-**获取 API Key 对应账户的账单，包含一切改变账户余额的记录，如资金划转、交易、手续费收取等**
+**Obtain the bill of accounts for the API Key account, including all records that change the balance of the account, such as capital transfer, transaction, handling fees, etc.**
 
-* 请求方式 GET
-* 请求路径 /v1/ledger
-* 权限: View, Trade
-* 请求参数(需要排序)
+* Request method get
+* Request path /v1 /ledger
+* Permanent: View, Trade
+* Request parameters (need sorting)
 
 
-| 参数名称       | 参数类型 | 是否必传 | 说明                                                                                                                                               |
-|------------| ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------|
-| asset      | string   | 否       | 资产代码，如 BTC, ETH 等<br/>可按以下两种形式指定多个资产代码<br/>1. /v1/ledger?asset=BTC,ETH<br/> 2. /v1/ledger?asset=BTC&asset=ETH <br/> 如果不指定 asset 参数, 则返回全部资产的账单记录 |
-| start_time | int64    | 否       | 限定返回账单记录的最早时间                                                                                                                                    |
-| end_time   | int64    | 否       | 限定返回账单记录的最近时间                                                                                                                                    |
-| before     | int64    | 否       | 账单记录id<br/>限定返回账单记录的最大id值                                                                                                                        |
-| after      | int64    | 否       | 账单记录id<br/>限定返回账单记录的最小id值                                                                                                                        |
-| limit      | int32    | 否       | 限定返回账单记录的最大条数<br/>默认值 100                                                                                                                        |
-| type       | string   | 否       | 账单类型 transfer划转，trade交易，fee手续费，rebate系统收取，funding资金费用                                                                                                                                            |
+| Parameter name | Parameter type | Whether to pass it? | Description |
+|----------------| ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------|
+| asset          | string | No | Asset code, such as BTC, ETH, etc.<br/> Multiple asset codes can be specified in the following two forms<br/>1. /v1/ledger?asset=BTC,ETH<br/> 2./V1/LEDger? ASSET = BTC & Asset = ETH <br/> If the ASSET parameters are not specified, return the bill record of all assets |
+| start_time     | int64 | No | The earliest time of limited returning bill records |
+| end_time       | int64 | No | Limited to return the latest time of the billing record |
+| before         | int64 | No | Bill record id<br/>Limit the maximum id value of the return bill record |
+| after          | int64 | No | Bill record id<br/>Limit the minimum id value of return bill record |
+| limit          | int32 | No | Limited to return the maximum number of bill records<br/>Default value 100 |
+| type           | String | No | Bill type transfer transfer, trade transaction, fee handling fee, refite system charged, funding funds fee |
 
 * Data Source
 
-  DB
+DB
 
 ## Create an order
 
@@ -1427,30 +1396,30 @@ if __name__ == '__main__':
 
 ```json
 {
-  "orderId": "4611767382287843330", // 订单id
-  "clientOrderId": "",  // 自定义id
-  "createTime": "1733390630904", // 创建时间
-  "product": "BTC_USDT", // 交易对代码
-  "type": "limit", // 订单类型
-  "side": "buy", // 交易方向
-  "quantity": "0.01", // 委托数量
+  "orderId": "4611767382287843330", // Order id
+  "clientOrderId": "", // Custom ID
+  "createTime": "1733390630904", // Creation time
+  "product": "BTC_USDT", // Transaction to the code to the code
+  "type": "Limit", // Order type
+  "side": "Buy", // Trading direction
+  "quantity": "0.01", // quantity
   "stf": "disabled",
-  "price": "10300",  // 委托价格
+  "price": "10300", // The commission price
   "visibleQty": "0.01",
-  "timeInForce": "gtc",
+  "timeInforce": "GTC",
   "cancelAfter": 0,
   "postOnly": false,
-  "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
-  "positionId": 0,  // 提交的仓位id
-  "close": false,   // 是否为可平单
-  "leverage": 0,    // 杠杠倍数
-  "action": "unknown", // 仓位行为
-  "status": "filled", // 订单状态
-  "executedQty": "0.01", // 已成交数量
-  "profit": "0",    // 收益
-  "executedCost": "103", // 已成交价值
-  "fillCount": 1, // 成交次数
-  "fills": [  // 成交详情
+  "positionMerge": "None", // position mode None divide the position Long merged multi
+  "positionId": 0, // Submitted position id
+  "close": false, // Is it a flat order
+  "leverage": 0, // Leverage multiple
+  "action": "unknown", // position behavior
+  "status": "Filled", // Order status
+  "executedQty": "0.01", //
+  "Profit": "0", // return
+  "executedCost": "103", // The transaction value has
+  "fillCount": 1, // Number of transactions
+  "fills": [// transaction details
     {
       "tradeId": 1,
       "time": "1733390650379",
@@ -1460,52 +1429,52 @@ if __name__ == '__main__':
       "taker": false,
       "fees": [
         {
-          "amount": "0.103", // 资产数量
-          "asset": "USDT", // 资产代码
-          "value": "0.103" // 估值
+        "amount": "0.103", // Number of assets
+        "asset": "USDT", // Asset code
+        "value": "0.103" // Valuation
         }
       ]
     }
-  ],
-  "fees": [  // 手续费
-    {
-      "amount": "0.103", // 资产数量
-      "asset": "USDT", // 资产代码
-      "value": "0.103" // 估值
-    }
-  ],
-  "updateTime": "1733390650379" // 更新时间
+    ],
+  "fees": [// handle fee
+      {
+      "amount": "0.103", // Number of assets
+      "asset": "USDT", // Asset code
+      "value": "0.103" // Valuation
+      }
+    ],
+  "updateTime": "1733390650379" // Update time
 }
 
 ```
 
-**提交委托**
+**Submit the entrustment**
 
-* 请求方式 POST
-* 请求路径 /v1/order
-* 权限: Trade
-* 请求参数
+* Request method POST
+* Request path /v1/order
+* Permissions: Trade
+* Request parameters
 
 
-| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                    |
+| Parameter Name | Parameter Type | Whether it must be passed | Description |
 |-----------------|---------|------|-----------------------------------------------------------------------------------------------------------------------|
-| symbol          | string  | 是    | 交易对代码，如 BTC_USDT, ETH_USDT 等                                                                                          |
-| type            | string  | 是    | 委托类型，有效值 limit market                                                                                                 |
-| client_order_id | string  | 否    | 委托id，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳                                                                                |
-| quantity        | decimal | 是    | 委托量 有正负                                                                                                               |
-| price           | decimal | 否    | 委托限价                                                                                                                  |
-| market          | string  | 是    | 必须 spot 现货，lpc U本位永续                                                                                                  |
-| positionMerge   | string  | 否    | 合约必须 none分仓 long合并多 short合并空                                                                                          |
-| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                             |
-| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                             
-| close           | bool    | 否    | 合约必须 true 平仓单，false 开仓单                                                                                               |
-| post_only       | bool    | 否    | ...                                                                                                                   |
-| time_in_force   | string   | 否       | 委托时效性<br/>有效值 gtc, ioc<br/>gtc 表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>默认值 gtc |
-| positionId   | string   | 否       | 仓位id                                                                                                                  |
+| symbol | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, etc. |
+| type | string | Yes | Delegate type, valid value limit market |
+| client_order_id | string | No | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate |
+| Quantity | DECIMAL | Yes | The commission is positive and negative |
+| Price | DECIMAL | No | Entrusted price limit |
+| market | string | Yes | Must spot spot, lpc U-standard perpetual |
+| POSITIONMERGE | String | No | Contract must be nONG to merge multi -short merged empty |
+| marginMethod | string | No | Contract must be isolate position by position, cross full position |
+| leverage | int | No | Contract must be leverage multiple
+| close | bool | No | The contract must be true to close the warehouse receipt, false to open the warehouse receipt |
+| post_only | bool | No | ... |
+| Time_in_Force | String | No | Effective time performance <br/> Effective value GTC, IOC <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC |
+| POSITIONID | String | No | Warehouse ID |
 
-> 委托对象
-> 最多包含该委托的20笔成交
-> 如果委托有多于20笔成交，那么该对象仅包含最后20笔，其他成交请通过 fills 接口获取
+> Delegate object
+> It contains up to 20 transactions entrusted
+> If there are more than 20 transactions in the delegation, then the object only contains the last 20 transactions. Please obtain other transactions through the fills interface.
 
 ## Get an order
 
@@ -1575,30 +1544,30 @@ if __name__ == '__main__':
 
 ```json
 {
-  "orderId": "4611767382287843330", // 订单id
-  "clientOrderId": "",  // 自定义id
-  "createTime": "1733390630904", // 创建时间
-  "product": "BTC_USDT", // 交易对代码
-  "type": "limit", // 订单类型
-  "side": "buy", // 交易方向
-  "quantity": "0.01", // 委托数量
+  "orderId": "4611767382287843330", // Order id
+  "clientOrderId": "", // Custom ID
+  "createTime": "1733390630904", // Creation time
+  "product": "BTC_USDT", // Transaction to the code to the code
+  "type": "Limit", // Order type
+  "side": "Buy", // Trading direction
+  "quantity": "0.01", // quantity
   "stf": "disabled",
-  "price": "10300",  // 委托价格
+  "price": "10300", // The commission price
   "visibleQty": "0.01",
-  "timeInForce": "gtc",
+  "timeInforce": "GTC",
   "cancelAfter": 0,
   "postOnly": false,
-  "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
-  "positionId": 0,  // 提交的仓位id
-  "close": false,   // 是否为可平单
-  "leverage": 0,    // 杠杠倍数
-  "action": "unknown", // 仓位行为
-  "status": "filled", // 订单状态
-  "executedQty": "0.01", // 已成交数量
-  "profit": "0",    // 收益
-  "executedCost": "103", // 已成交价值
-  "fillCount": 1, // 成交次数
-  "fills": [  // 成交详情
+  "positionMerge": "None", // position mode None divide the position Long merged multi
+  "positionId": 0, // Submitted position id
+  "close": false, // Is it a flat order
+  "leverage": 0, // Leverage multiple
+  "action": "unknown", // position behavior
+  "status": "Filled", // Order status
+  "executedQty": "0.01", //
+  "Profit": "0", // return
+  "executedCost": "103", // The transaction value has
+  "fillCount": 1, // Number of transactions
+  "fills": [// transaction details
     {
       "tradeId": 1,
       "time": "1733390650379",
@@ -1608,35 +1577,35 @@ if __name__ == '__main__':
       "taker": false,
       "fees": [
         {
-          "amount": "0.103", // 资产数量
-          "asset": "USDT", // 资产代码
-          "value": "0.103" // 估值
+          "amount": "0.103", // Number of assets
+          "asset": "USDT", // Asset code
+          "value": "0.103" // Valuation
         }
       ]
     }
   ],
-  "fees": [  // 手续费
+  "fees": [// handle fee
     {
-      "amount": "0.103", // 资产数量
-      "asset": "USDT", // 资产代码
-      "value": "0.103" // 估值
+      "amount": "0.103", // Number of assets
+      "asset": "USDT", // Asset code
+      "value": "0.103" // Valuation
     }
   ],
-  "updateTime": "1733390650379" // 更新时间
+  "updateTime": "1733390650379" // Update time
 }
 ```
 
-**获取指定 id 的委托**
+**Get the commission of the specified ID**
 
-* 请求方式 GET
-* 请求路径 /v1/order
-* 权限: View, Trade
-* 请求参数
+* Request method get
+* Request path /v1/order
+* Permissions: View, Trade
+* Request parameters
 
 
-| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                |
+| Parameter Name | Parameter Type | Whether it must be passed | Description |
 | ---------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id       | string   | 是       | 委托id<br/>委托id可以是交易所分配的, <br/>也可以是用户自定义的 (在提交委托时使用client_order_id参数).<br/>当使用自定义id时, 需要在id前添加 “c:” 前缀.<br/>例如: 提交委托时使用了自定义id “123”, 在获取委托时, 需使用 “c:123”. |
+| ID | String | Yes | Entrusted ID <br/> The entrustment ID can be allocated by the exchange, <br/> can also be customized by users (using the client_order_id parameter when submitting the commission). When defining IDs, you need to add "C:" prefix before ID. <br/> For example: using a custom ID "123" when submitting commission, when obtaining the commission, you need to use "C: 123".
 
 ## Get Orders
 
@@ -1707,30 +1676,30 @@ if __name__ == '__main__':
 ```javascript
 [
   {
-    "orderId": "4611767382287843330", // 订单id
-    "clientOrderId": "",  // 自定义id
-    "createTime": "1733390630904", // 创建时间
-    "product": "BTC_USDT", // 交易对代码
-    "type": "limit", // 订单类型
-    "side": "buy", // 交易方向
-    "quantity": "0.01", // 委托数量
+    "orderId": "4611767382287843330", // Order id
+    "clientOrderId": "", // Custom ID
+    "createTime": "1733390630904", // Creation time
+    "product": "BTC_USDT", // Transaction to the code to the code
+    "type": "Limit", // Order type
+    "side": "Buy", // Trading direction
+    "quantity": "0.01", // quantity
     "stf": "disabled",
-    "price": "10300",  // 委托价格
+    "price": "10300", // The commission price
     "visibleQty": "0.01",
-    "timeInForce": "gtc",
+    "timeInforce": "GTC",
     "cancelAfter": 0,
     "postOnly": false,
-    "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
-    "positionId": 0,  // 提交的仓位id
-    "close": false,   // 是否为可平单
-    "leverage": 0,    // 杠杠倍数
-    "action": "unknown", // 仓位行为
-    "status": "filled", // 订单状态
-    "executedQty": "0.01", // 已成交数量
-    "profit": "0",    // 收益
-    "executedCost": "103", // 已成交价值
-    "fillCount": 1, // 成交次数
-    "fills": [  // 成交详情
+    "positionMerge": "None", // position mode None divide the position Long merged multi
+    "positionId": 0, // Submitted position id
+    "close": false, // Is it a flat order
+    "leverage": 0, // Leverage multiple
+    "action": "unknown", // position behavior
+    "status": "Filled", // Order status
+    "executedQty": "0.01", //
+    "Profit": "0", // return
+    "executedCost": "103", // The transaction value has
+    "fillCount": 1, // Number of transactions
+    "fills": [// transaction details
       {
         "tradeId": 1,
         "time": "1733390650379",
@@ -1740,66 +1709,66 @@ if __name__ == '__main__':
         "taker": false,
         "fees": [
           {
-            "amount": "0.103", // 资产数量
-            "asset": "USDT", // 资产代码
-            "value": "0.103" // 估值
+            "amount": "0.103", // Number of assets
+            "asset": "USDT", // Asset code
+            "value": "0.103" // Valuation
           }
         ]
       }
     ],
-    "fees": [  // 手续费
+    "fees": [// handle fee
       {
-        "amount": "0.103", // 资产数量
-        "asset": "USDT", // 资产代码
-        "value": "0.103" // 估值
+        "amount": "0.103", // Number of assets
+        "asset": "USDT", // Asset code
+        "value": "0.103" // Valuation
       }
     ],
-    "updateTime": "1733390650379" // 更新时间
-  },
+    "updateTime": "1733390650379" // Update time
+  }
   ...
 ]
 ```
 
-**获取ApiKey对应账户中符合下列条件的委托**
+**Obtain the delegation in the corresponding ApiKey account that meets the following conditions**
 
-1. 全部未结算委托
-2. 三个月内的已结算委托, 含已拒绝, 已撤销和已成交委托
-3. 全部已成交委托
-4. 全部已撤销的部分成交委托
+1. All unsettled commissions
+2. The settlement commission of the settlement within three months, including rejection, revoked and transaction commission
+3. All have been commissioned
+4. All trading commissions that have been revoked
 
-* 请求方式 GET
-* 请求路径 /v1/orders
-* 权限: View, Trade
-* 请求参数(需要排序)
+* Request method get
+* Request path /v1 /order
+* Permanent: View, Trade
+* Request parameters (need sorting)
 
 
-| 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                                                                                             |
+| Parameter name | Parameter type | Whether to pass it? | Description |
 | ------------ | ---------- |-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| status     | string   | 否   | 有效值 unsettled, settled<br/>unsettled 表示获取未结算委托，返回结果按委托创建时间倒序排序<br/>settled 表示获取已结算委托，返回结果按委托结算时间倒序排序<br/>默认值 unsettled                                                                                                                                   |
-| market | string   | 否   | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol     | string   | 否   | 交易对代码，如 BTC_USDT, ETH_USDT 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
-| start_time | long     | 否   | 限定返回委托的最近创建时间                                                                                                                                                                                                                                                                                       |
-| end_time   | long     | 否   | 限定返回委托的最近创建时间                                                                                                                                                                                                                                                                                       |
-| before     | int64    | 否   | 委托更新 id<br/>限定返回委托的最大更新id                                                                                                                                                                                                                                                                         |
-| after      | int64    | 否   | 委托更新 id<br/>限定返回委托的最小更新id                                                                                                                                                                                                                                                                         |
-| limit      | long     | 否   | 指定最多返回多少个委托                                                                                                                                                                                                                                                                                           |
+| STATUS | String | No | Valid value unsettedled, settled <br/> Unsettedled indicates that the uncomfortable commission is obtained, the return result is sorted by the entrusted creation time. <br/> default value unsettedled |
+| Market | String | No | No | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| Symbol | String | No | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
+| start_time | long | No | Limited return to the last creation time of the delegation |
+| end_time | long | No | Limited return to the last creation time of the delegation |
+| BeFore | int64 | No | Entrust update ID <br/> Limited to return to the maximum update ID |
+| after | int64 | No | Entrust update ID <br/> Limited to the minimum update ID of the entrustment |
+| Limit | Long | No | How many commissioneds are the specified?
 
-* 该接口支持的参数组合和数据源
+* Parameter combinations and data sources supported by this interface
 
-  * status=unsettled + symbol
-  * status=settled + symbol + start_time
-  * status=settled + symbol + start_time + limit
-  * status=settled + symbol + end_time
-  * status=settled + symbol + end_time + limit
-  * status=settled + symbol + start_time + end_time
-  * status=settled + symbol + start_time + end_time + limit
-  * status=settled + symbol + before
-  * status=settled + symbol + before + limit
-  * status=settled + symbol + after
-  * status=settled + symbol + after + limit
+* status=unsettled + symbol
+* status=settled + symbol + start_time
+* status=settled + symbol + start_time + limit
+* status=settled + symbol + end_time
+* status=settled + symbol + end_time + limit
+* status=settled + symbol + start_time + end_time
+* status=settled + symbol + start_time + end_time + limit
+* status=settled + symbol + before
+* status=settled + symbol + before + limit
+* status=settled + symbol + after
+* status=settled + symbol + after + limit
 
-> 返回的unsettled委托按创建时间由早及近排序
-> 返回的settled委托按结算时间由早及近排序
+> The returned unsettled delegation is sorted from early to near by creation time
+> The returned setled delegation is sorted from early to near according to settlement time
 
 ## Cancel an Order
 
@@ -1879,23 +1848,23 @@ if __name__ == '__main__':
 > Response
 
 ```json
-[n] // 取消数量
+[n] // Cancel quantity
 ```
 
-**撤销指定 id 的委托**
+**Revoke the delegation of the specified id**
 
-* 请求方式 DELETE
-* 请求路径 /v1/order
-* 权限: Trade
-* 请求参数
+* Request method DELETE
+* Request path /v1/order
+* Permissions: Trade
+* Request parameters
 
 
-| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                  |
-| ---------- | ---------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id       | string   | 是       | 委托id<br>委托id可以是交易所分配的，<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义id时，需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义id “123”, 在撤销委托时，需使用 “c:123”。 |
-| market | string   | 是   | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
+| Parameter Name | Parameter Type | Whether it must be passed | Description |
+| ----------- | -------------------------------------------------------------------------------------------------------------------- ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ -------------------- |
+| ID | String | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. | |
+| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
 
-> 如果指定id的委托已结算，或者不存在指定id的委托，会收到-30001错误。
+> If the delegate with the specified id has been settled, or if the delegate with the specified id does not exist, you will receive an error -30001.
 
 ## Cancel all Orders
 
@@ -1976,24 +1945,24 @@ if __name__ == '__main__':
 > Response
 
 ```json
-[n] // 取消数量
+[n] // Cancel quantity
 ```
 
-**撤销全部委托**
+**Rejected all commissioned commissioned**
 
-* 请求方式 DELETE
-* 请求路径 /v1/orders
-* 权限: Trade
-* 请求参数
+* Request method DELETE
+* Request path /v1 /order
+* Permissions: Trade
+* Request parameters
 
 
-| 参数名称   | 参数类型 | 是否必传 | 说明                                    |
+| Parameter Name | Parameter Type | Whether it must be passed | Description |
 |--------| ---------- |-----|---------------------------------------|
-| market | string   | 是   | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约 |
-| symbol | string   | 是   | 交易对代码<br/>如 BTC_USDT, ETH_USDT 等      |
-| side   | string   | 否   | buy 或者 sell                           |
+| market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
+| symbol | string | Yes | Transaction pair code<br/>such as BTC_USDT, ETH_USDT, etc. |
+| Side | String | No | Buy or Sell |
 
-> 如果请求被正确执行，返回空数组，否则返回错误信息
+> If the request is executed correctly, return an empty array, otherwise return an error message
 
 ## Get fills
 
@@ -2066,65 +2035,65 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "product":"BTC_USDT_SWAP", // 交易对代码
-    "fees":[{"amount":"10","asset":"USDT"}],// 手续费
-    "quantity":"0.01", // 成交数量
-    "orderId":"4611772879845982371", // 订单id
-    "price":"1000000", // 成交价格
-    "time":"1733541360859", // 成交时间
-    "taker":true, // 是否为吃单
-    "profit":"-9060", // 收益
-    "tradeId":26 
+  "product":"BTC_USDT_SWAP", // Transaction pair code
+  "fees": [{"amount": "10", "asset": "usdt"}], // fees
+  "quantity": "0.01", // The number of transactions
+  "orderId":"4611772879845982371", // Order id
+  "price":"1000000", // Transaction price
+  "time":"1733541360859", // Transaction time
+  "taker":true, // Is it a order
+  "profit":"-9060", // Revenue
+  "tradeId": 26
   },
-  ...
+...
 ]
 ```
 
-**获取成交记录**
+**Get transaction records**
 
-* 请求方式 GET
-* 请求路径 /v1/fills
-* 权限: View, Trade
-* 请求参数(需要排序)
+* Request method get
+* Request path /v1/fills
+* Permanent: View, Trade
+* Request parameters (need sorting)
 
 
-| 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                             |
+| Parameter name | Parameter type | Whether to pass it? | Description |
 | ------------ | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| market | string   | 是   | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约 |
-| order_id   | string   | 否       | 交易所分配的委托id<br/>限定仅返回指定委托的成交记录<br/>如果不指定该参数，请指定 symbol                          |
-| symbol     | string   | 否       | 交易对代码<br/>如 BTC_USDT, ETH_USDT 等<br/>限定仅返回指定交易对的成交记录<br/>如果不指定该参数，请指定 order_id |
-| start_time | int64    | 否       | 限定返回成交记录的最早时间                                                                                       |
-| end_time   | int64    | 否       | 限定返回成交记录的最近时间                                                                                       |
-| before     | int64    | 否       | 成交记录 id<br/>限定返回成交记录的最大id                                                                         |
-| after      | int64    | 否       | 成交记录 id<br/>限定返回成交记录的最小id                                                                         |
-| limit      | int32    | 否       | 限定返回结果的最大条数<br/>默认值 100                                                                            |
+| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| order_id | string | No | Delegation id assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol |
+| symbol | string | No | Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id |
+| start_time | int64 | No | The earliest time of the return transaction records |
+| end_time | int64 | No | Limited to return the latest time of transaction record |
+| BeFore | int64 | No | Transaction record ID <br/> Limited to return the maximum ID of the transaction record |
+| after | int64 | No | Transaction record id<br/>Limit the minimum id to return transaction record |
+| limit | int32 | No | Limited to the maximum number of returned results<br/>Default value 100 |
 
-* 该接口支持的参数组合和数据源
+* The parameter combination and data source supported by the interface
 
-  * symbol  --> database
-  * symbol + limit  --> database
-  * symbol + start_time  --> database
-  * symbol + start_time + limit  --> database
-  * symbol + end_time  --> database
-  * symbol + end_time + limit  --> database
-  * symbol + start_time + end_time  --> database
-  * symbol + start_time + end_time + limit  --> database
-  * symbol + before  --> database
-  * symbol + before + limit  --> database
-  * symbol + after  --> database
-  * symbol + after + limit  --> database
-  * order_id  --> database
-  * order_id + limit  --> database
-  * order_id + before  --> database
-  * order_id + before + limit  --> database
+* symbol  --> database
+* symbol + limit  --> database
+* symbol + start_time  --> database
+* symbol + start_time + limit  --> database
+* symbol + end_time  --> database
+* symbol + end_time + limit  --> database
+* symbol + start_time + end_time  --> database
+* symbol + start_time + end_time + limit  --> database
+* symbol + before  --> database
+* symbol + before + limit  --> database
+* symbol + after  --> database
+* symbol + after + limit  --> database
+* order_id  --> database
+* order_id + limit  --> database
+* order_id + before  --> database
+* order_id + before + limit  --> database
 
-> 返回结果按成交记录id由小到大排序
+> Return results sorted from small to large by transaction record id
 
 # User Data Streams
 
 ## Overview
 
-> 例子
+> Example
 
 ```javascript
 const CryptoJS = require("crypto-js");
@@ -2237,24 +2206,24 @@ if __name__ == "__main__":
 
 ```
 
-使用 Websocket 推送服务可以及时获取账户的余额及委托变动信息。
+Use Websocket push service to obtain account balance and delegation changes information in a timely manner.
 
-**连接 Websocket 服务器**
+**Connect to WebSocket server**
 
-请使用以下 URL 连接 Websocket 服务器：
+Please use the following URL to connect to the Websocket server:
 
 wss://user-wss.madex360.com
 
-**在连接时，请附加以下HTTP请求头**
+**Please attach the following HTTP request header when connecting**
 
 * api-key
-* api-sign
+* API-SIGN
 * api-expire-time
 
-*具体方法请参考[Authentication](#authentication)章节*
+*For specific methods, please refer to the [Authentication](#authentication) chapter*
 
-> 数据流
-> 在成功建立连接后，客户端将收到ApiKey对应账户的余额变动信息及委托变动信息。格式如下:
+> Data flow
+> After successfully establishing a connection, the client will receive information and commission change information of the balance of the account of the APIKEY account. The format is as follows:
 
 ```javascript
 {
@@ -2275,72 +2244,70 @@ wss://user-wss.madex360.com
 
 ## Account
 
-**当账户余额发生变更时，会收到account事件**
+**When the account balance changes, you will receive an account event**
 
 ```javascript
 {
   "stream": "account",
   "data": {
-      "asset":"USDT", // 资产代码
-      "balance":"100000", // 余额
-      "holds":"20016.9970000" // 冻结
-  }
+  "asset":"USDT", // Asset code
+  "balance":"100000", // Balance
+  "Holds": "20016.9970000" // Frozen
 }
 ```
 
 ## Position
 
-**当仓位信息发送变更时，会收到position事件**
+**When the position information is sent to change, you will receive the Position event**
 ```javascript
 {
   "stream": "position",
   "data": {
-      "id":"1125899906842624003", // 仓位id
-      "symbol":"BTC_USDT_SWAP", // 交易对代码
-      "quantity":"0",   // 数量
-      "entryPrice":"0", // 开仓均价
-      "mergeMode":"none", // 仓位模式
-      "marginMethod":"isolate",//仓位模式
-      "leverage":"10.0", // 杠杠
-      "initMargin":"0.1", // 起始保证金率
-      "maintMargin":"0.005",// 维持保证金率
-      "posMargin":"0", // 持仓保证金
-      "orderMargin":"1009.8990000" // 委托保证金
-  }
+  "id": "1125899906842624003", // position ID
+  "symbol": "BTC_USDT_SWAP", // Transaction to the code to the code
+  "quantity": "0", // quantity
+  "entryPrice":"0", // Average price for opening positions
+  "mergeMode": "None", // position mode
+  "marginMethod":"isolate",//Position mode
+  "leverage":"10.0", // bar
+  "initMargin":"0.1", // Start margin rate
+  "maintMargin": "0.005", // Maintain the margin rate
+  "posMargin": "0", // Press margin
+  "orderMargin":"1009.8990000" // Entrustment deposit
 }
 ```
 ## Order
 
-**当委托发生变更时，会收到order事件**
+**When the delegation changes, the order event will be received**
 
 ```javascript
 {
-  "stream": "order",
-  "data":{
-    "orderId": "4611767382287843330", // 订单id
-      "clientOrderId": "",  // 自定义id
-      "createTime": "1733390630904", // 创建时间
-      "product": "BTC_USDT", // 交易对代码
-      "type": "limit", // 订单类型
-      "side": "buy", // 交易方向
-      "quantity": "0.01", // 委托数量
+"stream": "order",
+"data":{
+    "orderId": "4611767382287843330", // Order id
+      "clientOrderId": "", // Custom ID
+      "createTime": "1733390630904", // Creation time
+      "Product": "BTC_USDT", // Transaction to the code to the code
+      "type": "Limit", // Order type
+      "side": "Buy", // Trading direction
+      "quantity": "0.01", // quantity
       "stf": "disabled",
-      "price": "10300",  // 委托价格
+      "price": "10300", // The commission price
       "visibleQty": "0.01",
-      "timeInForce": "gtc",
+      "timeInforce": "GTC",
       "cancelAfter": 0,
       "postOnly": false,
-      "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
-      "positionId": 0,  // 提交的仓位id
-      "close": false,   // 是否为可平单
-      "leverage": 0,    // 杠杠倍数
-      "action": "unknown", // 仓位行为
-      "status": "filled", // 订单状态
-      "executedQty": "0.01", // 已成交数量
-      "profit": "0",    // 收益
-      "executedCost": "103", // 已成交价值
-      "fillCount": 1, // 成交次数
-      "fills": [  // 成交详情
+      "positionMerge": "None", // position mode None divide the position Long merged multi
+      "positionId": 0, // Submitted position id
+      "close": false, // Is it a flat order
+      "leverage": 0, // Leverage multiple
+      "action": "unknown", // position behavior
+      "status": "Filled", // Order status
+      "executedQty": "0.01", //
+      "Profit": "0", // return
+      "executedCost": "103", // The transaction value has
+      "fillCount": 1, // Number of transactions
+      "fills": [// transaction details
       {
         "tradeId": 1,
         "time": "1733390650379",
@@ -2350,21 +2317,20 @@ wss://user-wss.madex360.com
         "taker": false,
         "fees": [
           {
-            "amount": "0.103", // 资产数量
-            "asset": "USDT", // 资产代码
-            "value": "0.103" // 估值
+            "amount": "0.103", // Number of assets
+            "asset": "USDT", // Asset code
+            "value": "0.103" // Valuation
           }
         ]
       }
     ],
-      "fees": [  // 手续费
+      "fees": [// handle fee
       {
-        "amount": "0.103", // 资产数量
-        "asset": "USDT", // 资产代码
-        "value": "0.103" // 估值
+        "amount": "0.103", // Number of assets
+        "asset": "USDT", // Asset code
+        "value": "0.103" // Valuation
       }
     ],
-      "updateTime": "1733390650379" // 更新时间
+      "updateTime": "1733390650379" // Update time
   }
-}
 ```
