@@ -7,7 +7,7 @@ language_tabs:
 - csharp
 
 toc_footers:
-- <a href = 'https: //www.madex.com'> Start Trading </a>
+- <a href = 'https://www.ktx.com'> Start Trading </a>
 
 includes:
 - errors
@@ -42,12 +42,12 @@ code_clipboard: true
 * GET is used to obtain market or private data
 
 * POST is used to submit delegates and other operations
- **The parameters required for the REST interface of the API should be attached to the request according to the following rules:**
+  **The parameters required for the REST interface of the API should be attached to the request according to the following rules:**
 
 * The interface parameters of GET type should be attached to Query String
 
 * The interface parameters of POST type should be attached to the Request Body in JSON format
- **Response**
+  **Response**
 
 The API's response data is returned in JSON format. For the specific format, please refer to the description of each interface.
 
@@ -68,7 +68,7 @@ The time values involved in the API interface parameters and response data are U
 
 ---
 
-## traffic restriction
+## Traffic restriction
 
 **Madex The following access restrictions on the request from the same IP:**
 
@@ -263,7 +263,7 @@ if __name__ == '__main__':
 
 
 | Parameter name | Parameter type | Whether to pass it? | Description |
-|--------| ---------------------------------------------------------------------------------------------------------------------- ---------------------|
+|--------| ---------- |------|-----------------------------------------|
 | market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
 | Symbol | String | No | Transaction to code, such as BTC_USDT, ETH_USDT, etc.
 
@@ -548,7 +548,7 @@ do_request()
 
 *If you use the parameter combination of the data source as database to obtain the latest transaction record, the result will be slightly delayed than the cache data source*
 * Usage
-**Usage Example: Get all the transaction records of a transaction pair within three months**
+  **Usage Example: Get all the transaction records of a transaction pair within three months**
 
 1. First use the symbol + limit parameter combination to obtain the latest transaction record
 2. Tradeid the first recorded as the value of the BeFore parameter, use Symbol + BeFore + Limit parameter combination to get more records, until the all transaction records within three months stop stopped stopped stopping
@@ -735,9 +735,9 @@ if __name__ == "__main__":
 **Use the WebSocket push service to get the market information in time.**
 
 * Connect to the WebSocket server
-Please use the following URL to connect to the Websocket server:
-<br/>
-wss://stream-market.tonetou.com
+  Please use the following URL to connect to the Websocket server:
+  <br/>
+  wss://stream-market.tonetou.com
 
 > After connecting, the client can send the following JSON format request to the server
 
@@ -887,10 +887,10 @@ wss://stream-market.tonetou.com
 
 1. The parameter of the request is the depth stream name, and the format is as follows:
 
-* \<market><symbol>.order_book.\<max depth>
+* \<market>\<symbol>.order_book.\<max_depth>
 1. \<market> is a trading-to-market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
-3. \<max depth> is the maximum depth, the effective value is 5, 10, 20, 50, 100, 200, 500, 1000
+3. \<max_depth> is the maximum depth, the effective value is 5, 10, 20, 50, 100, 200, 500, 1000
 
 > Data flow
 
@@ -964,8 +964,8 @@ wss://stream-market.tonetou.com
 
 1. The parameter of the request is the transaction flow name, and the format is as follows:
 
-* \<symbol>.trades
-1. \ <market> is a transaction to the market, such as Spot, LPC
+* \<market>\<symbol>.trades
+1. \<market> is a transaction to the market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 
 > Data flow
@@ -991,9 +991,9 @@ wss://stream-market.tonetou.com
 }
 ```
 
-## Subscribe Candles
+## Subscribe K-line
 
-**Subscribe to K -line**
+**Subscribe to K-line**
 
 > Send the following request to subscribe to the K-line
 
@@ -1013,8 +1013,8 @@ wss://stream-market.tonetou.com
 
 1. The K-line stream name format is as follows:
 
-* \<symbol>.candles.\<time_frame>
-1. \ <market> is a transaction to the market, such as Spot, LPC
+* \<market>\<symbol>.candles.\<time_frame>
+1. \<market> is a transaction to the market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 3. \<time_frame> is the K-line period, the effective value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
 > Data flow
@@ -1054,7 +1054,7 @@ wss://stream-market.tonetou.com
 
 ## Subscribe Tickers
 
-**Subscribe to K -line**
+**Subscribe Tickers**
 
 > Send the following request to subscribe to Ticker
 
@@ -1074,7 +1074,7 @@ wss://stream-market.tonetou.com
 
 1. The Ticker stream name format is as follows:
 
-* \<symbol>.ticker
+* \<market>\<symbol>.ticker
 1. \<market> is a trading-to-market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 > Data flow
