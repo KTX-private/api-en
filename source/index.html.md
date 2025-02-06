@@ -886,7 +886,7 @@ if __name__ == "__main__":
 
 1. The parameter of the request is the depth stream name, and the format is as follows:
 
-* \<market>\<symbol>.order_book.\<max_depth>
+* \<market>.\<symbol>.order_book.\<max_depth>
 1. \<market> is a trading-to-market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 3. \<max_depth> is the maximum depth, the effective value is 5, 10, 20, 50, 100, 200, 500, 1000
@@ -963,7 +963,7 @@ if __name__ == "__main__":
 
 1. The parameter of the request is the transaction flow name, and the format is as follows:
 
-* \<market>\<symbol>.trades
+* \<market>.\<symbol>.trades
 1. \<market> is a transaction to the market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 
@@ -1012,7 +1012,7 @@ if __name__ == "__main__":
 
 1. The K-line stream name format is as follows:
 
-* \<market>\<symbol>.candles.\<time_frame>
+* \<market>.\<symbol>.candles.\<time_frame>
 1. \<market> is a transaction to the market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 3. \<time_frame> is the K-line period, the effective value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
@@ -1073,7 +1073,7 @@ if __name__ == "__main__":
 
 1. The Ticker stream name format is as follows:
 
-* \<market>\<symbol>.ticker
+* \<market>.\<symbol>.ticker
 1. \<market> is a trading-to-market, such as spot, lpc
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 > Data flow
@@ -1859,7 +1859,7 @@ if __name__ == '__main__':
 
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description |
-| ----------- | -------------------------------------------------------------------------------------------------------------------- ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ -------------------- |
+|----------------| ---------- |-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | id | String | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. | |
 | market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
 
