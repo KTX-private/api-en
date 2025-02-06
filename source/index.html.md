@@ -3,8 +3,7 @@ title: Madex API doc
 
 language_tabs:
 - javascript
-- Python
-- csharp
+- python
 
 toc_footers:
 - <a href = 'https://www.ktx.com'> Start Trading </a>
@@ -620,10 +619,10 @@ if __name__ == '__main__':
 * Request parameters
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description |
-| ---------- | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1./PAIRS? Symbol = btc_usdt, ETH_USDT <br/ > 2. /pairs?symbol=BTC_USDT&symbol=ETH_USDT |
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                              |
+| ---------- | ---------- | ---------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                                                                                 |
+| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
 
