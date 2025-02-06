@@ -899,19 +899,19 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Market</td>
+<td>market</td>
 <td>String</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
 </tr>
 <tr>
-<td>Symbol</td>
+<td>symbol</td>
 <td>String</td>
 <td>Yes</td>
 <td>Trading code, such as BTC_USDT, ETH_USDT, etc.</td>
 </tr>
 <tr>
-<td>Time_frame</td>
+<td>time_frame</td>
 <td>String</td>
 <td>Yes</td>
 <td>The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1H, 2H, 4H, 6H, 12H, 1d, 3D, 1W or 1m</td>
@@ -929,7 +929,7 @@
 <td>UTC Time <br/> Limited to return the earliest time of the K -line records</td>
 </tr>
 <tr>
-<td>Limit</td>
+<td>limit</td>
 <td>Integer</td>
 <td>No</td>
 <td>Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000</td>
@@ -1018,7 +1018,7 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Market</td>
+<td>market</td>
 <td>String</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
@@ -1030,13 +1030,13 @@
 <td>Transaction pair codes, such as BTC_USDT, ETH_USDT, etc.</td>
 </tr>
 <tr>
-<td>Start_time</td>
+<td>start_time</td>
 <td>int64</td>
 <td>No</td>
 <td>The earliest time of limited returning transaction records</td>
 </tr>
 <tr>
-<td>END_TIME</td>
+<td>end_time</td>
 <td>int64</td>
 <td>No</td>
 <td>Limited recent time of returning transaction records</td>
@@ -1054,7 +1054,7 @@
 <td>Trading record ID <br/> Limit the maximum ID of returning transaction records</td>
 </tr>
 <tr>
-<td>Limit</td>
+<td>limit</td>
 <td>Integer</td>
 <td>No</td>
 <td>The maximum number of obtaining records <br/> The default value is 100, the maximum value is 1000</td>
@@ -1165,13 +1165,13 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>Market</td>
+<td>market</td>
 <td>String</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
 </tr>
 <tr>
-<td>Symbol</td>
+<td>symbol</td>
 <td>String</td>
 <td>Yes</td>
 <td>Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT</td>
@@ -2416,13 +2416,13 @@ If there are more than 20 transactions in the delegation, then the object only c
 </tr>
 </thead><tbody>
 <tr>
-<td>STATUS</td>
+<td>status</td>
 <td>String</td>
 <td>No</td>
 <td>Valid value unsettedled, settled <br/> Unsettedled indicates that the uncomfortable commission is obtained, the return result is sorted by the entrusted creation time. <br/> default value unsettedled</td>
 </tr>
 <tr>
-<td>Market</td>
+<td>market</td>
 <td>String</td>
 <td>No</td>
 <td>No</td>
@@ -2446,7 +2446,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>Limited return to the last creation time of the delegation</td>
 </tr>
 <tr>
-<td>BeFore</td>
+<td>beFore</td>
 <td>int64</td>
 <td>No</td>
 <td>Entrust update ID <br/> Limited to return to the maximum update ID</td>
@@ -2458,7 +2458,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>Entrust update ID <br/> Limited to the minimum update ID of the entrustment</td>
 </tr>
 <tr>
-<td>Limit</td>
+<td>limit</td>
 <td>Long</td>
 <td>No</td>
 <td>How many commissioneds are the specified?</td>
@@ -2570,8 +2570,8 @@ The returned setled delegation is sorted from early to near according to settlem
 
 <p>| Parameter Name | Parameter Type | Whether it must be passed | Description |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ -------------------- |
-| ID | String | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the &quot;c:&quot; prefix before the id. <br/>For example: the custom id &quot;123&quot; is used when submitting the delegation, and when revoking the delegation, &quot;c:123&quot; is required. | |
-| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |</p>
+| id | String | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the &quot;c:&quot; prefix before the id. <br/>For example: the custom id &quot;123&quot; is used when submitting the delegation, and when revoking the delegation, &quot;c:123&quot; is required. | |
+| market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |</p>
 
 <blockquote>
 <p>If the delegate with the specified id has been settled, or if the delegate with the specified id does not exist, you will receive an error -30001.</p>
@@ -2789,7 +2789,7 @@ The returned setled delegation is sorted from early to near according to settlem
 </tr>
 </thead><tbody>
 <tr>
-<td>Market</td>
+<td>market</td>
 <td>String</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
