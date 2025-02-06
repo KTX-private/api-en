@@ -435,13 +435,13 @@ if __name__ == '__main__':
 
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description |
-| ------------ | ---------- | ---------- | ---------------------------------------------------------------------------------------- |
-| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. |
-| Time_frame | String | Yes | The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1H, 2H, 4H, 6H, 12H, 1d, 3D, 1W or 1m |
-| before | int64 | No | utc time<br/>Limit the latest time of return to the K-line record |
-| after | int64 | No | UTC Time <br/> Limited to return the earliest time of the K -line records |
-| Limit | Integer | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000 |
+|----------------| ---------- | ---------- | ---------------------------------------------------------------------------------------- |
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| symbol         | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. |
+| time_frame     | String | Yes | The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1H, 2H, 4H, 6H, 12H, 1d, 3D, 1W or 1m |
+| before         | int64 | No | utc time<br/>Limit the latest time of return to the K-line record |
+| after          | int64 | No | UTC Time <br/> Limited to return the earliest time of the K -line records |
+| limit          | Integer | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000 |
 
 * The parameter combination and data source supported by the interface
 
@@ -517,14 +517,14 @@ do_request()
 
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description |
-| ------------ | ---------- | ---------- | ---------------------------------------------- |
-| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| symbol | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, etc. |
-| Start_time | int64 | No | The earliest time of limited returning transaction records |
-| END_TIME | int64 | No | Limited recent time of returning transaction records |
-| before | int64 | No | Transaction record id<br/> Limited to return the maximum id of the transaction record |
-| after | int64 | No | Trading record ID <br/> Limit the maximum ID of returning transaction records |
-| Limit | Integer | No | The maximum number of obtaining records <br/> The default value is 100, the maximum value is 1000 |
+|----------------| ---------- | ---------- | ---------------------------------------------- |
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| symbol         | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, etc. |
+| start_time     | int64 | No | The earliest time of limited returning transaction records |
+| end_time       | int64 | No | Limited recent time of returning transaction records |
+| before         | int64 | No | Transaction record id<br/> Limited to return the maximum id of the transaction record |
+| after          | int64 | No | Trading record ID <br/> Limit the maximum ID of returning transaction records |
+| limit          | Integer | No | The maximum number of obtaining records <br/> The default value is 100, the maximum value is 1000 |
 
 * Parameter combinations and data sources supported by this interface
 
@@ -620,9 +620,9 @@ if __name__ == '__main__':
 
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                              |
-| ---------- | ---------- | ---------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                                                                                 |
-| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT |
+|----------------| ---------- | ---------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                                                                                 |
+| symbol         | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
 
@@ -1742,15 +1742,15 @@ if __name__ == '__main__':
 
 
 | Parameter name | Parameter type | Whether to pass it? | Description |
-| ------------ | ---------- |-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| STATUS | String | No | Valid value unsettedled, settled <br/> Unsettedled indicates that the uncomfortable commission is obtained, the return result is sorted by the entrusted creation time. <br/> default value unsettedled |
-| Market | String | No | No | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| Symbol | String | No | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
-| start_time | long | No | Limited return to the last creation time of the delegation |
-| end_time | long | No | Limited return to the last creation time of the delegation |
-| BeFore | int64 | No | Entrust update ID <br/> Limited to return to the maximum update ID |
-| after | int64 | No | Entrust update ID <br/> Limited to the minimum update ID of the entrustment |
-| Limit | Long | No | How many commissioneds are the specified?
+|----------------| ---------- |-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| status         | String | No | Valid value unsettedled, settled <br/> Unsettedled indicates that the uncomfortable commission is obtained, the return result is sorted by the entrusted creation time. <br/> default value unsettedled |
+| market         | String | No | No | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| Symbol         | String | No | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
+| start_time     | long | No | Limited return to the last creation time of the delegation |
+| end_time       | long | No | Limited return to the last creation time of the delegation |
+| beFore         | int64 | No | Entrust update ID <br/> Limited to return to the maximum update ID |
+| after          | int64 | No | Entrust update ID <br/> Limited to the minimum update ID of the entrustment |
+| limit          | Long | No | How many commissioneds are the specified?
 
 * Parameter combinations and data sources supported by this interface
 
@@ -1860,8 +1860,8 @@ if __name__ == '__main__':
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description |
 | ----------- | -------------------------------------------------------------------------------------------------------------------- ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ ------------------------------------------------ -------------------- |
-| ID | String | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. | |
-| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| id | String | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. | |
+| market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
 
 > If the delegate with the specified id has been settled, or if the delegate with the specified id does not exist, you will receive an error -30001.
 
@@ -2057,15 +2057,15 @@ if __name__ == '__main__':
 
 
 | Parameter name | Parameter type | Whether to pass it? | Description |
-| ------------ | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| Market | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| order_id | string | No | Delegation id assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol |
-| symbol | string | No | Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id |
-| start_time | int64 | No | The earliest time of the return transaction records |
-| end_time | int64 | No | Limited to return the latest time of transaction record |
-| BeFore | int64 | No | Transaction record ID <br/> Limited to return the maximum ID of the transaction record |
-| after | int64 | No | Transaction record id<br/>Limit the minimum id to return transaction record |
-| limit | int32 | No | Limited to the maximum number of returned results<br/>Default value 100 |
+|----------------| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------ |
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| order_id       | string | No | Delegation id assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol |
+| symbol         | string | No | Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id |
+| start_time     | int64 | No | The earliest time of the return transaction records |
+| end_time       | int64 | No | Limited to return the latest time of transaction record |
+| BeFore         | int64 | No | Transaction record ID <br/> Limited to return the maximum ID of the transaction record |
+| after          | int64 | No | Transaction record id<br/>Limit the minimum id to return transaction record |
+| limit          | int32 | No | Limited to the maximum number of returned results<br/>Default value 100 |
 
 * The parameter combination and data source supported by the interface
 
