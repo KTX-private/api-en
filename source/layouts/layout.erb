@@ -144,6 +144,9 @@ under the License.
 
         if(url.indexOf('en') != -1){
           //英文
+          exLogo.onclick = function () {
+            window.location.href = 'https://pre.ktx.one/en'
+          }
           btnSpotSelect.innerHTML = 'Spot'
           lang_btn.innerHTML = '中文';
 
@@ -151,9 +154,7 @@ under the License.
           lang_btn.href = url.replace('en/', 'zh/');
 
 
-          exLogo.onclick = function () {
-            window.location.href = 'https://pre.ktx.one/en'
-          }
+          
         }else{
           //中文
           lang_btn.innerHTML = 'English';
