@@ -30,9 +30,9 @@ code_clipboard: true
 **API uses the following Base URL:**
 
 * Market Data Endpoints: https://api.ktx.com/api
-* User Data Endpoints: https://api-user.ktx.com/api
-* Market Data Stream: wss://stream-market.ktx.com
-* User Data Stream: wss://madex-user.ktx.com
+* User Data Endpoints: https://api.ktx.com/api
+* Market Data Stream: wss://m-stream.ktx.com
+* User Data Stream: wss://u-stream.ktx.com
 
 **Add API domain name list**
 
@@ -95,7 +95,7 @@ The time values involved in the API interface parameters and response data are U
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -126,8 +126,9 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -142,6 +143,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
+        'api-expire-time': str(int(time.time() * 1000) + 5000)
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -245,11 +247,7 @@ if __name__ == '__main__':
     "quantityScale": 4, // Quantity accuracy
     "priceScale": 4, // Price accuracy
     "minOrderValue": "0.0001", // Minimum order value
-    "maxOrderValue": "1000000000", // Maximum order value
-    "Fundingrate": "0.0001" // capital rate
-    "NextFundingtime": "1733472000000", // Funding rate settlement time
-    "predictedFundingRate": "0.0001", // Expected funding rate
-    "Markprice": "98042.3405", // Label price
+    "maxOrderValue": "1000000000" // Maximum order value
   }
 ]
 ```
@@ -636,7 +634,7 @@ Cache
 
 ```javascript
 const WebSocket = require('ws');
-const madexws = 'wss://stream-market.ktx.com';
+const madexws = 'wss://m-stream.ktx.com';
 
 let wsClass = function () {
 };
@@ -692,7 +690,7 @@ import threading
 import time
 from datetime import datetime
 
-ws_url = 'wss://stream-market.ktx.com'
+ws_url = 'wss://m-stream.ktx.com'
 
 def stringify(obj):
     return json.dumps(obj, sort_keys=True).replace("\'", "\"").replace(" ", "")
@@ -750,7 +748,7 @@ if __name__ == "__main__":
 * Connect to the WebSocket server
   Please use the following URL to connect to the Websocket server:
   <br/>
-  wss://stream-market.ktx.com
+  wss://m-stream.ktx.com
 
 > After connecting, the client can send the following JSON format request to the server
 
@@ -1130,7 +1128,7 @@ if __name__ == "__main__":
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1161,8 +1159,9 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1176,6 +1175,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
+        'api-expire-time': str(int(time.time() * 1000) + 5000)
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1192,12 +1192,16 @@ if __name__ == '__main__':
   {
   "asset":"USDT", // Asset code
   "balance":10000, // Total amount
-  "holds":0 // Freeze amount
+  "holds":0, // Freeze amount
+  "withdrawable":0,// Transferable
+  "collateral":false,// Collateral
   },
   {
   "asset": "USDT", // Asset code
   "balance":10000, // Total amount
-  "holds":0 // Freeze amount
+  "holds":0, // Freeze amount
+  "withdrawable":0,// Transferable
+  "collateral":false,// Collateral
   },
   ...
 ]
@@ -1227,7 +1231,7 @@ Cache
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1258,8 +1262,9 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1273,6 +1278,8 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
+        'api-expire-time': str(int(time.time() * 1000) + 5000)
+
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1328,7 +1335,7 @@ DB
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1373,7 +1380,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1477,7 +1484,7 @@ if __name__ == '__main__':
 | Quantity | DECIMAL | Yes | The commission is positive and negative |
 | Price | DECIMAL | No | Entrusted price limit |
 | market | string | Yes | Must spot spot, lpc U-standard perpetual |
-| POSITIONMERGE | String | No | Contract must be nONG to merge multi -short merged empty |
+| POSITIONMERGE | String | No | Contract must be to merge multi -short merged empty |
 | marginMethod | string | No | Contract must be isolate position by position, cross full position |
 | leverage | int | No | Contract must be leverage multiple
 | close | bool | No | The contract must be true to close the warehouse receipt, false to open the warehouse receipt |
@@ -1497,7 +1504,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1528,11 +1535,12 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-
+t = time.time()
 
 def do_request():
     path = '/v1/order'
@@ -1628,7 +1636,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1659,11 +1667,12 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-
+t = time.time()
 
 def do_request():
     path = '/v1/orders'
@@ -1791,7 +1800,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1831,7 +1840,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1866,8 +1875,8 @@ if __name__ == '__main__':
 
 **Revoke the delegation of the specified id**
 
-* Request method DELETE
-* Request path /v1/order
+* Request method POST
+* Request path /v1/order/delete
 * Permissions: Trade
 * Request parameters
 
@@ -1887,7 +1896,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1897,9 +1906,9 @@ const param = {
 
 let bodyStr = JSON.stringify(param);
 const sign = CryptoJS.HmacSHA256(bodyStr, secret).toString();
-const url = `${endpoints}/v1/orders`;
+const url = `${endpoints}/v1/orders/delete`;
 
-request.delete({
+request.post({
         url:url,
         body:param,
         json:true,
@@ -1927,7 +1936,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1939,7 +1948,7 @@ def do_request():
     }
     body_str = json.dumps(param)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), body_str.encode("utf-8"), hashlib.sha256).hexdigest()
-    path = '/v1/orders'
+    path = '/v1/orders/delete'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
@@ -1947,7 +1956,7 @@ def do_request():
         'api-expire-time':str(round(t * 1000 +5000)) # optional
 
     }
-    resp = requests.delete(END_POINT + path, json=param, headers=headers)
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
 
 
@@ -1963,8 +1972,8 @@ if __name__ == '__main__':
 
 **Rejected all commissioned commissioned**
 
-* Request method DELETE
-* Request path /v1 /order
+* Request method POST
+* Request path /v1 /orders/delete
 * Permissions: Trade
 * Request parameters
 
@@ -1985,7 +1994,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -2018,7 +2027,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -2049,7 +2058,7 @@ if __name__ == '__main__':
 [
   {
   "product":"BTC_USDT_SWAP", // Transaction pair code
-  "fees": [{"amount": "10", "asset": "usdt"}], // fees
+  "fees": [{"amount": "10", "asset": "usdt", "value": "10"}], // fees
   "quantity": "0.01", // The number of transactions
   "orderId":"4611772879845982371", // Order id
   "price":"1000000", // Transaction price
@@ -2111,7 +2120,7 @@ if __name__ == '__main__':
 ```javascript
 const CryptoJS = require("crypto-js");
 const WebSocket = require('ws');
-const madexws = 'wss://madex-user.ktx.com';
+const madexws = 'wss://u-stream.ktx.com';
 const apikey = "9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13"; // your apikey
 const secret = "ca55beb9e45d4f30b3959b464402319b9e12bac7"; // your secret
 const sign = CryptoJS.HmacSHA256("/user/verify", secret).toString();
@@ -2178,7 +2187,7 @@ import threading
 import time
 from datetime import datetime
 
-ws_url = 'wss://user-wss.madex360.com'
+ws_url = 'wss://u-stream.ktx.com'
 API_KEY = '9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13'
 SECRET_KEY = 'ca55beb9e45d4f30b3959b464402319b9e12bac7'
 SIGN = hmac.new(SECRET_KEY.encode("utf-8"), "/user/verify".encode('utf-8'), hashlib.sha256).hexdigest()
@@ -2239,7 +2248,7 @@ Use Websocket push service to obtain account balance and delegation changes info
 
 Please use the following URL to connect to the Websocket server:
 
-wss://user-wss.madex360.com
+wss://u-stream.ktx.com
 
 **Please attach the following HTTP request header when connecting**
 
