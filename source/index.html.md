@@ -36,6 +36,8 @@ code_clipboard: true
 
 **Add API domain name list**
 
+[https://api.ktx.com/v1/pu/domains](https://api.ktx.com/v1/pu/domains)
+
 **API's REST interface uses the following http method:**
 
 * GET is used to obtain market or private data
