@@ -36,7 +36,7 @@ code_clipboard: true
 
 **Add API domain name list**
 
-[https://api.ktx.com/v1/pu/domains](https://api.ktx.com/v1/pu/domains)
+[https://api.ktx.com/api/v1/pu/domains](https://api.ktx.com/api/v1/pu/domains)
 
 **API's REST interface uses the following http method:**
 
@@ -1122,7 +1122,7 @@ if __name__ == "__main__":
 
 
 
-## Get Accounts
+## Get Trade Account Asset
 
 > Request
 
@@ -1136,7 +1136,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
 const queryStr = 'asset=BTC';
-const sign = CryptoJS.HmacSHA256(queryStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/accounts?${queryStr}`;
 
 request.get(url,{
@@ -1144,7 +1145,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000 // optional
+            'api-expire-time':exprieTime // optional
           },
         },
 
@@ -1171,13 +1172,14 @@ SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 def do_request():
     path = '/v1/accounts'
     query_str = 'asset=BTC'
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), query_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time': str(int(time.time() * 1000) + 5000)
+        'api-expire-time': expire_time
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1225,6 +1227,214 @@ if __name__ == '__main__':
 
 Cache
 
+
+## Get Main Account Asset
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/api'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    asset:'USDT'
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/tf/main/assets`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime // optional
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/api'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'asset': 'USDT'
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/tf/main/assets'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time #optional
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "state": "0",
+  "msg": null,
+  "result": [
+    {
+      "asset": "USDT",//Asset code
+      "balance": "2081.0000000000",//Total Amount
+      "holds": "498.0000000000"//Freeze Amount
+    }
+  ]
+}
+```
+
+**Get Main Account Assets**
+
+* Request method POST
+* Request path /v1/tf/main/assets
+* Permissions: Trade
+* Request parameters
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description |
+| ---------- | ---------- | ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------|
+| asset | string | No | Asset code, such as BTC, ETH, etc.<br/> If the asset parameter is not specified, the information of all assets will be returned |
+
+
+## Asset Transfer
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/api'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    symbol:'USDT',
+    amount: 10
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/tf/transfer`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime // optional
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/api'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'symbol': 'USDT',
+        'amount': 10
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/tf/transfer'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time #optional
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "state": "0",
+  "msg": null,
+  "result": {}
+}
+```
+
+**Asset Tranfer**
+
+* Request method POST
+* Request path /v1/tf/transfer
+* Permissions: Trade
+* Request parameters
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                               |
+| ---------- |----------------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol | string  | Yes | Asset code, such as BTC, ETH                                                                                                                              |
+| amount | number  | Yes | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
+
+
 ## Get an account's ledger
 
 > Request
@@ -1239,7 +1449,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
 const queryStr = 'asset=BTC&end_time=1651895799668&limit=10';
-const sign = CryptoJS.HmacSHA256(queryStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/ledger?${queryStr}`;
 
 request.get(url,{
@@ -1247,7 +1458,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000 // optional
+            'api-expire-time':exprieTime // optional
         },
     },
 
@@ -1274,13 +1485,14 @@ SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 def do_request():
     path = '/v1/ledger'
     query_str = 'asset=BTC&end_time=1651895799668&limit=10'
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), query_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time': str(int(time.time() * 1000) + 5000)
+        'api-expire-time': expire_time
 
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
@@ -1350,7 +1562,8 @@ const param = {
 }
 
 let bodyStr = JSON.stringify(param);
-const sign = CryptoJS.HmacSHA256(bodyStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
 const url = `${endpoints}/v1/order`;
 
 request.post({
@@ -1361,7 +1574,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000  // optional
+            'api-expire-time':exprieTime  // optional
         },
     },
 
@@ -1385,7 +1598,6 @@ import time
 END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-t = time.time()
 
 
 def do_request():
@@ -1398,13 +1610,14 @@ def do_request():
       'market':'spot',
     }
     body_str = json.dumps(param)
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), body_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
     path = '/v1/order'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':str(round(t * 1000 +5000)) # optional
+        'api-expire-time':expire_time # optional
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1512,7 +1725,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
 const queryStr = 'id=4611772879845982339';
-const sign = CryptoJS.HmacSHA256(queryStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/order?${queryStr}`;
 
 request.get(url,{
@@ -1520,7 +1734,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000  // optional
+            'api-expire-time':exprieTime  // optional
         },
     },
 
@@ -1542,18 +1756,18 @@ import time
 END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-t = time.time()
 
 def do_request():
     path = '/v1/order'
     query_str = 'id=14118828812271651'
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), query_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':str(round(t * 1000 +5000)) # optional
+        'api-expire-time':expire_time # optional
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1644,7 +1858,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
 const queryStr = 'limit=2&status=settled&market=spot&symbol=BTC_USDT';
-const sign = CryptoJS.HmacSHA256(queryStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/orders?${queryStr}`;
 
 request.get(url,{
@@ -1652,7 +1867,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000  // optional
+            'api-expire-time':exprieTime // optional
         },
     },
 
@@ -1674,18 +1889,18 @@ import time
 END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-t = time.time()
 
 def do_request():
     path = '/v1/orders'
     query_str = 'limit=2&status=settled&market=spot&symbol=BTC_USDT'
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), query_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':str(round(t * 1000 +5000)) # optional
+        'api-expire-time':expire_time # optional
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1811,7 +2026,8 @@ const param = {
 }
 
 let bodyStr = JSON.stringify(param);
-const sign = CryptoJS.HmacSHA256(bodyStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
 const url = `${endpoints}/v1/order/delete`;
 
 request.post({
@@ -1822,7 +2038,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000 // optional
+            'api-expire-time':exprieTime // optional
         },
     },
 
@@ -1845,7 +2061,6 @@ import time
 END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-t = time.time()
 
 def do_request():
 
@@ -1853,13 +2068,14 @@ def do_request():
         'id': '14245272657638034'
     }
     body_str = json.dumps(param)
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), body_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
     path = '/v1/order/delete'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':str(round(t * 1000 +5000)) #optional
+        'api-expire-time':expire_time #optional
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1907,7 +2123,8 @@ const param = {
 }
 
 let bodyStr = JSON.stringify(param);
-const sign = CryptoJS.HmacSHA256(bodyStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
 const url = `${endpoints}/v1/orders/delete`;
 
 request.post({
@@ -1918,7 +2135,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000 // optional
+            'api-expire-time':exprieTime // optional
         },
     },
 
@@ -1941,7 +2158,6 @@ import time
 END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-t = time.time()
 
 def do_request():
 
@@ -1949,13 +2165,14 @@ def do_request():
         'symbol': 'BTC_USDT'
     }
     body_str = json.dumps(param)
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), body_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
     path = '/v1/orders/delete'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':str(round(t * 1000 +5000)) # optional
+        'api-expire-time':expire_time # optional
 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
@@ -2002,7 +2219,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
 const queryStr = 'limit=2&market=spot&symbol=BTC_USDT';
-const sign = CryptoJS.HmacSHA256(queryStr, secret).toString();
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/fills?${queryStr}`;
 
 request.get(url,{
@@ -2010,7 +2228,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000 // optional
+            'api-expire-time':exprieTime // optional
 
         },
     },
@@ -2028,6 +2246,7 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
 END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
@@ -2038,13 +2257,14 @@ def do_request():
     path = '/v1/fills'
     query_str = 'limit=2&market=spot&symbol=BTC_USDT'
     # POST or DELETE replace query_str with body_str
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), query_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':str(round(t * 1000 +5000)) # optional
+        'api-expire-time':expire_time # optional
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
