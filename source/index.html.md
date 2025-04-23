@@ -2490,7 +2490,7 @@ wss://u-stream.ktx.com
 > Data flow
 > After successfully establishing a connection, the client will receive information and commission change information of the balance of the account of the APIKEY account. The format is as follows:
 
-```javascript
+```json
 {
   "stream": "account",
   "data": { Account }
@@ -2511,7 +2511,7 @@ wss://u-stream.ktx.com
 
 **When the account balance changes, you will receive an account event**
 
-```javascript
+```json
 {
   "stream": "account",
   "data": {
@@ -2524,7 +2524,7 @@ wss://u-stream.ktx.com
 ## Position
 
 **When the position information is sent to change, you will receive the Position event**
-```javascript
+```json
 {
   "stream": "position",
   "data": {
@@ -2545,7 +2545,7 @@ wss://u-stream.ktx.com
 
 **When the delegation changes, the order event will be received**
 
-```javascript
+```json
 {
 "stream": "order",
 "data":{
