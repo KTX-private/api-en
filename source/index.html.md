@@ -314,7 +314,7 @@ do_request()
 
 ```json
 {
-"i": "1027024", // update id
+"i": 1027024, // update id
 "t": "1644558642100", // update time
 "b": [// Buy the market
   [
@@ -499,14 +499,14 @@ do_request()
 ```json
 [
   {
-  "i": "17122255", // Transaction ID
+  "i": 17122255, // Transaction ID
   "p": "46125.7", // The transaction price
   "q": "0.079045", // Transaction volume
   "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
   "t": "1628738748319" // Transaction time
   },
   {
-    "i": "17122254", // Transaction ID
+    "i": 17122254, // Transaction ID
     "p": "46125", // The transaction price
     "q": "0.079047", // Transaction volume
     "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
@@ -918,7 +918,7 @@ if __name__ == "__main__":
 {
 "stream": "spot.BTC_USDT.order_book.20",
 "data": {
-    "i": "1027024", // update id
+    "i": 1027024, // update id
       "t": "1644558642100", // update time
       "b": [// Buy the market
       [
@@ -994,14 +994,14 @@ if __name__ == "__main__":
 {
 "stream": "spot.BTC_USDT.trades",
 "data":  {
-    "i": "17122255", // Transaction ID
+    "i": 17122255, // Transaction ID
       "p": "46125.7", // The transaction price
       "q": "0.079045", // Transaction volume
       "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
       "t": "1628738748319" // Transaction time
   },
   {
-    "i": "17122254", // Transaction ID
+    "i": 17122254, // Transaction ID
     "p": "46125", // The transaction price
     "q": "0.079047", // Transaction volume
     "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
@@ -1919,7 +1919,7 @@ if __name__ == '__main__':
 
 > Response
 
-```javascript
+```json
 [
   {
     "orderId": "4611767382287843330", // Order id
