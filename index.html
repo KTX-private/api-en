@@ -1382,46 +1382,46 @@ TICKER: The latest transaction information</p>
 
 <p>Request: Cancel the subscription data stream</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">UNSUBSCRIBE</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
-  <span class="dl">"</span><span class="s2">data stream name</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">data stream name</span><span class="dl">"</span><span class="p">,</span> 
-    <span class="p">...</span> 
-  <span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"UNSUBSCRIBE"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"data stream name"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"data stream name"</span><span class="p">,</span><span class="w"> 
+    </span><span class="err">...</span><span class="w"> 
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <blockquote>
 <p>If the request is properly handled by the server, the client will receive the following response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">result</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">success</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Back results</span>
-  <span class="dl">"</span><span class="s2">op</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">SUBSCRIBE</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Back</span><span class="w"> </span><span class="err">results</span><span class="w">
+  </span><span class="nl">"op"</span><span class="p">:</span><span class="s2">"SUBSCRIBE"</span><span class="p">,</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <blockquote>
 <p>If the request is wrong, the client will receive the following error response:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-<span class="dl">"</span><span class="s2">error</span><span class="dl">"</span><span class="p">:</span> <span class="o">-</span><span class="mi">1003</span><span class="p">,</span> <span class="c1">// Error code</span>
-<span class="dl">"</span><span class="s2">message</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">...</span><span class="dl">"</span> <span class="c1">// Error description</span>
-<span class="p">}</span>
-</code></pre></div><h2 id='request-methods'>Request Methods</h2>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="nl">"error"</span><span class="p">:</span><span class="w"> </span><span class="mi">-1003</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Error</span><span class="w"> </span><span class="err">code</span><span class="w">
+</span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Error</span><span class="w"> </span><span class="err">description</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='request-methods'>Request Methods</h2>
 <blockquote>
 <p>Request type and parameter</p>
 
 <p>The client can send the following requests to the server</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span> <span class="c1">// Request ID given by the client</span>
-  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">...</span><span class="dl">"</span> <span class="c1">// Request type</span>
-  <span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="c1">// Request parameter list</span>
-    <span class="dl">"</span><span class="s2">...</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">...</span><span class="dl">"</span><span class="p">,</span>
-<span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Request</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">given</span><span class="w"> </span><span class="err">by</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">client</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Request</span><span class="w"> </span><span class="err">type</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">//</span><span class="w"> </span><span class="err">Request</span><span class="w"> </span><span class="err">parameter</span><span class="w"> </span><span class="err">list</span><span class="w">
+    </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"..."</span><span class="p">,</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <ul>
 <li>Where the value of the method field is one of the following request types:</li>
 </ul>
@@ -1447,16 +1447,16 @@ TICKER: The latest transaction information</p>
 <blockquote>
 <p>Send the following request to subscribe to the in-depth information</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SUBSCRIBE</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
-  <span class="dl">"</span><span class="s2">spot.BTC_USDT.order_book.20</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">spot.ETH_USDT.order_book.20</span><span class="dl">"</span><span class="p">,</span>
-    <span class="p">...</span>
-<span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUBSCRIBE"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"spot.BTC_USDT.order_book.20"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"spot.ETH_USDT.order_book.20"</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <ul>
 <li>Parameters</li>
 </ul>
@@ -1475,66 +1475,66 @@ TICKER: The latest transaction information</p>
 <blockquote>
 <p>Data flow</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-<span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">spot.BTC_USDT.order_book.20</span><span class="dl">"</span><span class="p">,</span>
-<span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">i</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1027024</span><span class="p">,</span> <span class="c1">// update id</span>
-      <span class="dl">"</span><span class="s2">t</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1644558642100</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// update time</span>
-      <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="c1">// Buy the market</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">46125.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The commission price</span>
-        <span class="dl">"</span><span class="s2">0.079045</span><span class="dl">"</span> <span class="c1">// quantity</span>
-      <span class="p">],,,</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">46125.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The commission price</span>
-        <span class="dl">"</span><span class="s2">0.079045</span><span class="dl">"</span> <span class="c1">// quantity</span>
-      <span class="p">],,,</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">46125.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The commission price</span>
-        <span class="dl">"</span><span class="s2">0.079045</span><span class="dl">"</span> <span class="c1">// quantity</span>
-      <span class="p">]</span>
-      <span class="p">...</span>
-    <span class="p">],</span>
-      <span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="c1">// Selling the disk</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">46125.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The commission price</span>
-        <span class="dl">"</span><span class="s2">0.079045</span><span class="dl">"</span> <span class="c1">// quantity</span>
-      <span class="p">],,,</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">46125.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The commission price</span>
-        <span class="dl">"</span><span class="s2">0.079045</span><span class="dl">"</span> <span class="c1">// quantity</span>
-      <span class="p">],,,</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">46125.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The commission price</span>
-        <span class="dl">"</span><span class="s2">0.079045</span><span class="dl">"</span> <span class="c1">// quantity</span>
-      <span class="p">]</span>
-      <span class="p">...</span>
-    <span class="p">]</span>
-  <span class="p">}</span>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot.BTC_USDT.order_book.20"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"i"</span><span class="p">:</span><span class="w"> </span><span class="mi">1027024</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">id</span><span class="w">
+      </span><span class="nl">"t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1644558642100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">update</span><span class="w"> </span><span class="err">time</span><span class="w">
+      </span><span class="nl">"b"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">//</span><span class="w"> </span><span class="err">Buy</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">market</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"0.079045"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+      </span><span class="p">],,,</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"0.079045"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+      </span><span class="p">],,,</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"0.079045"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"a"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">//</span><span class="w"> </span><span class="err">Selling</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">disk</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"0.079045"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+      </span><span class="p">],,,</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"0.079045"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+      </span><span class="p">],,,</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"0.079045"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 
-<span class="p">}</span>
-</code></pre></div>
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <blockquote>
 <p>After successful subscriptions, the client will first receive a complete depth of data flow, and then receive an incremental change data flow. Please follow the following methods to synthesize the complete depth, or use SDK.
 &quot;</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code>  <span class="p">...</span>
-</code></pre></div><h2 id='subscribe-trades'>Subscribe Trades</h2>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="w">  </span><span class="err">...</span><span class="w">
+</span></code></pre></div><h2 id='subscribe-trades'>Subscribe Trades</h2>
 <p><strong>Subscribe to transaction list</strong></p>
 
 <blockquote>
 <p>Send the following request to subscribe to the transaction list</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SUBSCRIBE</span><span class="dl">"</span>
-  <span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
-  <span class="dl">"</span><span class="s2">Spot.Btc_usdt.trades</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">spot.ETH_USDT.trades</span><span class="dl">"</span><span class="p">,</span>
-      <span class="p">...</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUBSCRIBE"</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"Spot.Btc_usdt.trades"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"spot.ETH_USDT.trades"</span><span class="p">,</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <ul>
 <li>Parameter</li>
 </ul>
@@ -1552,40 +1552,40 @@ TICKER: The latest transaction information</p>
 <blockquote>
 <p>Data flow</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-<span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">spot.BTC_USDT.trades</span><span class="dl">"</span><span class="p">,</span>
-<span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span>  <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">i</span><span class="dl">"</span><span class="p">:</span> <span class="mi">17122255</span><span class="p">,</span> <span class="c1">// Transaction ID</span>
-      <span class="dl">"</span><span class="s2">p</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">46125.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The transaction price</span>
-      <span class="dl">"</span><span class="s2">q</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.079045</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Transaction volume</span>
-      <span class="dl">"</span><span class="s2">s</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Taker's transaction direction 1 represents buy -1 representative sells</span>
-      <span class="dl">"</span><span class="s2">t</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1628738748319</span><span class="dl">"</span> <span class="c1">// Transaction time</span>
-  <span class="p">},</span>
-  <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">i</span><span class="dl">"</span><span class="p">:</span> <span class="mi">17122254</span><span class="p">,</span> <span class="c1">// Transaction ID</span>
-    <span class="dl">"</span><span class="s2">p</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">46125</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The transaction price</span>
-    <span class="dl">"</span><span class="s2">q</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.079047</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Transaction volume</span>
-    <span class="dl">"</span><span class="s2">s</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Taker's transaction direction 1 represents buy -1 representative sells</span>
-    <span class="dl">"</span><span class="s2">t</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1628738748318</span><span class="dl">"</span> <span class="c1">// Transaction time</span>
-  <span class="p">}</span>
-<span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div><h2 id='subscribe-k-line'>Subscribe K-line</h2>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot.BTC_USDT.trades"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"data"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"i"</span><span class="p">:</span><span class="w"> </span><span class="mi">17122255</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">ID</span><span class="w">
+      </span><span class="nl">"p"</span><span class="p">:</span><span class="w"> </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">price</span><span class="w">
+      </span><span class="nl">"q"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.079045"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">volume</span><span class="w">
+      </span><span class="nl">"s"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Taker's</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">direction</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">represents</span><span class="w"> </span><span class="err">buy</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="err">representative</span><span class="w"> </span><span class="err">sells</span><span class="w">
+      </span><span class="nl">"t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1628738748319"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">time</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"i"</span><span class="p">:</span><span class="w"> </span><span class="mi">17122254</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">ID</span><span class="w">
+    </span><span class="nl">"p"</span><span class="p">:</span><span class="w"> </span><span class="s2">"46125"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"q"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.079047"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">volume</span><span class="w">
+    </span><span class="nl">"s"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Taker's</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">direction</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="err">represents</span><span class="w"> </span><span class="err">buy</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="err">representative</span><span class="w"> </span><span class="err">sells</span><span class="w">
+    </span><span class="nl">"t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1628738748318"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">time</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='subscribe-k-line'>Subscribe K-line</h2>
 <p><strong>Subscribe to K-line</strong></p>
 
 <blockquote>
 <p>Send the following request to subscribe to the K-line</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SUBSCRIBE</span><span class="dl">"</span>
-  <span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
-  <span class="dl">"</span><span class="s2">spot.BTC_USDT.candles.1m</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">spot.ETH_USDT.candles.1h</span><span class="dl">"</span><span class="p">,</span>
-      <span class="p">...</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUBSCRIBE"</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"spot.BTC_USDT.candles.1m"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"spot.ETH_USDT.candles.1h"</span><span class="p">,</span><span class="w">
+      </span><span class="err">...</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <ul>
 <li>Parameter</li>
 </ul>
@@ -1601,52 +1601,52 @@ TICKER: The latest transaction information</p>
 <li>&lt;time_frame&gt; is the K-line period, the effective value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
 &gt; Data flow</li>
 </ul>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-<span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">spot.BTC_USDT.candles.1m</span><span class="dl">"</span><span class="p">,</span>
-<span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-<span class="dl">"</span><span class="s2">t</span><span class="dl">"</span><span class="p">:</span><span class="mi">60000</span><span class="p">,</span> <span class="c1">// Time period</span>
-<span class="dl">"</span><span class="s2">e</span><span class="dl">"</span><span class="p">:[</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">1644224940000</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// start time</span>
-        <span class="dl">"</span><span class="s2">10190.53</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Opening price</span>
-        <span class="dl">"</span><span class="s2">10192.5</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The highest price</span>
-        <span class="dl">"</span><span class="s2">9806.82</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Minimum price</span>
-        <span class="dl">"</span><span class="s2">10127.37</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Close price</span>
-        <span class="dl">"</span><span class="s2">0.834</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Trading volume</span>
-        <span class="dl">"</span><span class="s2">8370.40506</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// transaction value</span>
-        <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The ID of the first transaction</span>
-        <span class="mi">278</span> <span class="c1">// Total transactions in the interval</span>
-      <span class="p">],</span>
-      <span class="p">[</span>
-        <span class="dl">"</span><span class="s2">1644224940000</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">10190.53</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">10192.5</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">9806.82</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">10127.37</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">0.834</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">8370.40506</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">1</span><span class="dl">"</span><span class="p">,</span>
-        <span class="mi">278</span>
-      <span class="p">]</span>
-    <span class="p">]</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h2 id='subscribe-tickers'>Subscribe Tickers</h2>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot.BTC_USDT.candles.1m"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span><span class="nl">"t"</span><span class="p">:</span><span class="mi">60000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Time</span><span class="w"> </span><span class="err">period</span><span class="w">
+</span><span class="nl">"e"</span><span class="p">:[</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"1644224940000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">start</span><span class="w"> </span><span class="err">time</span><span class="w">
+        </span><span class="s2">"10190.53"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Opening</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"10192.5"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">highest</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"9806.82"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Minimum</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"10127.37"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Close</span><span class="w"> </span><span class="err">price</span><span class="w">
+        </span><span class="s2">"0.834"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Trading</span><span class="w"> </span><span class="err">volume</span><span class="w">
+        </span><span class="s2">"8370.40506"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">value</span><span class="w">
+        </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">ID</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">first</span><span class="w"> </span><span class="err">transaction</span><span class="w">
+        </span><span class="mi">278</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">transactions</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">interval</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="p">[</span><span class="w">
+        </span><span class="s2">"1644224940000"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"10190.53"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"10192.5"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"9806.82"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"10127.37"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"0.834"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"8370.40506"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+        </span><span class="mi">278</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='subscribe-tickers'>Subscribe Tickers</h2>
 <p><strong>Subscribe Tickers</strong></p>
 
 <blockquote>
 <p>Send the following request to subscribe to Ticker</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">123</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">SUBSCRIBE</span><span class="dl">"</span>
-  <span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
-  <span class="dl">"</span><span class="s2">spot.BTC_USDT.ticker</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">spot.ETH_USDT.ticker</span><span class="dl">"</span><span class="p">,</span>
-    <span class="p">...</span>
-  <span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">123</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"method"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SUBSCRIBE"</span><span class="w">
+  </span><span class="nl">"params"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+  </span><span class="s2">"spot.BTC_USDT.ticker"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"spot.ETH_USDT.ticker"</span><span class="p">,</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <ul>
 <li>Parameters</li>
 </ul>
@@ -1661,28 +1661,28 @@ TICKER: The latest transaction information</p>
 <li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 &gt; Data flow</li>
 </ul>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-<span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">spot.BTC_USDT.ticker</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">askPrice</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">98100</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Sell for one price</span>
-    <span class="dl">"</span><span class="s2">product</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">BTC_USDT</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Transaction pair</span>
-    <span class="dl">"</span><span class="s2">amount</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">922635</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// 24 transaction value</span>
-    <span class="dl">"</span><span class="s2">last</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">98000</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Latest transaction price</span>
-    <span class="dl">"</span><span class="s2">firstTradeId</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// The first transaction id</span>
-    <span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Price changes</span>
-    <span class="dl">"</span><span class="s2">bidQty</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1.7</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Sell a quantity</span>
-    <span class="dl">"</span><span class="s2">bidPrice</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">98000</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Buy one price</span>
-    <span class="dl">"</span><span class="s2">volume</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">9.41</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// 24h transaction quantity</span>
-    <span class="dl">"</span><span class="s2">lastQty</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.3</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// 24h latest deal</span>
-    <span class="dl">"</span><span class="s2">askQty</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.5</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Sell a quantity</span>
-    <span class="dl">"</span><span class="s2">high</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">98100</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The highest price of 24</span>
-    <span class="dl">"</span><span class="s2">tradeCount</span><span class="dl">"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="c1">// Number of transactions</span>
-    <span class="dl">"</span><span class="s2">low</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">98000</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// 24h lowest price</span>
-    <span class="dl">"</span><span class="s2">time</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1733474204000</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Time</span>
-    <span class="dl">"</span><span class="s2">Open</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">98000</span><span class="dl">"</span> <span class="c1">// Opening price</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"spot.BTC_USDT.ticker"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"askPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Sell</span><span class="w"> </span><span class="err">for</span><span class="w"> </span><span class="err">one</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">pair</span><span class="w">
+    </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"922635"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">24</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">value</span><span class="w">
+    </span><span class="nl">"last"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Latest</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"firstTradeId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">first</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">id</span><span class="w">
+    </span><span class="nl">"change"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Price</span><span class="w"> </span><span class="err">changes</span><span class="w">
+    </span><span class="nl">"bidQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Sell</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+    </span><span class="nl">"bidPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Buy</span><span class="w"> </span><span class="err">one</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"volume"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.41"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">24</span><span class="err">h</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+    </span><span class="nl">"lastQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.3"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">24</span><span class="err">h</span><span class="w"> </span><span class="err">latest</span><span class="w"> </span><span class="err">deal</span><span class="w">
+    </span><span class="nl">"askQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.5"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Sell</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+    </span><span class="nl">"high"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">highest</span><span class="w"> </span><span class="err">price</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="mi">24</span><span class="w">
+    </span><span class="nl">"tradeCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">transactions</span><span class="w">
+    </span><span class="nl">"low"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="mi">24</span><span class="err">h</span><span class="w"> </span><span class="err">lowest</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733474204000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Time</span><span class="w">
+    </span><span class="nl">"Open"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Opening</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <hr>
 <h1 id='user-data-endpoints'>User Data Endpoints</h1><h2 id='get-trade-account-asset'>Get Trade Account Asset</h2>
 <blockquote>
