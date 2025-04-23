@@ -531,7 +531,8 @@
 
 
 <span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">asset=BTC</span><span class="dl">'</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// POST or DELETE  replace queryStr with bodyStr</span>
+<span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// POST or DELETE  replace queryStr with bodyStr</span>
 <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/accounts?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
@@ -539,7 +540,7 @@
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>
           <span class="p">},</span>
         <span class="p">},</span>
 
@@ -563,14 +564,15 @@
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/accounts'</span>
     <span class="n">query_str</span> <span class="o">=</span> <span class="s">'asset=BTC'</span>
+    <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="c1"># POST or DELETE replace query_str with body_str
-</span>    <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">query_str</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
+</span>    <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">query_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
 
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="n">expire_time</span>
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
@@ -610,12 +612,17 @@
 
 <p><strong>Create a signature</strong></p>
 
-<p>Before sending the request, first determine the message used for the signature. For GET type requests, Query String is the message body that needs to be signed, and for POST requests, Body String is the message body that needs to be signed. The specific method of signing is as follows:</p>
+<p>Before sending the request, first determine the message used for the signature. For GET type requests, Query String is the message body that needs to be signed, and for POST requests, Body String is the message body that needs to be signed. Expire_time represents the expiration time. The specific method of signing is as follows:</p>
 
 <ul>
-<li>The first step: use Secret Key as a key to perform a message to the signature of the HMACSHA256 algorithm</li>
-<li>Step 2: Convert the above results to hex string</li>
-<li>Step 3: Use Hex String as the value of the request header api-sign</li>
+<li>Step 1: Get the current timestamp and set expiration time
+Use Date.now() to obtain the current timestamp in milliseconds, and add a short validity period (e.g., 5000 milliseconds) to indicate that the request will expire in 5 seconds.</li>
+<li>Step 2: Generate the signature
+Concatenate [timestamp + request body string] as the original data, and use the HMAC-SHA256 algorithm to encrypt it with the user&#39;s secret as the key.</li>
+<li>Step 3: Convert the result to a hex string
+Convert the HMAC result into a hexadecimal string format.</li>
+<li>Step 4: Add headers
+Use the hex string as the value for the api-sign header, and set the expiration timestamp as the value for the api-expire-time header.</li>
 </ul>
 <h2 id='api-key-permissions'>Api Key Permissions</h2>
 <p><strong>Private interface requires specific permissions to execute. Appropriate authority can be granted for API Key. If the API Key is not awarded the permissions required by an interface, the request submitted to the API Key will be rejected.</strong></p>
@@ -1699,7 +1706,7 @@ TICKER: The latest transaction information</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
           <span class="p">},</span>
         <span class="p">},</span>
 
@@ -1818,7 +1825,7 @@ TICKER: The latest transaction information</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -1852,8 +1859,8 @@ TICKER: The latest transaction information</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1">#optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -1929,7 +1936,7 @@ TICKER: The latest transaction information</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -1964,8 +1971,8 @@ TICKER: The latest transaction information</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1">#optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2034,7 +2041,7 @@ TICKER: The latest transaction information</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2188,7 +2195,7 @@ TICKER: The latest transaction information</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2228,8 +2235,8 @@ TICKER: The latest transaction information</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2322,28 +2329,28 @@ TICKER: The latest transaction information</p>
 <td>Delegate type, valid value limit market</td>
 </tr>
 <tr>
-<td>client_order_id</td>
-<td>string</td>
-<td>No</td>
-<td>Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate</td>
-</tr>
-<tr>
 <td>Quantity</td>
 <td>DECIMAL</td>
 <td>Yes</td>
 <td>The commission is positive and negative</td>
 </tr>
 <tr>
-<td>Price</td>
-<td>DECIMAL</td>
-<td>No</td>
-<td>Entrusted price limit</td>
-</tr>
-<tr>
 <td>market</td>
 <td>string</td>
 <td>Yes</td>
 <td>Must spot spot, lpc U-standard perpetual</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>No</td>
+<td>Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate</td>
+</tr>
+<tr>
+<td>Price</td>
+<td>DECIMAL</td>
+<td>No</td>
+<td>Entrusted price limit</td>
 </tr>
 <tr>
 <td>POSITIONMERGE</td>
@@ -2416,7 +2423,7 @@ If there are more than 20 transactions in the delegation, then the object only c
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2446,8 +2453,8 @@ If there are more than 20 transactions in the delegation, then the object only c
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2555,7 +2562,7 @@ If there are more than 20 transactions in the delegation, then the object only c
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2585,8 +2592,8 @@ If there are more than 20 transactions in the delegation, then the object only c
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2685,7 +2692,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>market</td>
 <td>String</td>
 <td>No</td>
-<td>No</td>
+<td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/> default value spot</td>
 </tr>
 <tr>
 <td>Symbol</td>
@@ -2772,7 +2779,7 @@ The returned setled delegation is sorted from early to near according to settlem
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2806,8 +2813,8 @@ The returned setled delegation is sorted from early to near according to settlem
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1">#optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2882,7 +2889,7 @@ The returned setled delegation is sorted from early to near according to settlem
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2916,8 +2923,8 @@ The returned setled delegation is sorted from early to near according to settlem
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
@@ -2993,7 +3000,7 @@ The returned setled delegation is sorted from early to near according to settlem
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
 
         <span class="p">},</span>
     <span class="p">},</span>
@@ -3026,8 +3033,8 @@ The returned setled delegation is sorted from early to near according to settlem
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
