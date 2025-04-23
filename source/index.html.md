@@ -2519,6 +2519,7 @@ wss://u-stream.ktx.com
   "balance":"100000", // Balance
   "Holds": "20016.9970000" // Frozen
 }
+}
 ```
 
 ## Position
@@ -2539,6 +2540,7 @@ wss://u-stream.ktx.com
   "maintMargin": "0.005", // Maintain the margin rate
   "posMargin": "0", // Press margin
   "orderMargin":"1009.8990000" // Entrustment deposit
+}
 }
 ```
 ## Order
