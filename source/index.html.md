@@ -1912,7 +1912,7 @@ if __name__ == '__main__':
 
 > Response
 
-```javascript
+```json
 [
   {
     "orderId": "4611767382287843330", // Order id
