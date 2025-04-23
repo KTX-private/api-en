@@ -2524,6 +2524,7 @@ wss://u-stream.ktx.com
 ## Position
 
 **When the position information is sent to change, you will receive the Position event**
+
 ```json
 {
   "stream": "position",
