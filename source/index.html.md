@@ -103,7 +103,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
 const queryStr = 'asset=BTC';
-const sign = CryptoJS.HmacSHA256(queryStr, secret).toString(); // POST or DELETE  replace queryStr with bodyStr
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString(); // POST or DELETE  replace queryStr with bodyStr
 const url = `${endpoints}/v1/accounts?${queryStr}`;
 
 request.get(url,{
@@ -111,7 +112,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000 // optional
+            'api-expire-time':exprieTime
           },
         },
 
@@ -138,14 +139,15 @@ SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 def do_request():
     path = '/v1/accounts'
     query_str = 'asset=BTC'
+    expire_time = str(int(time.time() * 1000) + 5000)
     # POST or DELETE replace query_str with body_str
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), query_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time': str(int(time.time() * 1000) + 5000)
+        'api-expire-time': expire_time
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -178,11 +180,16 @@ if __name__ == '__main__':
 
 **Create a signature**
 
-Before sending the request, first determine the message used for the signature. For GET type requests, Query String is the message body that needs to be signed, and for POST requests, Body String is the message body that needs to be signed. The specific method of signing is as follows:
+Before sending the request, first determine the message used for the signature. For GET type requests, Query String is the message body that needs to be signed, and for POST requests, Body String is the message body that needs to be signed. Expire_time represents the expiration time. The specific method of signing is as follows:
 
-* The first step: use Secret Key as a key to perform a message to the signature of the HMACSHA256 algorithm
-* Step 2: Convert the above results to hex string
-* Step 3: Use Hex String as the value of the request header api-sign
+* Step 1: Get the current timestamp and set expiration time
+  Use Date.now() to obtain the current timestamp in milliseconds, and add a short validity period (e.g., 5000 milliseconds) to indicate that the request will expire in 5 seconds.
+* Step 2: Generate the signature
+  Concatenate [timestamp + request body string] as the original data, and use the HMAC-SHA256 algorithm to encrypt it with the user's secret as the key.
+* Step 3: Convert the result to a hex string
+  Convert the HMAC result into a hexadecimal string format.
+* Step 4: Add headers
+ Use the hex string as the value for the api-sign header, and set the expiration timestamp as the value for the api-expire-time header.
 
 ## Api Key Permissions
 
@@ -1145,7 +1152,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
           },
         },
 
@@ -1257,7 +1264,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -1294,7 +1301,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time #optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1363,7 +1370,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -1401,7 +1408,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time #optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1458,7 +1465,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -1574,7 +1581,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  // optional
+            'api-expire-time':exprieTime  
         },
     },
 
@@ -1617,7 +1624,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1695,10 +1702,10 @@ if __name__ == '__main__':
 |-----------------|---------|------|-----------------------------------------------------------------------------------------------------------------------|
 | symbol | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, etc. |
 | type | string | Yes | Delegate type, valid value limit market |
-| client_order_id | string | No | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate |
 | Quantity | DECIMAL | Yes | The commission is positive and negative |
-| Price | DECIMAL | No | Entrusted price limit |
 | market | string | Yes | Must spot spot, lpc U-standard perpetual |
+| client_order_id | string | No | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate |
+| Price | DECIMAL | No | Entrusted price limit |
 | POSITIONMERGE | String | No | Contract must be to merge multi -short merged empty |
 | marginMethod | string | No | Contract must be isolate position by position, cross full position |
 | leverage | int | No | Contract must be leverage multiple
@@ -1734,7 +1741,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  // optional
+            'api-expire-time':exprieTime  
         },
     },
 
@@ -1767,7 +1774,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1867,7 +1874,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -1900,7 +1907,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1981,16 +1988,16 @@ if __name__ == '__main__':
 * Request parameters (need sorting)
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description |
-|----------------| ---------- |-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                             |
+|----------------| ---------- |----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | status         | String | No | Valid value unsettedled, settled <br/> Unsettedled indicates that the uncomfortable commission is obtained, the return result is sorted by the entrusted creation time. <br/> default value unsettedled |
-| market         | String | No | No | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| Symbol         | String | No | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
-| start_time     | long | No | Limited return to the last creation time of the delegation |
-| end_time       | long | No | Limited return to the last creation time of the delegation |
-| beFore         | int64 | No | Entrust update ID <br/> Limited to return to the maximum update ID |
-| after          | int64 | No | Entrust update ID <br/> Limited to the minimum update ID of the entrustment |
-| limit          | Long | No | How many commissioneds are the specified?
+| market         | String | No | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/> default value spot                                                                                        |
+| Symbol         | String | No | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter      |
+| start_time     | long | No | Limited return to the last creation time of the delegation                                                                                                                                              |
+| end_time       | long | No | Limited return to the last creation time of the delegation                                                                                                                                              |
+| beFore         | int64 | No | Entrust update ID <br/> Limited to return to the maximum update ID                                                                                                                                      |
+| after          | int64 | No | Entrust update ID <br/> Limited to the minimum update ID of the entrustment                                                                                                                             |
+| limit          | Long | No | How many commissioneds are the specified?                                                                                                                                                               
 
 * Parameter combinations and data sources supported by this interface
 
@@ -2038,7 +2045,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -2075,7 +2082,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time #optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -2135,7 +2142,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -2172,7 +2179,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
@@ -2228,7 +2235,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
 
         },
     },
@@ -2264,7 +2271,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
