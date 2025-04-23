@@ -3296,32 +3296,32 @@ The returned setled delegation is sorted from early to near according to settlem
 <p>Data flow
 After successfully establishing a connection, the client will receive information and commission change information of the balance of the account of the APIKEY account. The format is as follows:</p>
 </blockquote>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">account</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span> <span class="nx">Account</span> <span class="p">}</span>
-<span class="p">}</span>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">Account</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
-<span class="p">{</span>
-  <span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">order</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span> <span class="nx">Order</span> <span class="p">}</span>
-<span class="p">}</span>
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
-<span class="p">{</span>
-  <span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">order</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span> <span class="nx">Position</span> <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h2 id='account'>Account</h2>
+</span><span class="p">{</span><span class="w">
+  </span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">Position</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='account'>Account</h2>
 <p><strong>When the account balance changes, you will receive an account event</strong></p>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-  <span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">account</span><span class="dl">"</span><span class="p">,</span>
-  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-  <span class="dl">"</span><span class="s2">asset</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">USDT</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Asset code</span>
-  <span class="dl">"</span><span class="s2">balance</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">100000</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Balance</span>
-  <span class="dl">"</span><span class="s2">Holds</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">20016.9970000</span><span class="dl">"</span> <span class="c1">// Frozen</span>
-<span class="p">}</span>
-</code></pre></div><h2 id='position'>Position</h2>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
+  </span><span class="nl">"balance"</span><span class="p">:</span><span class="s2">"100000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Balance</span><span class="w">
+  </span><span class="nl">"Holds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20016.9970000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Frozen</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='position'>Position</h2>
 <p><strong>When the position information is sent to change, you will receive the Position event</strong>
-<code>javascript
+<code>json
 {
   &quot;stream&quot;: &quot;position&quot;,
   &quot;data&quot;: {
@@ -3340,59 +3340,59 @@ After successfully establishing a connection, the client will receive informatio
 </code></p>
 <h2 id='order'>Order</h2>
 <p><strong>When the delegation changes, the order event will be received</strong></p>
-<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
-<span class="dl">"</span><span class="s2">stream</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">order</span><span class="dl">"</span><span class="p">,</span>
-<span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:{</span>
-    <span class="dl">"</span><span class="s2">orderId</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">4611767382287843330</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Order id</span>
-      <span class="dl">"</span><span class="s2">clientOrderId</span><span class="dl">"</span><span class="p">:</span> <span class="dl">""</span><span class="p">,</span> <span class="c1">// Custom ID</span>
-      <span class="dl">"</span><span class="s2">createTime</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1733390630904</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Creation time</span>
-      <span class="dl">"</span><span class="s2">Product</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">BTC_USDT</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Transaction to the code to the code</span>
-      <span class="dl">"</span><span class="s2">type</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Limit</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Order type</span>
-      <span class="dl">"</span><span class="s2">side</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Buy</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Trading direction</span>
-      <span class="dl">"</span><span class="s2">quantity</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.01</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// quantity</span>
-      <span class="dl">"</span><span class="s2">stf</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">disabled</span><span class="dl">"</span><span class="p">,</span>
-      <span class="dl">"</span><span class="s2">price</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10300</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The commission price</span>
-      <span class="dl">"</span><span class="s2">visibleQty</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.01</span><span class="dl">"</span><span class="p">,</span>
-      <span class="dl">"</span><span class="s2">timeInforce</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GTC</span><span class="dl">"</span><span class="p">,</span>
-      <span class="dl">"</span><span class="s2">cancelAfter</span><span class="dl">"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-      <span class="dl">"</span><span class="s2">postOnly</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-      <span class="dl">"</span><span class="s2">positionMerge</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">None</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// position mode None divide the position Long merged multi</span>
-      <span class="dl">"</span><span class="s2">positionId</span><span class="dl">"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// Submitted position id</span>
-      <span class="dl">"</span><span class="s2">close</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// Is it a flat order</span>
-      <span class="dl">"</span><span class="s2">leverage</span><span class="dl">"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="c1">// Leverage multiple</span>
-      <span class="dl">"</span><span class="s2">action</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">unknown</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// position behavior</span>
-      <span class="dl">"</span><span class="s2">status</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Filled</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Order status</span>
-      <span class="dl">"</span><span class="s2">executedQty</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.01</span><span class="dl">"</span><span class="p">,</span> <span class="c1">//</span>
-      <span class="dl">"</span><span class="s2">Profit</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// return</span>
-      <span class="dl">"</span><span class="s2">executedCost</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">103</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// The transaction value has</span>
-      <span class="dl">"</span><span class="s2">fillCount</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="c1">// Number of transactions</span>
-      <span class="dl">"</span><span class="s2">fills</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="c1">// transaction details</span>
-      <span class="p">{</span>
-        <span class="dl">"</span><span class="s2">tradeId</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">time</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1733390650379</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">price</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">10300</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">quantity</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.01</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">profit</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0</span><span class="dl">"</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">taker</span><span class="dl">"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
-        <span class="dl">"</span><span class="s2">fees</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
-          <span class="p">{</span>
-            <span class="dl">"</span><span class="s2">amount</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.103</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Number of assets</span>
-            <span class="dl">"</span><span class="s2">asset</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">USDT</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Asset code</span>
-            <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.103</span><span class="dl">"</span> <span class="c1">// Valuation</span>
-          <span class="p">}</span>
-        <span class="p">]</span>
-      <span class="p">}</span>
-    <span class="p">],</span>
-      <span class="dl">"</span><span class="s2">fees</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="c1">// handle fee</span>
-      <span class="p">{</span>
-        <span class="dl">"</span><span class="s2">amount</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.103</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Number of assets</span>
-        <span class="dl">"</span><span class="s2">asset</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">USDT</span><span class="dl">"</span><span class="p">,</span> <span class="c1">// Asset code</span>
-        <span class="dl">"</span><span class="s2">value</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">0.103</span><span class="dl">"</span> <span class="c1">// Valuation</span>
-      <span class="p">}</span>
-    <span class="p">],</span>
-      <span class="dl">"</span><span class="s2">updateTime</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1733390650379</span><span class="dl">"</span> <span class="c1">// Update time</span>
-  <span class="p">}</span>
-</code></pre></div><h1 id='errors'>Errors</h1><h2 id='e08c1d4f9a'>错误码</h2>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+</span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"order"</span><span class="p">,</span><span class="w">
+</span><span class="nl">"data"</span><span class="p">:{</span><span class="w">
+    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">id</span><span class="w">
+      </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Custom</span><span class="w"> </span><span class="err">ID</span><span class="w">
+      </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Creation</span><span class="w"> </span><span class="err">time</span><span class="w">
+      </span><span class="nl">"Product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">code</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">code</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">type</span><span class="w">
+      </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Trading</span><span class="w"> </span><span class="err">direction</span><span class="w">
+      </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+      </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+      </span><span class="nl">"visibleQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GTC"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"None"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w"> </span><span class="err">None</span><span class="w"> </span><span class="err">divide</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">Long</span><span class="w"> </span><span class="err">merged</span><span class="w"> </span><span class="err">multi</span><span class="w">
+      </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Submitted</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">id</span><span class="w">
+      </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Is</span><span class="w"> </span><span class="err">it</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">flat</span><span class="w"> </span><span class="err">order</span><span class="w">
+      </span><span class="nl">"leverage"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Leverage</span><span class="w"> </span><span class="err">multiple</span><span class="w">
+      </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">behavior</span><span class="w">
+      </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Filled"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">status</span><span class="w">
+      </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w">
+      </span><span class="nl">"Profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">return</span><span class="w">
+      </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">has</span><span class="w">
+      </span><span class="nl">"fillCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">transactions</span><span class="w">
+      </span><span class="nl">"fills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">//</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">details</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"taker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">assets</span><span class="w">
+            </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
+            </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Valuation</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">//</span><span class="w"> </span><span class="err">handle</span><span class="w"> </span><span class="err">fee</span><span class="w">
+      </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">assets</span><span class="w">
+        </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
+        </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Valuation</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"updateTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Update</span><span class="w"> </span><span class="err">time</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h1 id='errors'>Errors</h1><h2 id='e08c1d4f9a'>错误码</h2>
 <table><thead>
 <tr>
 <th style="text-align: center">Code</th>
