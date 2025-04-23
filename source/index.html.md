@@ -830,7 +830,7 @@ if __name__ == "__main__":
 
 > Request: Cancel the subscription data stream
 
-```javascript
+```json
 {
   "id": 1,
   "method": "UNSUBSCRIBE",
@@ -844,7 +844,7 @@ if __name__ == "__main__":
 
 > If the request is properly handled by the server, the client will receive the following response:
 
-```javascript
+```json
 {
   "result": "success", // Back results
   "op":"SUBSCRIBE",
@@ -853,7 +853,7 @@ if __name__ == "__main__":
 
 > If the request is wrong, the client will receive the following error response:
 
-```javascript
+```json
 {
 "error": -1003, // Error code
 "message": "..." // Error description
@@ -866,7 +866,7 @@ if __name__ == "__main__":
 
 > The client can send the following requests to the server
 
-```javascript
+```json
 {
   "id": 123, // Request ID given by the client
   "method": "..." // Request type
@@ -891,7 +891,7 @@ if __name__ == "__main__":
 
 > Send the following request to subscribe to the in-depth information
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE",
@@ -914,7 +914,7 @@ if __name__ == "__main__":
 
 > Data flow
 
-```javascript
+```json
 {
 "stream": "spot.BTC_USDT.order_book.20",
 "data": {
@@ -958,7 +958,7 @@ if __name__ == "__main__":
 > After successful subscriptions, the client will first receive a complete depth of data flow, and then receive an incremental change data flow. Please follow the following methods to synthesize the complete depth, or use SDK.
 "
 
-```javascript
+```json
   ...
 ```
 
@@ -968,7 +968,7 @@ if __name__ == "__main__":
 
 > Send the following request to subscribe to the transaction list
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE"
@@ -990,7 +990,7 @@ if __name__ == "__main__":
 
 > Data flow
 
-```javascript
+```json
 {
 "stream": "spot.BTC_USDT.trades",
 "data":  {
@@ -1017,7 +1017,7 @@ if __name__ == "__main__":
 
 > Send the following request to subscribe to the K-line
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE"
@@ -1039,7 +1039,7 @@ if __name__ == "__main__":
 3. \<time_frame> is the K-line period, the effective value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
 > Data flow
 
-```javascript
+```json
 {
 "stream": "spot.BTC_USDT.candles.1m",
 "data": {
@@ -1078,7 +1078,7 @@ if __name__ == "__main__":
 
 > Send the following request to subscribe to Ticker
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE"
@@ -1099,7 +1099,7 @@ if __name__ == "__main__":
 2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
 > Data flow
 
-```javascript
+```json
 {
 "stream": "spot.BTC_USDT.ticker",
   "data": {
@@ -2490,7 +2490,7 @@ wss://u-stream.ktx.com
 > Data flow
 > After successfully establishing a connection, the client will receive information and commission change information of the balance of the account of the APIKEY account. The format is as follows:
 
-```javascript
+```json
 {
   "stream": "account",
   "data": { Account }
@@ -2511,7 +2511,7 @@ wss://u-stream.ktx.com
 
 **When the account balance changes, you will receive an account event**
 
-```javascript
+```json
 {
   "stream": "account",
   "data": {
@@ -2524,7 +2524,7 @@ wss://u-stream.ktx.com
 ## Position
 
 **When the position information is sent to change, you will receive the Position event**
-```javascript
+```json
 {
   "stream": "position",
   "data": {
@@ -2545,7 +2545,7 @@ wss://u-stream.ktx.com
 
 **When the delegation changes, the order event will be received**
 
-```javascript
+```json
 {
 "stream": "order",
 "data":{
