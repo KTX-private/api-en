@@ -30,7 +30,7 @@ code_clipboard: true
 **API uses the following Base URL:**
 
 * Market Data Endpoints: https://api.ktx.com/api
-* User Data Endpoints: https://api.ktx.com/api
+* User Data Endpoints: https://api.ktx.com/papi
 * Market Data Stream: wss://m-stream.ktx.com
 * User Data Stream: wss://u-stream.ktx.com
 
@@ -97,7 +97,7 @@ The time values involved in the API interface parameters and response data are U
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -105,7 +105,7 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 const queryStr = 'asset=BTC';
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString(); // POST or DELETE  replace queryStr with bodyStr
-const url = `${endpoints}/v1/accounts?${queryStr}`;
+const url = `${endpoints}/v1/trade/accounts?${queryStr}`;
 
 request.get(url,{
           headers: {
@@ -131,13 +131,13 @@ import hmac
 import requests
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
 
 def do_request():
-    path = '/v1/accounts'
+    path = '/v1/trade/accounts'
     query_str = 'asset=BTC'
     expire_time = str(int(time.time() * 1000) + 5000)
     # POST or DELETE replace query_str with body_str
@@ -206,6 +206,88 @@ Before sending the request, first determine the message used for the signature. 
 
 # Market Data Endpoints
 
+## Ping Test
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/ping`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/ping'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{}
+```
+
+
+
+## Get Server Time
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/time`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/time';
+
+def do_request():
+    path = '/v1/ping'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{"time":"1746777864508"}
+```
+
+
+
 
 
 ## Get Listed Pairs
@@ -271,7 +353,7 @@ if __name__ == '__main__':
 | Parameter name | Parameter type | Whether to pass it? | Description |
 |--------| ---------- |------|-----------------------------------------|
 | market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
-| Symbol | String | No | Transaction to code, such as BTC_USDT, ETH_USDT, etc.
+| Symbol | String | No | Transaction to code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 
 * Data source
 
@@ -356,11 +438,11 @@ do_request()
 * Request parameters
 
 
-| Parameter Name | Parameter Type | Whether it must be passed | Description |
-| ------------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
-| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. |
-| Level | int32 | No | How many level depth is specified? <br/> Effective value 1, 2, 5, 10, 20, 50, 100, 500, 1000 <br/> The default value 100 |
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ------------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Symbol | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Level | int32 | No | How many level depth is specified? <br/> Effective value 1, 2, 5, 10, 20, 50, 100, 500, 1000 <br/> The default value 100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | Price_scale | Integer | No | Specify the depth of the price by the price, such as the price of the specified transaction pair contains up to 4 digits <br/> Price_scale = 0 The price returned to the price up to 4 digits, <br/> price_scale = 1 to return to return. The price contains a maximum of 3 decimal numbers. The entrusted measurement is the price range of the price range 0.0010 and the price of <br/> price_scale = 2 to 2 contains up to 2 decimal numbers. br/> price_scale = 3 to 3 to include a maximum number of decimal numbers. The sum of all delegations in 1.0000<br/>Valid values ​​0, 1, 2, 3, 4, 5<br/>Default value 0 |
 
 > Note: The data are sorted by the best price, that is, the buy side depth is sorted from large to small, and the sell side depth is sorted from small to large
@@ -437,27 +519,27 @@ if __name__ == '__main__':
 **Get K-line data**
 
 * Request method get
-* Request path /v1 /candles
+* Request path /v1/candles
 * Request parameters
 
 
-| Parameter Name | Parameter Type | Whether it must be passed | Description |
-|----------------| ---------- | ---------- | ---------------------------------------------------------------------------------------- |
-| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| symbol         | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. |
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                             |
+|----------------| ---------- | ---------- |-------------------------------------------------------------------------------------------------------------------------|
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                |
+| symbol         | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                            |
 | time_frame     | String | Yes | The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1H, 2H, 4H, 6H, 12H, 1d, 3D, 1W or 1m |
-| before         | int64 | No | utc time<br/>Limit the latest time of return to the K-line record |
-| after          | int64 | No | UTC Time <br/> Limited to return the earliest time of the K -line records |
-| limit          | Integer | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000 |
+| before         | int64 | No | utc time<br/>Limit the latest time of return to the K-line record                                                       |
+| after          | int64 | No | UTC Time <br/> Limited to return the earliest time of the K -line records                                               |
+| limit          | Integer | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000                     |
 
 * The parameter combination and data source supported by the interface
 
-1. symbol + time_frame  --> cache
-2. symbol + time_frame + limit  --> cache
-3. symbol + time_frame + before  --> database
-4. symbol + time_frame + before + limit  --> database
-5. symbol + time_frame + after  --> database
-6. symbol + time_frame + after + limit  --> database
+1. market + symbol + time_frame  --> cache
+2. market + symbol + time_frame + limit  --> cache
+3. market + market + symbol + time_frame + before  --> database
+4. market + symbol + time_frame + before + limit  --> database
+5. market + symbol + time_frame + after  --> database
+6. market + symbol + time_frame + after + limit  --> database
 
 > Return results from early and nearly sorted by time
 
@@ -519,34 +601,34 @@ do_request()
 **Get the transaction record**
 
 * Request method get
-* Request path /v1 /trades
+* Request path /v1/trades
 * Request parameters
 
 
-| Parameter Name | Parameter Type | Whether it must be passed | Description |
-|----------------| ---------- | ---------- | ---------------------------------------------- |
-| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| symbol         | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, etc. |
-| start_time     | int64 | No | The earliest time of limited returning transaction records |
-| end_time       | int64 | No | Limited recent time of returning transaction records |
-| before         | int64 | No | Transaction record id<br/> Limited to return the maximum id of the transaction record |
-| after          | int64 | No | Trading record ID <br/> Limit the maximum ID of returning transaction records |
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                       |
+|----------------| ---------- | ---------- |---------------------------------------------------------------------------------------------------|
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract          |
+| symbol         | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                            |
+| start_time     | int64 | No | The earliest time of limited returning transaction records                                        |
+| end_time       | int64 | No | Limited recent time of returning transaction records                                              |
+| before         | int64 | No | Transaction record id<br/> Limited to return the maximum id of the transaction record             |
+| after          | int64 | No | Trading record ID <br/> Limit the maximum ID of returning transaction records                     |
 | limit          | Integer | No | The maximum number of obtaining records <br/> The default value is 100, the maximum value is 1000 |
 
 * Parameter combinations and data sources supported by this interface
 
-1. symbol  --> cache
-2. symbol + limit  --> cache
-3. symbol + start_time  --> database
-4. symbol + start_time + limit  --> database
-5. symbol + end_time  --> database
-6. symbol + end_time + limit  --> database
-7. symbol + start_time + end_time  --> database
-8. symbol + start_time + end_time + limit  --> database
-9. symbol + before  --> database
-10. symbol + before + limit  --> database
-11. symbol + after  --> database
-12. symbol + after + limit  --> database
+1. market + symbol  --> cache
+2. market + symbol + limit  --> cache
+3. market + symbol + start_time  --> database
+4. market + symbol + start_time + limit  --> database
+5. market + symbol + end_time  --> database
+6. market + symbol + end_time + limit  --> database
+7. market + symbol + start_time + end_time  --> database
+8. market + symbol + start_time + end_time + limit  --> database
+9. market + symbol + before  --> database
+10. market + symbol + before + limit  --> database
+11. market + symbol + after  --> database
+12. market + symbol + after + limit  --> database
 
 *The parameter combination of the data source is Cache to obtain the last 1,000 transaction records*
 
@@ -622,14 +704,14 @@ if __name__ == '__main__':
 **Get the quotation data**
 
 * Request method get
-* Request path /v1 /ticker
+* Request path /v1/ticker
 * Request parameters
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                              |
-|----------------| ---------- | ---------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                                                                                 |
-| symbol         | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT |
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                          |
+|----------------| ---------- | ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                                                             |
+| symbol         | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
 
@@ -819,7 +901,7 @@ if __name__ == "__main__":
 > market.symbol.data_type.param1.param2...
 
 > Where, market is a trading-to-market, such as spot and lpc
-> Symbol is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+> Symbol is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 > Data_type is a data type, and currently only supports the following data types
 > Order_Book: Deep
 > trades: trading list
@@ -909,7 +991,7 @@ if __name__ == "__main__":
 
 * \<market>.\<symbol>.order_book.\<max_depth>
 1. \<market> is a trading-to-market, such as spot, lpc
-2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 3. \<max_depth> is the maximum depth, the effective value is 5, 10, 20, 50, 100, 200, 500, 1000
 
 > Data flow
@@ -986,7 +1068,7 @@ if __name__ == "__main__":
 
 * \<market>.\<symbol>.trades
 1. \<market> is a transaction to the market, such as spot, lpc
-2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 
 > Data flow
 
@@ -1035,7 +1117,7 @@ if __name__ == "__main__":
 
 * \<market>.\<symbol>.candles.\<time_frame>
 1. \<market> is a transaction to the market, such as spot, lpc
-2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 3. \<time_frame> is the K-line period, the effective value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
 > Data flow
 
@@ -1096,7 +1178,7 @@ if __name__ == "__main__":
 
 * \<market>.\<symbol>.ticker
 1. \<market> is a trading-to-market, such as spot, lpc
-2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+2. \<symbol> is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 > Data flow
 
 ```json
@@ -1137,7 +1219,7 @@ if __name__ == "__main__":
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1145,7 +1227,7 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 const queryStr = 'asset=BTC';
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
-const url = `${endpoints}/v1/accounts?${queryStr}`;
+const url = `${endpoints}/v1/trade/accounts?${queryStr}`;
 
 request.get(url,{
           headers: {
@@ -1171,13 +1253,13 @@ import hmac
 import requests
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
 
 def do_request():
-    path = '/v1/accounts'
+    path = '/v1/trade/accounts'
     query_str = 'asset=BTC'
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
@@ -1201,18 +1283,20 @@ if __name__ == '__main__':
 ```json
 [
   {
-  "asset":"USDT", // Asset code
-  "balance":10000, // Total amount
-  "holds":0, // Freeze amount
-  "withdrawable":0,// Transferable
-  "collateral":false,// Collateral
+    "asset":"USDT",  // Asset code
+    "balance":"100",  // Total amount
+    "locked":"0",  // Freeze amount
+    "free":"100",  //  Available Amount
+    "withdrawable":"100",// Transferable
+    "collateral":false,// Collateral
   },
   {
-  "asset": "USDT", // Asset code
-  "balance":10000, // Total amount
-  "holds":0, // Freeze amount
-  "withdrawable":0,// Transferable
-  "collateral":false,// Collateral
+    "asset":"USDT",  // Asset code
+    "balance":"100",  // Total amount
+    "locked":"0",  // Freeze amount
+    "free":"100",  //  Available Amount
+    "withdrawable":"100",// Transferable
+    "collateral":false,// Collateral
   },
   ...
 ]
@@ -1221,7 +1305,7 @@ if __name__ == '__main__':
 **Get the balance, freeze and other information of various assets in the corresponding account by API Key**
 
 * Request method get
-* Request path /v1 /accounts
+* Request path /v1/trade/accounts
 * Permissions: View, Trade
 * Request parameters
 
@@ -1243,7 +1327,7 @@ Cache
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1254,7 +1338,7 @@ const param = {
 let bodyStr = JSON.stringify(param);
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
-const url = `${endpoints}/v1/tf/main/assets`;
+const url = `${endpoints}/v1/main/assets`;
 
 request.post({
         url:url,
@@ -1284,7 +1368,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1296,7 +1380,7 @@ def do_request():
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
-    path = '/v1/tf/main/assets'
+    path = '/v1/main/assets'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
@@ -1314,23 +1398,21 @@ if __name__ == '__main__':
 > Response
 
 ```json
-{
-  "state": "0",
-  "msg": null,
-  "result": [
-    {
-      "asset": "USDT",//Asset code
-      "balance": "2081.0000000000",//Total Amount
-      "holds": "498.0000000000"//Freeze Amount
-    }
-  ]
-}
+[
+  {
+    "asset": "USDT", //Asset code
+    "balance": "100", // Total Amount
+    "locked": "0"// Freeze Amount
+    "free": "100"// Available Amount
+  }
+]
+
 ```
 
 **Get Main Account Assets**
 
 * Request method POST
-* Request path /v1/tf/main/assets
+* Request path /v1/main/assets
 * Permissions: Trade
 * Request parameters
 
@@ -1348,7 +1430,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1360,7 +1442,7 @@ const param = {
 let bodyStr = JSON.stringify(param);
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
-const url = `${endpoints}/v1/tf/transfer`;
+const url = `${endpoints}/v1/transfer`;
 
 request.post({
         url:url,
@@ -1421,17 +1503,13 @@ if __name__ == '__main__':
 > Response
 
 ```json
-{
-  "state": "0",
-  "msg": null,
-  "result": {}
-}
+{}
 ```
 
 **Asset Tranfer**
 
 * Request method POST
-* Request path /v1/tf/transfer
+* Request path /v1/transfer
 * Permissions: Trade
 * Request parameters
 
@@ -1450,7 +1528,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1458,7 +1536,7 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 const queryStr = 'asset=BTC&end_time=1651895799668&limit=10';
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
-const url = `${endpoints}/v1/ledger?${queryStr}`;
+const url = `${endpoints}/v1/ledgers?${queryStr}`;
 
 request.get(url,{
         headers: {
@@ -1484,13 +1562,13 @@ import hmac
 import requests
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
 
 def do_request():
-    path = '/v1/ledger'
+    path = '/v1/ledgers'
     query_str = 'asset=BTC&end_time=1651895799668&limit=10'
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
@@ -1529,7 +1607,7 @@ if __name__ == '__main__':
 **Obtain the bill of accounts for the API Key account, including all records that change the balance of the account, such as capital transfer, transaction, handling fees, etc.**
 
 * Request method get
-* Request path /v1 /ledger
+* Request path /v1/ledgers
 * Permanent: View, Trade
 * Request parameters (need sorting)
 
@@ -1556,12 +1634,13 @@ DB
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 const param = {
     symbol:'BTC_USDT',
+    side:'buy',
     quantity:'0.0001',
     price:'90000',
     type:'limit',
@@ -1602,7 +1681,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1611,6 +1690,7 @@ def do_request():
 
     param = {
       'symbol':'BTC_USDT',
+      'side':'buy',
       'quantity':'0.0001',
       'price':'90000',
       'type':'limit',
@@ -1656,35 +1736,13 @@ if __name__ == '__main__':
   "close": false, // Is it a flat order
   "leverage": 0, // Leverage multiple
   "action": "unknown", // position behavior
-  "status": "Filled", // Order status
-  "executedQty": "0.01", //
+  "status": "accepted", // Order status
+  "executedQty": "0", // executed quantity
   "Profit": "0", // return
   "executedCost": "103", // The transaction value has
   "fillCount": 1, // Number of transactions
-  "fills": [// transaction details
-    {
-      "tradeId": 1,
-      "time": "1733390650379",
-      "price": "10300",
-      "quantity": "0.01",
-      "profit": "0",
-      "taker": false,
-      "fees": [
-        {
-        "amount": "0.103", // Number of assets
-        "asset": "USDT", // Asset code
-        "value": "0.103" // Valuation
-        }
-      ]
-    }
-    ],
-  "fees": [// handle fee
-      {
-      "amount": "0.103", // Number of assets
-      "asset": "USDT", // Asset code
-      "value": "0.103" // Valuation
-      }
-    ],
+  "fills": [],// transaction details
+  "fees": [],// handle fee
   "updateTime": "1733390650379" // Update time
 }
 
@@ -1698,21 +1756,21 @@ if __name__ == '__main__':
 * Request parameters
 
 
-| Parameter Name | Parameter Type | Whether it must be passed | Description |
-|-----------------|---------|------|-----------------------------------------------------------------------------------------------------------------------|
-| symbol | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, etc. |
-| type | string | Yes | Delegate type, valid value limit market |
-| Quantity | DECIMAL | Yes | The commission is positive and negative |
-| market | string | Yes | Must spot spot, lpc U-standard perpetual |
-| client_order_id | string | No | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate |
-| Price | DECIMAL | No | Entrusted price limit |
-| POSITIONMERGE | String | No | Contract must be to merge multi -short merged empty |
-| marginMethod | string | No | Contract must be isolate position by position, cross full position |
-| leverage | int | No | Contract must be leverage multiple
-| close | bool | No | The contract must be true to close the warehouse receipt, false to open the warehouse receipt |
-| post_only | bool | No | ... |
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                            |
+|-----------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol | string | Yes | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                 |
+| type | string | Yes | Delegate type, valid value limit market                                                                                                                                                                                                                                                                                                                                                                                |
+| Quantity | DECIMAL | Yes | The commission is positive and negative                                                                                                                                                                                                                                                                                                                                                                                |
+| market | string | Yes | Must spot spot, lpc U-standard perpetual                                                                                                                                                                                                                                                                                                                                                                               |
+| client_order_id | string | No | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate                                                                                                                                                                                                                                                                                    |
+| Price | DECIMAL | No | Entrusted price limit                                                                                                                                                                                                                                                                                                                                                                                                  |
+| POSITIONMERGE | String | No | Contract must be to merge multi -short merged empty                                                                                                                                                                                                                                                                                                                                                                    |
+| marginMethod | string | No | Contract must be isolate position by position, cross full position                                                                                                                                                                                                                                                                                                                                                     |
+| leverage | int | No | Contract must be leverage multiple                                                                                                                                                                                                                                                                                                                                                                                     
+| close | bool | No | The contract must be true to close the warehouse receipt, false to open the warehouse receipt                                                                                                                                                                                                                                                                                                                          |
+| post_only | bool | No | ...                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | Time_in_Force | String | No | Effective time performance <br/> Effective value GTC, IOC <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC |
-| POSITIONID | String | No | Warehouse ID |
+| POSITIONID | String | No | Warehouse ID                                                                                                                                                                                                                                                                                                                                                                                                           |
 
 > Delegate object
 > It contains up to 20 transactions entrusted
@@ -1726,7 +1784,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1760,7 +1818,7 @@ import hmac
 import requests
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1851,7 +1909,7 @@ if __name__ == '__main__':
 | ---------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ID | String | Yes | Entrusted ID <br/> The entrustment ID can be allocated by the exchange, <br/> can also be customized by users (using the client_order_id parameter when submitting the commission). When defining IDs, you need to add "C:" prefix before ID. <br/> For example: using a custom ID "123" when submitting commission, when obtaining the commission, you need to use "C: 123".
 
-## Get Orders
+## Get History Orders
 
 > Request
 
@@ -1859,15 +1917,15 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
-const queryStr = 'limit=2&status=settled&market=spot&symbol=BTC_USDT';
+const queryStr = 'limit=2&market=spot&symbol=BTC_USDT';
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
-const url = `${endpoints}/v1/orders?${queryStr}`;
+const url = `${endpoints}/v1/history/orders?${queryStr}`;
 
 request.get(url,{
         headers: {
@@ -1893,13 +1951,13 @@ import hmac
 import requests
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
 def do_request():
-    path = '/v1/orders'
-    query_str = 'limit=2&status=settled&market=spot&symbol=BTC_USDT'
+    path = '/v1/history/orders'
+    query_str = 'limit=2&market=spot&symbol=BTC_USDT'
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
@@ -1977,44 +2035,157 @@ if __name__ == '__main__':
 
 **Obtain the delegation in the corresponding ApiKey account that meets the following conditions**
 
-1. All unsettled commissions
 2. The settlement commission of the settlement within three months, including rejection, revoked and transaction commission
 3. All have been commissioned
 4. All trading commissions that have been revoked
 
 * Request method get
-* Request path /v1 /order
+* Request path /v1/history/order
 * Permanent: View, Trade
-* Request parameters (need sorting)
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                             |
-|----------------| ---------- |----|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| status         | String | No | Valid value unsettedled, settled <br/> Unsettedled indicates that the uncomfortable commission is obtained, the return result is sorted by the entrusted creation time. <br/> default value unsettedled |
-| market         | String | No | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/> default value spot                                                                                        |
-| Symbol         | String | No | Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter      |
-| start_time     | long | No | Limited return to the last creation time of the delegation                                                                                                                                              |
-| end_time       | long | No | Limited return to the last creation time of the delegation                                                                                                                                              |
-| beFore         | int64 | No | Entrust update ID <br/> Limited to return to the maximum update ID                                                                                                                                      |
-| after          | int64 | No | Entrust update ID <br/> Limited to the minimum update ID of the entrustment                                                                                                                             |
-| limit          | Long | No | How many commissioneds are the specified?                                                                                                                                                               
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                      |
+|----------------| ---------- |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | String | Yes                 | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/>                                                                                              |
+| Symbol         | String | No                  | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
+| start_time     | long | No                  | Limited return to the last creation time of the delegation                                                                                                                                                       |
+| end_time       | long | No                  | Limited return to the last creation time of the delegation                                                                                                                                                       |
+| beFore         | int64 | No                  | Entrust update ID <br/> Limited to return to the maximum update ID                                                                                                                                               |
+| after          | int64 | No                  | Entrust update ID <br/> Limited to the minimum update ID of the entrustment                                                                                                                                      |
+| limit          | Long | No                  | How many commissioneds are the specified?                                                                                                                                                                        
 
 * Parameter combinations and data sources supported by this interface
 
-* status=unsettled + symbol
-* status=settled + symbol + start_time
-* status=settled + symbol + start_time + limit
-* status=settled + symbol + end_time
-* status=settled + symbol + end_time + limit
-* status=settled + symbol + start_time + end_time
-* status=settled + symbol + start_time + end_time + limit
-* status=settled + symbol + before
-* status=settled + symbol + before + limit
-* status=settled + symbol + after
-* status=settled + symbol + after + limit
+  *  market + symbol + start_time
+  *  market + symbol + start_time + limit
+  *  market + symbol + end_time
+  *  market + symbol + end_time + limit
+  *  market + symbol + start_time + end_time
+  *  market + symbol + start_time + end_time + limit
+  *  market + symbol + before
+  *  market + symbol + before + limit
+  *  market + symbol + after
+  *  market + symbol + after + limit
+
+> The returned settled delegation is sorted from early to near according to settlement time
+
+## 获取未成交订单列表
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'market=spot&symbol=BTC_USDT';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/pending/orders?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime  
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+    path = '/v1/pending/orders'
+    query_str = 'market=spot&symbol=BTC_USDT'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "orderId": "4611767382287843330", // Order id
+    "clientOrderId": "", // Custom ID
+    "createTime": "1733390630904", // Creation time
+    "product": "BTC_USDT", // Transaction to the code to the code
+    "type": "Limit", // Order type
+    "side": "Buy", // Trading direction
+    "quantity": "0.01", // quantity
+    "stf": "disabled",
+    "price": "10300", // The commission price
+    "visibleQty": "0.01",
+    "timeInforce": "GTC",
+    "cancelAfter": 0,
+    "postOnly": false,
+    "positionMerge": "None", // position mode None divide the position Long merged multi
+    "positionId": 0, // Submitted position id
+    "close": false, // Is it a flat order
+    "leverage": 0, // Leverage multiple
+    "action": "unknown", // position behavior
+    "status": "accepted", // Order status
+    "executedQty": "0", // executed quantity
+    "Profit": "0", // return
+    "executedCost": "103", // The transaction value has
+    "fillCount": 1, // Number of transactions
+    "fills": [],// transaction details
+    "fees": [],// handle fee
+    "updateTime": "1733390650379" // Update time
+  },
+  ...
+]
+```
+
+**获取未成交的委托**
+
+* Request method get
+* Request path /v1/pending/order
+* Permanent: View, Trade
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                      |
+|----------------| ---------- |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | String | Yes                 | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/>                                                                                              |
+| Symbol         | String | No                  | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
+
 
 > The returned unsettled delegation is sorted from early to near by creation time
-> The returned setled delegation is sorted from early to near according to settlement time
+
 
 ## Cancel an Order
 
@@ -2024,7 +2195,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -2065,7 +2236,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -2121,7 +2292,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -2162,7 +2333,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -2199,16 +2370,16 @@ if __name__ == '__main__':
 **Rejected all commissioned commissioned**
 
 * Request method POST
-* Request path /v1 /orders/delete
+* Request path /v1/orders/delete
 * Permissions: Trade
 * Request parameters
 
 
-| Parameter Name | Parameter Type | Whether it must be passed | Description |
-|--------| ---------- |-----|---------------------------------------|
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                             |
+|--------| ---------- |-----|-----------------------------------------------------------------------------------------|
 | market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
-| symbol | string | Yes | Transaction pair code<br/>such as BTC_USDT, ETH_USDT, etc. |
-| Side | String | No | Buy or Sell |
+| symbol | string | Yes | Transaction pair code<br/>such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                |
+| Side | String | No | Buy or Sell                                                                             |
 
 > If the request is executed correctly, return an empty array, otherwise return an error message
 
@@ -2220,7 +2391,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -2255,7 +2426,7 @@ import hmac
 import requests
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -2308,16 +2479,16 @@ if __name__ == '__main__':
 * Request parameters (need sorting)
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description |
-|----------------| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------ |
-| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
-| order_id       | string | No | Delegation id assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol |
-| symbol         | string | No | Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id |
-| start_time     | int64 | No | The earliest time of the return transaction records |
-| end_time       | int64 | No | Limited to return the latest time of transaction record |
-| BeFore         | int64 | No | Transaction record ID <br/> Limited to return the maximum ID of the transaction record |
-| after          | int64 | No | Transaction record id<br/>Limit the minimum id to return transaction record |
-| limit          | int32 | No | Limited to the maximum number of returned results<br/>Default value 100 |
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                                |
+|----------------| ---------- | ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                                                                                                                   |
+| order_id       | string | No | Delegation id assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol                                                |
+| symbol         | string | No | Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id |
+| start_time     | int64 | No | The earliest time of the return transaction records                                                                                                                                                                        |
+| end_time       | int64 | No | Limited to return the latest time of transaction record                                                                                                                                                                    |
+| BeFore         | int64 | No | Transaction record ID <br/> Limited to return the maximum ID of the transaction record                                                                                                                                     |
+| after          | int64 | No | Transaction record id<br/>Limit the minimum id to return transaction record                                                                                                                                                |
+| limit          | int32 | No | Limited to the maximum number of returned results<br/>Default value 100                                                                                                                                                    |
 
 * The parameter combination and data source supported by the interface
 
@@ -2514,11 +2685,14 @@ wss://u-stream.ktx.com
 ```json
 {
   "stream": "account",
-  "data": {
-  "asset":"USDT", // Asset code
-  "balance":"100000", // Balance
-  "Holds": "20016.9970000" // Frozen
-}
+  "data":  {
+    "asset":"USDT",  // Asset code
+    "balance":"100",  // Total amount
+    "locked":"0",  // Freeze amount
+    "free":"100",  //  Available Amount
+    "withdrawable":"100",// Transferable
+    "collateral":false,// Collateral
+  }
 }
 ```
 
