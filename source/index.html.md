@@ -1323,6 +1323,7 @@ Cache
 
 > Request
 
+
 ```javascript
 let CryptoJS = require("crypto-js");
 let request = require("request");
@@ -1331,63 +1332,54 @@ const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
-const param = {
-    asset:'USDT'
-}
 
-let bodyStr = JSON.stringify(param);
+const queryStr = 'asset=BTC';
 const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
-const url = `${endpoints}/v1/main/assets`;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/main/accounts?${queryStr}`;
 
-request.post({
-        url:url,
-        body:param,
-        json:true,
-        headers: {
+request.get(url,{
+          headers: {
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
             'api-expire-time':exprieTime 
+          },
         },
-    },
 
-    function optionalCallback(err, httpResponse, body) {
-        if (err) {
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
             return console.error('upload failed:', err);
-        }
-        console.log(body) // 7.the result
+          }
+          console.log(body) // 7.the result
 
-    });
+        });
 ```
 
 ```python
 import hashlib
 import hmac
 import requests
-import json
 import time
 
 END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
-def do_request():
 
-    param = {
-        'asset': 'USDT'
-    }
-    body_str = json.dumps(param)
+def do_request():
+    path = '/v1/main/accounts'
+    query_str = 'asset=BTC'
     expire_time = str(int(time.time() * 1000) + 5000)
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
-    path = '/v1/main/assets'
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time 
+        'api-expire-time': expire_time
     }
-    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
 
 
@@ -1411,8 +1403,8 @@ if __name__ == '__main__':
 
 **Get Main Account Assets**
 
-* Request method POST
-* Request path /v1/main/assets
+* Request method GET
+* Request path /v1/main/accounts
 * Permissions: Trade
 * Request parameters
 
