@@ -445,7 +445,7 @@ if __name__ == '__main__':
 |----------------| ---------- | ---------- | ---------------------------------------------------------------------------------------- |
 | market         | String | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
 | symbol         | String | Yes | Trading code, such as BTC_USDT, ETH_USDT, etc. |
-| time_frame     | String | Yes | The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1H, 2H, 4H, 6H, 12H, 1d, 3D, 1W or 1m |
+| time_frame     | String | Yes | The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M |
 | before         | int64 | No | utc time<br/>Limit the latest time of return to the K-line record |
 | after          | int64 | No | UTC Time <br/> Limited to return the earliest time of the K -line records |
 | limit          | Integer | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000 |
