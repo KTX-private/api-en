@@ -2204,13 +2204,118 @@ if __name__ == '__main__':
 * Request parameters
 
 
-| Parameter Name | Parameter Type | Whether it must be passed | Description |
-|--------| ---------- |-----|---------------------------------------|
-| market | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
-| symbol | string | Yes | Transaction pair code<br/>such as BTC_USDT, ETH_USDT, etc. |
-| Side | String | No | Buy or Sell |
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                            |
+|----------------| ---------- |-----|----------------------------------------------------------------------------------------|
+| market         | string | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
+| symbol         | string | Yes | Transaction pair code<br/>such as BTC_USDT, ETH_USDT, etc.                             |
+| side           | String | No | 1 buy or -1 sell                                                                       |
 
 > If the request is executed correctly, return an empty array, otherwise return an error message
+## 获取仓位
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/api'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'market=lpc&symbol=BTC_USDT_SWAP';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/positions?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/api'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+
+def do_request():
+    path = '/v1/positions'
+    query_str = 'market=lpc&symbol=BTC_USDT_SWAP'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    # POST or DELETE replace query_str with body_str
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "entryPrice": "109398.9", // entry price
+    "symbol": "BTC_USDT_SWAP", // symbol
+    "leverage": "10.0", // leverage
+    "maintMargin": "0.0050000000", // maint margin rate
+    "quantity": "-0.100", // margin quantity short 0.1
+    "posMargin": "1093.989", // margin
+    "marginMethod": "cross", // margin method 全仓
+    "closableQty": "-0.100", // closable quantity
+    "initMargin": "0.1000000000", // init margin rate
+    "id": "1125899906842624158", // id
+    "orderMargin": "0",  // order margin
+    "mergeMode": "short"  // position mode short
+  }
+  ...
+]
+```
+
+**Get positions**
+
+
+* Request method get
+* Request path /v1/positions
+* Permanent: View
+* Request parameters (need sorting)
+
+
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                             |
+|----------------| ---------- |---------------------------|-----------------------------------------------------------------------------------------|
+| market         | string | Yes                       | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
+| position_id    | string | No                        | position id                                                                              |
+| symbol         | int32 | No                        | Transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP                          |
 
 ## Get fills
 
@@ -2304,7 +2409,7 @@ if __name__ == '__main__':
 
 * Request method get
 * Request path /v1/fills
-* Permanent: View, Trade
+* Permanent: View
 * Request parameters (need sorting)
 
 
