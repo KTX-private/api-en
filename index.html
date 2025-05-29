@@ -3070,7 +3070,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <li>Request method get</li>
 <li>Request path /v1/positions</li>
 <li>Permanent: View</li>
-<li>Request parameters (need sorting)</li>
+<li>Request parameters </li>
 </ul>
 
 <table><thead>
@@ -3082,22 +3082,22 @@ The returned setled delegation is sorted from early to near according to settlem
 </tr>
 </thead><tbody>
 <tr>
-<td>market</td>
-<td>string</td>
-<td>Yes</td>
-<td>trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract</td>
-</tr>
-<tr>
 <td>position_id</td>
 <td>string</td>
 <td>No</td>
-<td>position id</td>
+<td>position id , the main param</td>
+</tr>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>No</td>
+<td>trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract</td>
 </tr>
 <tr>
 <td>symbol</td>
-<td>int32</td>
+<td>string</td>
 <td>No</td>
-<td>Transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP</td>
+<td>use symbol with market param ,transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP</td>
 </tr>
 </tbody></table>
 <h2 id='get-fills'>Get fills</h2>
