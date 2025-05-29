@@ -2308,15 +2308,14 @@ if __name__ == '__main__':
 * Request method get
 * Request path /v1/positions
 * Permanent: View
-* Request parameters (need sorting)
+* Request parameters 
 
 
-| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                             |
-|----------------| ---------- |---------------------------|-----------------------------------------------------------------------------------------|
-| market         | string | Yes                       | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
-| position_id    | string | No                        | position id                                                                              |
-| symbol         | int32 | No                        | Transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP                          |
-
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                  |
+| ------------ | ---------- |---------------------------|----------------------------------------------------------------------------------------------|
+| position_id   | string   | No                        | position id , the main param                                                                 |
+| market | string   | No                        | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract      |
+| symbol     | string   | No                        | use symbol with market param ,transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP |
 ## Get fills
 
 > Request
