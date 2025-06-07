@@ -337,6 +337,12 @@
             <a href="#market-data-endpoints" class="toc-h1 toc-link" data-title="Market Data Endpoints">Market Data Endpoints</a>
               <ul class="toc-list-h2">
                   <li>
+                    <a href="#ping-test" class="toc-h2 toc-link" data-title="Ping Test">Ping Test</a>
+                  </li>
+                  <li>
+                    <a href="#get-server-time" class="toc-h2 toc-link" data-title="Get Server Time">Get Server Time</a>
+                  </li>
+                  <li>
                     <a href="#get-listed-pairs" class="toc-h2 toc-link" data-title="Get Listed Pairs">Get Listed Pairs</a>
                   </li>
                   <li>
@@ -398,7 +404,10 @@
                     <a href="#get-an-order" class="toc-h2 toc-link" data-title="Get an order">Get an order</a>
                   </li>
                   <li>
-                    <a href="#get-orders" class="toc-h2 toc-link" data-title="Get Orders">Get Orders</a>
+                    <a href="#get-history-orders" class="toc-h2 toc-link" data-title="Get History Orders">Get History Orders</a>
+                  </li>
+                  <li>
+                    <a href="#ef41056898" class="toc-h2 toc-link" data-title="获取未成交订单列表">获取未成交订单列表</a>
                   </li>
                   <li>
                     <a href="#cancel-an-order" class="toc-h2 toc-link" data-title="Cancel an Order">Cancel an Order</a>
@@ -407,7 +416,7 @@
                     <a href="#cancel-all-orders" class="toc-h2 toc-link" data-title="Cancel all Orders">Cancel all Orders</a>
                   </li>
                   <li>
-                    <a href="#430d71f05a" class="toc-h2 toc-link" data-title="获取仓位">获取仓位</a>
+                    <a href="#get-positions" class="toc-h2 toc-link" data-title="Get positions">Get positions</a>
                   </li>
                   <li>
                     <a href="#get-fills" class="toc-h2 toc-link" data-title="Get fills">Get fills</a>
@@ -461,7 +470,7 @@
 
 <ul>
 <li>Market Data Endpoints: https://api.ktx.com/api</li>
-<li>User Data Endpoints: https://api.ktx.com/api</li>
+<li>User Data Endpoints: https://api.ktx.com/papi</li>
 <li>Market Data Stream: wss://m-stream.ktx.com</li>
 <li>User Data Stream: wss://u-stream.ktx.com</li>
 </ul>
@@ -528,7 +537,7 @@
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -536,7 +545,7 @@
 <span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">asset=BTC</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// POST or DELETE  replace queryStr with bodyStr</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/accounts?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/trade/accounts?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
           <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
@@ -559,13 +568,13 @@
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/accounts'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/trade/accounts'</span>
     <span class="n">query_str</span> <span class="o">=</span> <span class="s">'asset=BTC'</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="c1"># POST or DELETE replace query_str with body_str
@@ -640,7 +649,71 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <p>*The permissions required by the interface will be given in the description of each interface. *</p>
 
 <hr>
-<h1 id='market-data-endpoints'>Market Data Endpoints</h1><h2 id='get-listed-pairs'>Get Listed Pairs</h2>
+<h1 id='market-data-endpoints'>Market Data Endpoints</h1><h2 id='ping-test'>Ping Test</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">endPoint</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endPoint</span><span class="p">}</span><span class="s2">/v1/ping`</span>
+<span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span>
+        <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">failed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+          <span class="p">}</span>
+
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span>
+
+        <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span><span class="p">;</span>
+
+<span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/ping'</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">do_request</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
+</span></code></pre></div><h2 id='get-server-time'>Get Server Time</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">endPoint</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endPoint</span><span class="p">}</span><span class="s2">/v1/time`</span>
+<span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span>
+        <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">failed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+          <span class="p">}</span>
+
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span>
+
+        <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/time'</span><span class="p">;</span>
+
+<span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/ping'</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">do_request</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"time"</span><span class="p">:</span><span class="s2">"1746777864508"</span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='get-listed-pairs'>Get Listed Pairs</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -713,7 +786,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>Symbol</td>
 <td>String</td>
 <td>No</td>
-<td>Transaction to code, such as BTC_USDT, ETH_USDT, etc.</td>
+<td>Transaction to code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 </tbody></table>
 
@@ -814,7 +887,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>Symbol</td>
 <td>String</td>
 <td>Yes</td>
-<td>Trading code, such as BTC_USDT, ETH_USDT, etc.</td>
+<td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 <tr>
 <td>Level</td>
@@ -902,7 +975,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 
 <ul>
 <li>Request method get</li>
-<li>Request path /v1 /candles</li>
+<li>Request path /v1/candles</li>
 <li>Request parameters</li>
 </ul>
 
@@ -924,7 +997,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>symbol</td>
 <td>String</td>
 <td>Yes</td>
-<td>Trading code, such as BTC_USDT, ETH_USDT, etc.</td>
+<td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 <tr>
 <td>time_frame</td>
@@ -957,12 +1030,12 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 </ul>
 
 <ol>
-<li>symbol + time_frame  --&gt; cache</li>
-<li>symbol + time_frame + limit  --&gt; cache</li>
-<li>symbol + time_frame + before  --&gt; database</li>
-<li>symbol + time_frame + before + limit  --&gt; database</li>
-<li>symbol + time_frame + after  --&gt; database</li>
-<li>symbol + time_frame + after + limit  --&gt; database</li>
+<li>market + symbol + time_frame  --&gt; cache</li>
+<li>market + symbol + time_frame + limit  --&gt; cache</li>
+<li>market + market + symbol + time_frame + before  --&gt; database</li>
+<li>market + symbol + time_frame + before + limit  --&gt; database</li>
+<li>market + symbol + time_frame + after  --&gt; database</li>
+<li>market + symbol + time_frame + after + limit  --&gt; database</li>
 </ol>
 
 <blockquote>
@@ -1021,7 +1094,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 
 <ul>
 <li>Request method get</li>
-<li>Request path /v1 /trades</li>
+<li>Request path /v1/trades</li>
 <li>Request parameters</li>
 </ul>
 
@@ -1043,7 +1116,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>symbol</td>
 <td>string</td>
 <td>Yes</td>
-<td>Transaction pair codes, such as BTC_USDT, ETH_USDT, etc.</td>
+<td>Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 <tr>
 <td>start_time</td>
@@ -1082,18 +1155,18 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 </ul>
 
 <ol>
-<li>symbol  --&gt; cache</li>
-<li>symbol + limit  --&gt; cache</li>
-<li>symbol + start_time  --&gt; database</li>
-<li>symbol + start_time + limit  --&gt; database</li>
-<li>symbol + end_time  --&gt; database</li>
-<li>symbol + end_time + limit  --&gt; database</li>
-<li>symbol + start_time + end_time  --&gt; database</li>
-<li>symbol + start_time + end_time + limit  --&gt; database</li>
-<li>symbol + before  --&gt; database</li>
-<li>symbol + before + limit  --&gt; database</li>
-<li>symbol + after  --&gt; database</li>
-<li>symbol + after + limit  --&gt; database</li>
+<li>market + symbol  --&gt; cache</li>
+<li>market + symbol + limit  --&gt; cache</li>
+<li>market + symbol + start_time  --&gt; database</li>
+<li>market + symbol + start_time + limit  --&gt; database</li>
+<li>market + symbol + end_time  --&gt; database</li>
+<li>market + symbol + end_time + limit  --&gt; database</li>
+<li>market + symbol + start_time + end_time  --&gt; database</li>
+<li>market + symbol + start_time + end_time + limit  --&gt; database</li>
+<li>market + symbol + before  --&gt; database</li>
+<li>market + symbol + before + limit  --&gt; database</li>
+<li>market + symbol + after  --&gt; database</li>
+<li>market + symbol + after + limit  --&gt; database</li>
 </ol>
 
 <p><em>The parameter combination of the data source is Cache to obtain the last 1,000 transaction records</em></p>
@@ -1168,7 +1241,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 
 <ul>
 <li>Request method get</li>
-<li>Request path /v1 /ticker</li>
+<li>Request path /v1/ticker</li>
 <li>Request parameters</li>
 </ul>
 
@@ -1190,7 +1263,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>symbol</td>
 <td>String</td>
 <td>Yes</td>
-<td>Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT</td>
+<td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT</td>
 </tr>
 </tbody></table>
 
@@ -1374,7 +1447,7 @@ wss://m-stream.ktx.com</li>
 market.symbol.data_type.param1.param2...</p>
 
 <p>Where, market is a trading-to-market, such as spot and lpc
-Symbol is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+Symbol is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 Data_type is a data type, and currently only supports the following data types
 Order_Book: Deep
 trades: trading list
@@ -1471,7 +1544,7 @@ TICKER: The latest transaction information</p>
 <ul>
 <li>&lt;market&gt;.&lt;symbol&gt;.order_book.&lt;max_depth&gt;</li>
 <li>&lt;market&gt; is a trading-to-market, such as spot, lpc</li>
-<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.</li>
+<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</li>
 <li>&lt;max_depth&gt; is the maximum depth, the effective value is 5, 10, 20, 50, 100, 200, 500, 1000</li>
 </ul>
 
@@ -1549,7 +1622,7 @@ TICKER: The latest transaction information</p>
 <ul>
 <li>&lt;market&gt;.&lt;symbol&gt;.trades</li>
 <li>&lt;market&gt; is a transaction to the market, such as spot, lpc</li>
-<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.</li>
+<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</li>
 </ul>
 
 <blockquote>
@@ -1600,7 +1673,7 @@ TICKER: The latest transaction information</p>
 <ul>
 <li>&lt;market&gt;.&lt;symbol&gt;.candles.&lt;time_frame&gt;</li>
 <li>&lt;market&gt; is a transaction to the market, such as spot, lpc</li>
-<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.</li>
+<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</li>
 <li>&lt;time_frame&gt; is the K-line period, the effective value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
 &gt; Data flow</li>
 </ul>
@@ -1661,7 +1734,7 @@ TICKER: The latest transaction information</p>
 <ul>
 <li>&lt;market&gt;.&lt;symbol&gt;.ticker</li>
 <li>&lt;market&gt; is a trading-to-market, such as spot, lpc</li>
-<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, etc.
+<li>&lt;symbol&gt; is the name of the transaction pair, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.
 &gt; Data flow</li>
 </ul>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
@@ -1694,7 +1767,7 @@ TICKER: The latest transaction information</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -1702,7 +1775,7 @@ TICKER: The latest transaction information</p>
 <span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">asset=BTC</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/accounts?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/trade/accounts?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
           <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
@@ -1725,13 +1798,13 @@ TICKER: The latest transaction information</p>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/accounts'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/trade/accounts'</span>
     <span class="n">query_str</span> <span class="o">=</span> <span class="s">'asset=BTC'</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">query_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -1754,18 +1827,20 @@ TICKER: The latest transaction information</p>
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-  </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
-  </span><span class="nl">"balance"</span><span class="p">:</span><span class="mi">10000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">amount</span><span class="w">
-  </span><span class="nl">"holds"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">amount</span><span class="w">
-  </span><span class="nl">"withdrawable"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Transferable</span><span class="w">
-  </span><span class="nl">"collateral"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Collateral</span><span class="w">
+    </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">amount</span><span class="w">
+    </span><span class="nl">"locked"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">amount</span><span class="w">
+    </span><span class="nl">"free"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w">  </span><span class="err">Available</span><span class="w"> </span><span class="err">Amount</span><span class="w">
+    </span><span class="nl">"withdrawable"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Transferable</span><span class="w">
+    </span><span class="nl">"collateral"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Collateral</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
-  </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
-  </span><span class="nl">"balance"</span><span class="p">:</span><span class="mi">10000</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">amount</span><span class="w">
-  </span><span class="nl">"holds"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">amount</span><span class="w">
-  </span><span class="nl">"withdrawable"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Transferable</span><span class="w">
-  </span><span class="nl">"collateral"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Collateral</span><span class="w">
+    </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">amount</span><span class="w">
+    </span><span class="nl">"locked"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">amount</span><span class="w">
+    </span><span class="nl">"free"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w">  </span><span class="err">Available</span><span class="w"> </span><span class="err">Amount</span><span class="w">
+    </span><span class="nl">"withdrawable"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Transferable</span><span class="w">
+    </span><span class="nl">"collateral"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Collateral</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="err">...</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -1774,7 +1849,7 @@ TICKER: The latest transaction information</p>
 
 <ul>
 <li>Request method get</li>
-<li>Request path /v1 /accounts</li>
+<li>Request path /v1/trade/accounts</li>
 <li>Permissions: View, Trade</li>
 <li>Request parameters</li>
 </ul>
@@ -1807,64 +1882,55 @@ TICKER: The latest transaction information</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
-<span class="kd">const</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">asset</span><span class="p">:</span><span class="dl">'</span><span class="s1">USDT</span><span class="dl">'</span>
-<span class="p">}</span>
 
-<span class="kd">let</span> <span class="nx">bodyStr</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">asset=BTC</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">bodyStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/tf/main/assets`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/main/accounts?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
-<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
-        <span class="na">url</span><span class="p">:</span><span class="nx">url</span><span class="p">,</span>
-        <span class="na">body</span><span class="p">:</span><span class="nx">param</span><span class="p">,</span>
-        <span class="na">json</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
-        <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+<span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
+          <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
+          <span class="p">},</span>
         <span class="p">},</span>
-    <span class="p">},</span>
 
-    <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+          <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">upload failed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
-        <span class="p">}</span>
-        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="c1">// 7.the result</span>
+          <span class="p">}</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="c1">// 7.the result</span>
 
-    <span class="p">});</span>
+        <span class="p">});</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
-<span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
 
-    <span class="n">param</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s">'asset'</span><span class="p">:</span> <span class="s">'USDT'</span>
-    <span class="p">}</span>
-    <span class="n">body_str</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/main/accounts'</span>
+    <span class="n">query_str</span> <span class="o">=</span> <span class="s">'asset=BTC'</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
-    <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">body_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/tf/main/assets'</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">query_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
+
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="n">expire_time</span>
     <span class="p">}</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
 
@@ -1874,23 +1940,21 @@ TICKER: The latest transaction information</p>
 <blockquote>
 <p>Response</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="err">//Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
-      </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2081.0000000000"</span><span class="p">,</span><span class="err">//Total</span><span class="w"> </span><span class="err">Amount</span><span class="w">
-      </span><span class="nl">"holds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"498.0000000000"</span><span class="err">//Freeze</span><span class="w"> </span><span class="err">Amount</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">Amount</span><span class="w">
+    </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">Amount</span><span class="w">
+    </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="err">//</span><span class="w"> </span><span class="err">Available</span><span class="w"> </span><span class="err">Amount</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+
 </span></code></pre></div>
 <p><strong>Get Main Account Assets</strong></p>
 
 <ul>
-<li>Request method POST</li>
-<li>Request path /v1/tf/main/assets</li>
+<li>Request method GET</li>
+<li>Request path /v1/main/accounts</li>
 <li>Permissions: Trade</li>
 <li>Request parameters</li>
 </ul>
@@ -1917,7 +1981,7 @@ TICKER: The latest transaction information</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -1929,7 +1993,7 @@ TICKER: The latest transaction information</p>
 <span class="kd">let</span> <span class="nx">bodyStr</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">bodyStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/tf/transfer`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/transfer`</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
         <span class="na">url</span><span class="p">:</span><span class="nx">url</span><span class="p">,</span>
@@ -1986,17 +2050,13 @@ TICKER: The latest transaction information</p>
 <blockquote>
 <p>Response</p>
 </blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-</span><span class="p">}</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{}</span><span class="w">
 </span></code></pre></div>
 <p><strong>Asset Tranfer</strong></p>
 
 <ul>
 <li>Request method POST</li>
-<li>Request path /v1/tf/transfer</li>
+<li>Request path /v1/transfer</li>
 <li>Permissions: Trade</li>
 <li>Request parameters</li>
 </ul>
@@ -2029,7 +2089,7 @@ TICKER: The latest transaction information</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2037,7 +2097,7 @@ TICKER: The latest transaction information</p>
 <span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">asset=BTC&amp;end_time=1651895799668&amp;limit=10</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/ledger?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/ledgers?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
         <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
@@ -2060,13 +2120,13 @@ TICKER: The latest transaction information</p>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/ledger'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/ledgers'</span>
     <span class="n">query_str</span> <span class="o">=</span> <span class="s">'asset=BTC&amp;end_time=1651895799668&amp;limit=10'</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">query_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -2104,7 +2164,7 @@ TICKER: The latest transaction information</p>
 
 <ul>
 <li>Request method get</li>
-<li>Request path /v1 /ledger</li>
+<li>Request path /v1/ledgers</li>
 <li>Permanent: View, Trade</li>
 <li>Request parameters (need sorting)</li>
 </ul>
@@ -2173,12 +2233,13 @@ TICKER: The latest transaction information</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
 <span class="kd">const</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">symbol</span><span class="p">:</span><span class="dl">'</span><span class="s1">BTC_USDT</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">side</span><span class="p">:</span><span class="dl">'</span><span class="s1">buy</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">quantity</span><span class="p">:</span><span class="dl">'</span><span class="s1">0.0001</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">price</span><span class="p">:</span><span class="dl">'</span><span class="s1">90000</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">limit</span><span class="dl">'</span><span class="p">,</span>
@@ -2216,7 +2277,7 @@ TICKER: The latest transaction information</p>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -2225,6 +2286,7 @@ TICKER: The latest transaction information</p>
 
     <span class="n">param</span> <span class="o">=</span> <span class="p">{</span>
       <span class="s">'symbol'</span><span class="p">:</span><span class="s">'BTC_USDT'</span><span class="p">,</span>
+      <span class="s">'side'</span><span class="p">:</span><span class="s">'buy'</span><span class="p">,</span>
       <span class="s">'quantity'</span><span class="p">:</span><span class="s">'0.0001'</span><span class="p">,</span>
       <span class="s">'price'</span><span class="p">:</span><span class="s">'90000'</span><span class="p">,</span>
       <span class="s">'type'</span><span class="p">:</span><span class="s">'limit'</span><span class="p">,</span>
@@ -2269,35 +2331,13 @@ TICKER: The latest transaction information</p>
   </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Is</span><span class="w"> </span><span class="err">it</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">flat</span><span class="w"> </span><span class="err">order</span><span class="w">
   </span><span class="nl">"leverage"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Leverage</span><span class="w"> </span><span class="err">multiple</span><span class="w">
   </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">behavior</span><span class="w">
-  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Filled"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">status</span><span class="w">
-  </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accepted"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">status</span><span class="w">
+  </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">executed</span><span class="w"> </span><span class="err">quantity</span><span class="w">
   </span><span class="nl">"Profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">return</span><span class="w">
   </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">has</span><span class="w">
   </span><span class="nl">"fillCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">transactions</span><span class="w">
-  </span><span class="nl">"fills"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">//</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">details</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"tradeId"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"taker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">assets</span><span class="w">
-        </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
-        </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Valuation</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">]</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-  </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="err">//</span><span class="w"> </span><span class="err">handle</span><span class="w"> </span><span class="err">fee</span><span class="w">
-      </span><span class="p">{</span><span class="w">
-      </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">assets</span><span class="w">
-      </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
-      </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Valuation</span><span class="w">
-      </span><span class="p">}</span><span class="w">
-    </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"fills"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="err">//</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">details</span><span class="w">
+  </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="err">//</span><span class="w"> </span><span class="err">handle</span><span class="w"> </span><span class="err">fee</span><span class="w">
   </span><span class="nl">"updateTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Update</span><span class="w"> </span><span class="err">time</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -2323,7 +2363,7 @@ TICKER: The latest transaction information</p>
 <td>symbol</td>
 <td>string</td>
 <td>Yes</td>
-<td>Transaction pair codes, such as BTC_USDT, ETH_USDT, etc.</td>
+<td>Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 <tr>
 <td>type</td>
@@ -2411,7 +2451,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2442,7 +2482,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -2543,22 +2583,22 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>Entrusted ID <br/> The entrustment ID can be allocated by the exchange, <br/> can also be customized by users (using the client_order_id parameter when submitting the commission). When defining IDs, you need to add &quot;C:&quot; prefix before ID. <br/> For example: using a custom ID &quot;123&quot; when submitting commission, when obtaining the commission, you need to use &quot;C: 123&quot;.</td>
 </tr>
 </tbody></table>
-<h2 id='get-orders'>Get Orders</h2>
+<h2 id='get-history-orders'>Get History Orders</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
 
-<span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">limit=2&amp;status=settled&amp;market=spot&amp;symbol=BTC_USDT</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">limit=2&amp;market=spot&amp;symbol=BTC_USDT</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/orders?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/history/orders?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
         <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
@@ -2581,13 +2621,13 @@ If there are more than 20 transactions in the delegation, then the object only c
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/orders'</span>
-    <span class="n">query_str</span> <span class="o">=</span> <span class="s">'limit=2&amp;status=settled&amp;market=spot&amp;symbol=BTC_USDT'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/history/orders'</span>
+    <span class="n">query_str</span> <span class="o">=</span> <span class="s">'limit=2&amp;market=spot&amp;symbol=BTC_USDT'</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">query_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
 
@@ -2664,7 +2704,6 @@ If there are more than 20 transactions in the delegation, then the object only c
 <p><strong>Obtain the delegation in the corresponding ApiKey account that meets the following conditions</strong></p>
 
 <ol>
-<li>All unsettled commissions</li>
 <li>The settlement commission of the settlement within three months, including rejection, revoked and transaction commission</li>
 <li>All have been commissioned</li>
 <li>All trading commissions that have been revoked</li>
@@ -2672,9 +2711,8 @@ If there are more than 20 transactions in the delegation, then the object only c
 
 <ul>
 <li>Request method get</li>
-<li>Request path /v1 /order</li>
+<li>Request path /v1/history/order</li>
 <li>Permanent: View, Trade</li>
-<li>Request parameters (need sorting)</li>
 </ul>
 
 <table><thead>
@@ -2686,22 +2724,16 @@ If there are more than 20 transactions in the delegation, then the object only c
 </tr>
 </thead><tbody>
 <tr>
-<td>status</td>
-<td>String</td>
-<td>No</td>
-<td>Valid value unsettedled, settled <br/> Unsettedled indicates that the uncomfortable commission is obtained, the return result is sorted by the entrusted creation time. <br/> default value unsettedled</td>
-</tr>
-<tr>
 <td>market</td>
 <td>String</td>
-<td>No</td>
-<td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/> default value spot</td>
+<td>Yes</td>
+<td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/></td>
 </tr>
 <tr>
 <td>Symbol</td>
 <td>String</td>
 <td>No</td>
-<td>Trading code, such as BTC_USDT, ETH_USDT, etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter</td>
+<td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter</td>
 </tr>
 <tr>
 <td>start_time</td>
@@ -2736,23 +2768,153 @@ If there are more than 20 transactions in the delegation, then the object only c
 </tbody></table>
 
 <ul>
-<li><p>Parameter combinations and data sources supported by this interface</p></li>
-<li><p>status=unsettled + symbol</p></li>
-<li><p>status=settled + symbol + start_time</p></li>
-<li><p>status=settled + symbol + start_time + limit</p></li>
-<li><p>status=settled + symbol + end_time</p></li>
-<li><p>status=settled + symbol + end_time + limit</p></li>
-<li><p>status=settled + symbol + start_time + end_time</p></li>
-<li><p>status=settled + symbol + start_time + end_time + limit</p></li>
-<li><p>status=settled + symbol + before</p></li>
-<li><p>status=settled + symbol + before + limit</p></li>
-<li><p>status=settled + symbol + after</p></li>
-<li><p>status=settled + symbol + after + limit</p></li>
+<li><p>Parameter combinations and data sources supported by this interface</p>
+
+<ul>
+<li> market + symbol + start_time</li>
+<li> market + symbol + start_time + limit</li>
+<li> market + symbol + end_time</li>
+<li> market + symbol + end_time + limit</li>
+<li> market + symbol + start_time + end_time</li>
+<li> market + symbol + start_time + end_time + limit</li>
+<li> market + symbol + before</li>
+<li> market + symbol + before + limit</li>
+<li> market + symbol + after</li>
+<li> market + symbol + after + limit</li>
+</ul></li>
 </ul>
 
 <blockquote>
-<p>The returned unsettled delegation is sorted from early to near by creation time
-The returned setled delegation is sorted from early to near according to settlement time</p>
+<p>The returned settled delegation is sorted from early to near according to settlement time</p>
+</blockquote>
+<h2 id='ef41056898'>获取未成交订单列表</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
+<span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
+
+
+<span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">market=spot&amp;symbol=BTC_USDT</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/pending/orders?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+
+<span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
+        <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  
+        <span class="p">},</span>
+    <span class="p">},</span>
+
+    <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">upload failed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="c1">// 7.the result</span>
+
+    <span class="p">});</span>
+</code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
+<span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
+
+<span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/pending/orders'</span>
+    <span class="n">query_str</span> <span class="o">=</span> <span class="s">'market=spot&amp;symbol=BTC_USDT'</span>
+    <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
+    <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">query_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
+        <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
+        <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="n">do_request</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p>Response</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">id</span><span class="w">
+    </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Custom</span><span class="w"> </span><span class="err">ID</span><span class="w">
+    </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Creation</span><span class="w"> </span><span class="err">time</span><span class="w">
+    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">code</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">code</span><span class="w">
+    </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">type</span><span class="w">
+    </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Trading</span><span class="w"> </span><span class="err">direction</span><span class="w">
+    </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+    </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
+    </span><span class="nl">"visibleQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GTC"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"None"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w"> </span><span class="err">None</span><span class="w"> </span><span class="err">divide</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">Long</span><span class="w"> </span><span class="err">merged</span><span class="w"> </span><span class="err">multi</span><span class="w">
+    </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Submitted</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">id</span><span class="w">
+    </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Is</span><span class="w"> </span><span class="err">it</span><span class="w"> </span><span class="err">a</span><span class="w"> </span><span class="err">flat</span><span class="w"> </span><span class="err">order</span><span class="w">
+    </span><span class="nl">"leverage"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Leverage</span><span class="w"> </span><span class="err">multiple</span><span class="w">
+    </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">behavior</span><span class="w">
+    </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accepted"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Order</span><span class="w"> </span><span class="err">status</span><span class="w">
+    </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">executed</span><span class="w"> </span><span class="err">quantity</span><span class="w">
+    </span><span class="nl">"Profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">return</span><span class="w">
+    </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">value</span><span class="w"> </span><span class="err">has</span><span class="w">
+    </span><span class="nl">"fillCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Number</span><span class="w"> </span><span class="err">of</span><span class="w"> </span><span class="err">transactions</span><span class="w">
+    </span><span class="nl">"fills"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="err">//</span><span class="w"> </span><span class="err">transaction</span><span class="w"> </span><span class="err">details</span><span class="w">
+    </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="err">//</span><span class="w"> </span><span class="err">handle</span><span class="w"> </span><span class="err">fee</span><span class="w">
+    </span><span class="nl">"updateTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Update</span><span class="w"> </span><span class="err">time</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="err">...</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
+<p><strong>获取未成交的委托</strong></p>
+
+<ul>
+<li>Request method get</li>
+<li>Request path /v1/pending/order</li>
+<li>Permanent: View, Trade</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Parameter name</th>
+<th>Parameter type</th>
+<th>Whether to pass it?</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>market</td>
+<td>String</td>
+<td>Yes</td>
+<td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/></td>
+</tr>
+<tr>
+<td>Symbol</td>
+<td>String</td>
+<td>No</td>
+<td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>The returned unsettled delegation is sorted from early to near by creation time</p>
 </blockquote>
 <h2 id='cancel-an-order'>Cancel an Order</h2>
 <blockquote>
@@ -2761,7 +2923,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2799,7 +2961,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -2871,7 +3033,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2909,7 +3071,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -2945,7 +3107,7 @@ The returned setled delegation is sorted from early to near according to settlem
 
 <ul>
 <li>Request method POST</li>
-<li>Request path /v1 /orders/delete</li>
+<li>Request path /v1/orders/delete</li>
 <li>Permissions: Trade</li>
 <li>Request parameters</li>
 </ul>
@@ -2968,25 +3130,27 @@ The returned setled delegation is sorted from early to near according to settlem
 <td>symbol</td>
 <td>string</td>
 <td>Yes</td>
-<td>Transaction pair code<br/>such as BTC_USDT, ETH_USDT, etc.</td>
+<td>Transaction pair code<br/>such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 <tr>
-<td>side</td>
+<td>Side</td>
 <td>String</td>
 <td>No</td>
-<td>1 buy or -1 sell</td>
+<td>Buy or Sell</td>
 </tr>
 </tbody></table>
 
 <blockquote>
 <p>If the request is executed correctly, return an empty array, otherwise return an error message</p>
-<h2 id='430d71f05a'>获取仓位</h2>
+</blockquote>
+<h2 id='get-positions'>Get positions</h2>
+<blockquote>
 <p>Request</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -3018,7 +3182,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -3054,7 +3218,7 @@ The returned setled delegation is sorted from early to near according to settlem
     </span><span class="nl">"maintMargin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0050000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">maint</span><span class="w"> </span><span class="err">margin</span><span class="w"> </span><span class="err">rate</span><span class="w">
     </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">margin</span><span class="w"> </span><span class="err">quantity</span><span class="w"> </span><span class="err">short</span><span class="w"> </span><span class="mf">0.1</span><span class="w">
     </span><span class="nl">"posMargin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1093.989"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">margin</span><span class="w">
-    </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">margin</span><span class="w"> </span><span class="err">method</span><span class="w"> </span><span class="err">全仓</span><span class="w">
+    </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">margin</span><span class="w"> </span><span class="err">method</span><span class="w"> 
     </span><span class="nl">"closableQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">closable</span><span class="w"> </span><span class="err">quantity</span><span class="w">
     </span><span class="nl">"initMargin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1000000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">init</span><span class="w"> </span><span class="err">margin</span><span class="w"> </span><span class="err">rate</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1125899906842624158"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">id</span><span class="w">
@@ -3070,7 +3234,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <li>Request method get</li>
 <li>Request path /v1/positions</li>
 <li>Permanent: View</li>
-<li>Request parameters </li>
+<li>Request parameters</li>
 </ul>
 
 <table><thead>
@@ -3107,7 +3271,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -3139,7 +3303,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -3187,7 +3351,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <ul>
 <li>Request method get</li>
 <li>Request path /v1/fills</li>
-<li>Permanent: View</li>
+<li>Permanent: View, Trade</li>
 <li>Request parameters (need sorting)</li>
 </ul>
 
@@ -3215,7 +3379,7 @@ The returned setled delegation is sorted from early to near according to settlem
 <td>symbol</td>
 <td>string</td>
 <td>No</td>
-<td>Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id</td>
+<td>Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id</td>
 </tr>
 <tr>
 <td>start_time</td>
@@ -3436,11 +3600,14 @@ After successfully establishing a connection, the client will receive informatio
 <p><strong>When the account balance changes, you will receive an account event</strong></p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"stream"</span><span class="p">:</span><span class="w"> </span><span class="s2">"account"</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
-  </span><span class="nl">"balance"</span><span class="p">:</span><span class="s2">"100000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Balance</span><span class="w">
-  </span><span class="nl">"Holds"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20016.9970000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Frozen</span><span class="w">
-</span><span class="p">}</span><span class="w">
+  </span><span class="nl">"data"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">amount</span><span class="w">
+    </span><span class="nl">"locked"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">amount</span><span class="w">
+    </span><span class="nl">"free"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w">  </span><span class="err">Available</span><span class="w"> </span><span class="err">Amount</span><span class="w">
+    </span><span class="nl">"withdrawable"</span><span class="p">:</span><span class="s2">"100"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Transferable</span><span class="w">
+    </span><span class="nl">"collateral"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Collateral</span><span class="w">
+  </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div><h2 id='position'>Position</h2>
 <p><strong>When the position information is sent to change, you will receive the Position event</strong></p>
