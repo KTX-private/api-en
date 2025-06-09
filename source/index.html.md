@@ -1289,6 +1289,8 @@ if __name__ == '__main__':
     "free":"100",  //  Available Amount
     "withdrawable":"100",// Transferable
     "collateral":false,// Collateral
+    "discountForMargin":"1", // optional col ,discount for margin,if the asset support discount
+    "discountForFee":"1" // optional col, discount for fee,if the asset support discount
   },
   {
     "asset":"USDT",  // Asset code
@@ -1858,7 +1860,10 @@ if __name__ == '__main__':
   "action": "unknown", // position behavior
   "status": "Filled", // Order status
   "executedQty": "0.01", //
-  "Profit": "0", // return
+  "profit": "0", // profit
+  "origin":0, // origin         
+  "brokerId":0, // broker id     
+  "update_id":'1125899907137993336', // update id
   "executedCost": "103", // The transaction value has
   "fillCount": 1, // Number of transactions
   "fills": [// transaction details
@@ -1992,7 +1997,10 @@ if __name__ == '__main__':
     "action": "unknown", // position behavior
     "status": "Filled", // Order status
     "executedQty": "0.01", //
-    "Profit": "0", // return
+    "profit": "0", // profit
+    "origin":0, // origin         
+    "brokerId":0, // broker id     
+    "update_id":'1125899907137993336', // update id
     "executedCost": "103", // The transaction value has
     "fillCount": 1, // Number of transactions
     "fills": [// transaction details
@@ -2790,6 +2798,8 @@ wss://u-stream.ktx.com
     "free":"100",  //  Available Amount
     "withdrawable":"100",// Transferable
     "collateral":false,// Collateral
+    "discountForMargin":"1", // optional col ,discount for margin,if the asset support discount
+    "discountForFee":"1" // optional col, discount for fee,if the asset support discount
   }
 }
 ```
@@ -2812,8 +2822,9 @@ wss://u-stream.ktx.com
   "initMargin":"0.1", // Start margin rate
   "maintMargin": "0.005", // Maintain the margin rate
   "posMargin": "0", // Press margin
-  "orderMargin":"1009.8990000" // Entrustment deposit
-}
+  "orderMargin":"1009.8990000", // Entrustment deposit
+  "closableQty": '0' // closable quantity
+  
 }
 ```
 ## Order
@@ -2824,7 +2835,7 @@ wss://u-stream.ktx.com
 {
 "stream": "order",
 "data":{
-    "orderId": "4611767382287843330", // Order id
+      "orderId": "4611767382287843330", // Order id
       "clientOrderId": "", // Custom ID
       "createTime": "1733390630904", // Creation time
       "Product": "BTC_USDT", // Transaction to the code to the code
@@ -2844,7 +2855,10 @@ wss://u-stream.ktx.com
       "action": "unknown", // position behavior
       "status": "Filled", // Order status
       "executedQty": "0.01", //
-      "Profit": "0", // return
+      "profit": "0", // profit
+      "origin":0, // origin         
+      "brokerId":0, // broker id     
+      "update_id":'1125899907137993336', // update id
       "executedCost": "103", // The transaction value has
       "fillCount": 1, // Number of transactions
       "fills": [// transaction details
