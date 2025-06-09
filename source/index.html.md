@@ -1855,6 +1855,7 @@ if __name__ == '__main__':
   "postOnly": false,
   "positionMerge": "None", // position mode None divide the position Long merged multi
   "positionId": 0, // Submitted position id
+  "marginMethod": "cross", // margin method
   "close": false, // Is it a flat order
   "leverage": 0, // Leverage multiple
   "action": "unknown", // position behavior
@@ -1992,6 +1993,7 @@ if __name__ == '__main__':
     "postOnly": false,
     "positionMerge": "None", // position mode None divide the position Long merged multi
     "positionId": 0, // Submitted position id
+    "marginMethod": "cross", // margin method
     "close": false, // Is it a flat order
     "leverage": 0, // Leverage multiple
     "action": "unknown", // position behavior
@@ -2155,6 +2157,7 @@ if __name__ == '__main__':
     "postOnly": false,
     "positionMerge": "None", // position mode None divide the position Long merged multi
     "positionId": 0, // Submitted position id
+    "marginMethod": "cross", // margin method
     "close": false, // Is it a flat order
     "leverage": 0, // Leverage multiple
     "action": "unknown", // position behavior
@@ -2853,6 +2856,7 @@ wss://u-stream.ktx.com
       "postOnly": false,
       "positionMerge": "None", // position mode None divide the position Long merged multi
       "positionId": 0, // Submitted position id
+      "marginMethod": "cross", // margin method
       "close": false, // Is it a flat order
       "leverage": 0, // Leverage multiple
       "action": "unknown", // position behavior
