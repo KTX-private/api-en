@@ -779,12 +779,12 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <tr>
 <td>market</td>
 <td>string</td>
-<td>Yes</td>
-<td>trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract</td>
+<td>No</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract</td>
 </tr>
 <tr>
 <td>Symbol</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Transaction to code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
@@ -880,23 +880,23 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <tr>
 <td>market</td>
 <td>string</td>
-<td>Yes</td>
-<td>trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract</td>
+<td>No</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract</td>
 </tr>
 <tr>
-<td>Symbol</td>
-<td>String</td>
+<td>symbol</td>
+<td>string</td>
 <td>Yes</td>
 <td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 <tr>
-<td>Level</td>
+<td>level</td>
 <td>int32</td>
 <td>No</td>
 <td>How many level depth is specified? <br/> Effective value 1, 2, 5, 10, 20, 50, 100, 500, 1000 <br/> The default value 100</td>
 </tr>
 <tr>
-<td>Price_scale</td>
+<td>price_scale</td>
 <td>Integer</td>
 <td>No</td>
 <td>Specify the depth of the price by the price, such as the price of the specified transaction pair contains up to 4 digits <br/> Price_scale = 0 The price returned to the price up to 4 digits, <br/> price_scale = 1 to return to return. The price contains a maximum of 3 decimal numbers. The entrusted measurement is the price range of the price range 0.0010 and the price of <br/> price_scale = 2 to 2 contains up to 2 decimal numbers. br/&gt; price_scale = 3 to 3 to include a maximum number of decimal numbers. The sum of all delegations in 1.0000<br/>Valid values ​​0, 1, 2, 3, 4, 5<br/>Default value 0</td>
@@ -989,19 +989,19 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 </thead><tbody>
 <tr>
 <td>market</td>
-<td>String</td>
-<td>Yes</td>
-<td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
+<td>string</td>
+<td>No</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract</td>
 </tr>
 <tr>
 <td>symbol</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.</td>
 </tr>
 <tr>
 <td>time_frame</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M</td>
 </tr>
@@ -1108,9 +1108,9 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 </thead><tbody>
 <tr>
 <td>market</td>
-<td>String</td>
-<td>Yes</td>
-<td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
+<td>string</td>
+<td>No</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -1255,13 +1255,13 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 </thead><tbody>
 <tr>
 <td>market</td>
-<td>String</td>
-<td>Yes</td>
-<td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
+<td>string</td>
+<td>No</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract</td>
 </tr>
 <tr>
 <td>symbol</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT</td>
 </tr>
@@ -2215,7 +2215,7 @@ TICKER: The latest transaction information</p>
 </tr>
 <tr>
 <td>type</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Bill type transfer transfer, trade transaction, fee handling fee, refite system charged, funding funds fee</td>
 </tr>
@@ -2372,10 +2372,10 @@ TICKER: The latest transaction information</p>
 <td>Delegate type, valid value limit market</td>
 </tr>
 <tr>
-<td>Quantity</td>
+<td>quantity</td>
 <td>DECIMAL</td>
 <td>Yes</td>
-<td>The commission is positive and negative</td>
+<td>Delegate quantity</td>
 </tr>
 <tr>
 <td>market</td>
@@ -2397,7 +2397,7 @@ TICKER: The latest transaction information</p>
 </tr>
 <tr>
 <td>POSITIONMERGE</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Contract must be to merge multi -short merged empty</td>
 </tr>
@@ -2427,13 +2427,13 @@ TICKER: The latest transaction information</p>
 </tr>
 <tr>
 <td>Time_in_Force</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Effective time performance <br/> Effective value GTC, IOC <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC</td>
 </tr>
 <tr>
 <td>POSITIONID</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Warehouse ID</td>
 </tr>
@@ -2577,8 +2577,8 @@ If there are more than 20 transactions in the delegation, then the object only c
 </tr>
 </thead><tbody>
 <tr>
-<td>ID</td>
-<td>String</td>
+<td>id</td>
+<td>string</td>
 <td>Yes</td>
 <td>Entrusted ID <br/> The entrustment ID can be allocated by the exchange, <br/> can also be customized by users (using the client_order_id parameter when submitting the commission). When defining IDs, you need to add &quot;C:&quot; prefix before ID. <br/> For example: using a custom ID &quot;123&quot; when submitting commission, when obtaining the commission, you need to use &quot;C: 123&quot;.</td>
 </tr>
@@ -2725,13 +2725,13 @@ If there are more than 20 transactions in the delegation, then the object only c
 </thead><tbody>
 <tr>
 <td>market</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/></td>
 </tr>
 <tr>
 <td>Symbol</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter</td>
 </tr>
@@ -2761,7 +2761,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 </tr>
 <tr>
 <td>limit</td>
-<td>Long</td>
+<td>long</td>
 <td>No</td>
 <td>How many commissioneds are the specified?</td>
 </tr>
@@ -2901,13 +2901,13 @@ If there are more than 20 transactions in the delegation, then the object only c
 </thead><tbody>
 <tr>
 <td>market</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/></td>
 </tr>
 <tr>
 <td>Symbol</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter</td>
 </tr>
@@ -3011,13 +3011,13 @@ If there are more than 20 transactions in the delegation, then the object only c
 </thead><tbody>
 <tr>
 <td>id</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the &quot;c:&quot; prefix before the id. <br/>For example: the custom id &quot;123&quot; is used when submitting the delegation, and when revoking the delegation, &quot;c:123&quot; is required.</td>
 </tr>
 <tr>
 <td>market</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
 </tr>
@@ -3134,7 +3134,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 </tr>
 <tr>
 <td>Side</td>
-<td>String</td>
+<td>string</td>
 <td>No</td>
 <td>Buy or Sell</td>
 </tr>
@@ -3365,7 +3365,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 </thead><tbody>
 <tr>
 <td>market</td>
-<td>String</td>
+<td>string</td>
 <td>Yes</td>
 <td>Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract</td>
 </tr>
