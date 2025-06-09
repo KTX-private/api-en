@@ -2160,7 +2160,10 @@ if __name__ == '__main__':
     "action": "unknown", // position behavior
     "status": "accepted", // Order status
     "executedQty": "0", // executed quantity
-    "Profit": "0", // return
+    "profit": "0", // return
+    "origin":0, // origin         
+    "brokerId":0, // broker id     
+    "update_id":'1125899907137993336', // update id
     "executedCost": "103", // The transaction value has
     "fillCount": 1, // Number of transactions
     "fills": [],// transaction details
@@ -2817,7 +2820,7 @@ wss://u-stream.ktx.com
   "quantity": "0", // quantity
   "entryPrice":"0", // Average price for opening positions
   "mergeMode": "None", // position mode
-  "marginMethod":"isolate",//Position mode
+  "marginMethod":"isolate",//margin mode
   "leverage":"10.0", // bar
   "initMargin":"0.1", // Start margin rate
   "maintMargin": "0.005", // Maintain the margin rate
