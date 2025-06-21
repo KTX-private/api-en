@@ -1308,7 +1308,7 @@ if __name__ == '__main__':
 
 * Request method get
 * Request path /v1/trade/accounts
-* Permissions: View, Trade
+* Permissions: View
 * Request parameters
 
 
@@ -1407,7 +1407,7 @@ if __name__ == '__main__':
 
 * Request method GET
 * Request path /v1/main/accounts
-* Permissions: Trade
+* Permissions: View
 * Request parameters
 
 
@@ -1430,7 +1430,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 const param = {
     symbol:'USDT',
-    amount: 10
+    amount: 10,
+    type:1
 }
 
 let bodyStr = JSON.stringify(param);
@@ -1474,7 +1475,8 @@ def do_request():
 
     param = {
         'symbol': 'USDT',
-        'amount': 10
+        'amount': 10,
+        'type':1,
     }
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
@@ -1508,10 +1510,11 @@ if __name__ == '__main__':
 * Request parameters
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                               |
-| ---------- |----------------|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol | string  | Yes | Asset code, such as BTC, ETH                                                                                                                              |
-| amount | number  | Yes | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                           |
+|----------------|----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol         | string         | Yes | Asset code, such as BTC, ETH                                                                                                                          |
+| amount         | number         | Yes | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
+| type           | string         | Yes | If type is WALLET_TRADE ,transfer from main account to trade account <br/> If type is TRADE_WALLET , transfer from trade account to main account      |
 
 
 ## Get an account's ledger
@@ -1721,11 +1724,10 @@ if __name__ == '__main__':
   "quantity": "0.01", // quantity
   "stf": "disabled",
   "price": "10300", // The commission price
-  "visibleQty": "0.01",
   "timeInforce": "GTC",
   "cancelAfter": 0,
   "postOnly": false,
-  "positionMerge": "None", // position mode None divide the position Long merged multi
+  "positionMerge": "long", // position mode  long or short
   "positionId": 0, // Submitted position id
   "close": false, // Is it a flat order
   "leverage": 0, // Leverage multiple
@@ -1733,7 +1735,7 @@ if __name__ == '__main__':
   "status": "accepted", // Order status
   "executedQty": "0", // executed quantity
   "Profit": "0", // return
-  "executedCost": "103", // The transaction value has
+  "executedCost": "0", // The transaction value has
   "fillCount": 1, // Number of transactions
   "fills": [],// transaction details
   "fees": [],// handle fee
@@ -1843,17 +1845,16 @@ if __name__ == '__main__':
   "orderId": "4611767382287843330", // Order id
   "clientOrderId": "", // Custom ID
   "createTime": "1733390630904", // Creation time
-  "product": "BTC_USDT", // Transaction to the code to the code
+  "product": "BTC_USDT_SWAP", // Transaction to the code to the code
   "type": "Limit", // Order type
   "side": "Buy", // Trading direction
   "quantity": "0.01", // quantity
   "stf": "disabled",
   "price": "10300", // The commission price
-  "visibleQty": "0.01",
   "timeInforce": "GTC",
   "cancelAfter": 0,
   "postOnly": false,
-  "positionMerge": "None", // position mode None divide the position Long merged multi
+  "positionMerge": "long", // position mode  long or short
   "positionId": 0, // Submitted position id
   "marginMethod": "cross", // margin method
   "close": false, // Is it a flat order
@@ -1875,6 +1876,7 @@ if __name__ == '__main__':
       "quantity": "0.01",
       "profit": "0",
       "taker": false,
+      "side":"buy",
       "fees": [
         {
           "amount": "0.103", // Number of assets
@@ -1899,7 +1901,7 @@ if __name__ == '__main__':
 
 * Request method get
 * Request path /v1/order
-* Permissions: View, Trade
+* Permissions: View
 * Request parameters
 
 
@@ -1981,17 +1983,16 @@ if __name__ == '__main__':
     "orderId": "4611767382287843330", // Order id
     "clientOrderId": "", // Custom ID
     "createTime": "1733390630904", // Creation time
-    "product": "BTC_USDT", // Transaction to the code to the code
+    "product": "BTC_USDT_SWAP", // Transaction to the code to the code
     "type": "Limit", // Order type
     "side": "Buy", // Trading direction
     "quantity": "0.01", // quantity
     "stf": "disabled",
     "price": "10300", // The commission price
-    "visibleQty": "0.01",
     "timeInforce": "GTC",
     "cancelAfter": 0,
     "postOnly": false,
-    "positionMerge": "None", // position mode None divide the position Long merged multi
+    "positionMerge": "long", // position mode  long or short
     "positionId": 0, // Submitted position id
     "marginMethod": "cross", // margin method
     "close": false, // Is it a flat order
@@ -2013,6 +2014,7 @@ if __name__ == '__main__':
         "quantity": "0.01",
         "profit": "0",
         "taker": false,
+        "side":"buy",
         "fees": [
           {
             "amount": "0.103", // Number of assets
@@ -2145,17 +2147,16 @@ if __name__ == '__main__':
     "orderId": "4611767382287843330", // Order id
     "clientOrderId": "", // Custom ID
     "createTime": "1733390630904", // Creation time
-    "product": "BTC_USDT", // Transaction to the code to the code
+    "product": "BTC_USDT_SWAP", // Transaction to the code to the code
     "type": "Limit", // Order type
     "side": "Buy", // Trading direction
     "quantity": "0.01", // quantity
     "stf": "disabled",
     "price": "10300", // The commission price
-    "visibleQty": "0.01",
     "timeInforce": "GTC",
     "cancelAfter": 0,
     "postOnly": false,
-    "positionMerge": "None", // position mode None divide the position Long merged multi
+    "positionMerge": "long", // position mode  long or short
     "positionId": 0, // Submitted position id
     "marginMethod": "cross", // margin method
     "close": false, // Is it a flat order
@@ -2167,7 +2168,7 @@ if __name__ == '__main__':
     "origin":0, // origin         
     "brokerId":0, // broker id     
     "update_id":'1125899907137993336', // update id
-    "executedCost": "103", // The transaction value has
+    "executedCost": "0", // The transaction value has
     "fillCount": 1, // Number of transactions
     "fills": [],// transaction details
     "fees": [],// handle fee
@@ -2303,7 +2304,8 @@ const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 const param = {
-    symbol:'BTC_USDT'
+    symbol:'BTC_USDT',
+    market:'spot'
 }
 
 let bodyStr = JSON.stringify(param);
@@ -2346,7 +2348,9 @@ SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 def do_request():
 
     param = {
-        'symbol': 'BTC_USDT'
+        'symbol': 'BTC_USDT',
+        'market': 'spot'
+
     }
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
@@ -2467,10 +2471,10 @@ if __name__ == '__main__':
     "symbol": "BTC_USDT_SWAP", // symbol
     "leverage": "10.0", // leverage
     "maintMargin": "0.0050000000", // maint margin rate
-    "quantity": "-0.100", // margin quantity short 0.1
+    "quantity": "0.100", // margin quantity short 0.1
     "posMargin": "1093.989", // margin
     "marginMethod": "cross", // margin method 
-    "closableQty": "-0.100", // closable quantity
+    "closableQty": "0.100", // closable quantity
     "initMargin": "0.1000000000", // init margin rate
     "id": "1125899906842624158", // id
     "orderMargin": "0",  // order margin
@@ -2570,9 +2574,11 @@ if __name__ == '__main__':
 [
   {
   "product":"BTC_USDT_SWAP", // Transaction pair code
+  "side":"buy",
   "fees": [{"amount": "10", "asset": "usdt", "value": "10"}], // fees
   "quantity": "0.01", // The number of transactions
   "orderId":"4611772879845982371", // Order id
+  "fillId":"4611471874845582393", // Fill id
   "price":"1000000", // Transaction price
   "time":"1733541360859", // Transaction time
   "taker":true, // Is it a order
@@ -2598,8 +2604,8 @@ if __name__ == '__main__':
 | symbol         | string         | No | Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id |
 | start_time     | int64          | No | The earliest time of the return transaction records                                                                                                                                                                        |
 | end_time       | int64          | No | Limited to return the latest time of transaction record                                                                                                                                                                    |
-| BeFore         | int64          | No | Transaction record ID <br/> Limited to return the maximum ID of the transaction record                                                                                                                                     |
-| after          | int64          | No | Transaction record id<br/>Limit the minimum id to return transaction record                                                                                                                                                |
+| beFore         | int64          | No | fillId <br/> Limited to return the maximum ID of the transaction record                                                                                                                                                    |
+| after          | int64          | No | fillId<br/>Limit the minimum id to return transaction record                                                                                                                                                |
 | limit          | int32          | No | Limited to the maximum number of returned results<br/>Default value 100                                                                                                                                                    |
 
 * The parameter combination and data source supported by the interface
@@ -2822,7 +2828,7 @@ wss://u-stream.ktx.com
   "symbol": "BTC_USDT_SWAP", // Transaction to the code to the code
   "quantity": "0", // quantity
   "entryPrice":"0", // Average price for opening positions
-  "mergeMode": "None", // position mode
+  "mergeMode": "long", // position mode long or short
   "marginMethod":"isolate",//margin mode
   "leverage":"10.0", // bar
   "initMargin":"0.1", // Start margin rate
@@ -2844,17 +2850,16 @@ wss://u-stream.ktx.com
       "orderId": "4611767382287843330", // Order id
       "clientOrderId": "", // Custom ID
       "createTime": "1733390630904", // Creation time
-      "Product": "BTC_USDT", // Transaction to the code to the code
+      "Product": "BTC_USDT_SWAP", // Transaction to the code to the code
       "type": "Limit", // Order type
       "side": "Buy", // Trading direction
       "quantity": "0.01", // quantity
       "stf": "disabled",
       "price": "10300", // The commission price
-      "visibleQty": "0.01",
       "timeInforce": "GTC",
       "cancelAfter": 0,
       "postOnly": false,
-      "positionMerge": "None", // position mode None divide the position Long merged multi
+      "positionMerge": "long", // position mode  long or short
       "positionId": 0, // Submitted position id
       "marginMethod": "cross", // margin method
       "close": false, // Is it a flat order
