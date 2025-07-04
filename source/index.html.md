@@ -1605,8 +1605,7 @@ if __name__ == '__main__':
 
 * Request method get
 * Request path /v1/ledgers
-* Permanent: View, Trade
-* Request parameters (need sorting)
+* Permanent: View
 
 
 | Parameter name | Parameter type | Whether to pass it? | Description |
