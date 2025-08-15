@@ -2398,16 +2398,16 @@ TICKER: The latest transaction information</p>
 <td>Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate</td>
 </tr>
 <tr>
-<td>Price</td>
+<td>price</td>
 <td>DECIMAL</td>
 <td>No</td>
 <td>Entrusted price limit</td>
 </tr>
 <tr>
-<td>POSITIONMERGE</td>
+<td>positionMerge</td>
 <td>string</td>
 <td>No</td>
-<td>Contract must be to merge multi -short merged empty</td>
+<td>long or short exp:open long(positionMerge=long,side=buy),close long(positionMerge=long,side=sell),open short(positionMerge=short,side=buy),close short(positionMerge=short,side=sell)</td>
 </tr>
 <tr>
 <td>marginMethod</td>
@@ -2434,13 +2434,13 @@ TICKER: The latest transaction information</p>
 <td>...</td>
 </tr>
 <tr>
-<td>Time_in_Force</td>
+<td>time_in_Force</td>
 <td>string</td>
 <td>No</td>
 <td>Effective time performance <br/> Effective value GTC, IOC <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC</td>
 </tr>
 <tr>
-<td>POSITIONID</td>
+<td>positionId</td>
 <td>string</td>
 <td>No</td>
 <td>Warehouse ID</td>
