@@ -30,7 +30,7 @@ code_clipboard: true
 **API uses the following Base URL:**
 
 * Market Data Endpoints: https://api.ktx.com/api
-* User Data Endpoints: https://api.ktx.com/papi
+* User Data Endpoints: https://api.ktx.com/papi (the old version url is end with /api, should use /papi)
 * Market Data Stream: wss://m-stream.ktx.com
 * User Data Stream: wss://u-stream.ktx.com
 
