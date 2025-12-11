@@ -2255,6 +2255,34 @@ TICKER: The latest transaction information</p>
     <span class="na">market</span><span class="p">:</span><span class="dl">'</span><span class="s1">spot</span><span class="dl">'</span><span class="p">,</span>
 <span class="p">}</span>
 
+<span class="cm">/* 
+mini trade 
+open long example
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'buy',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+}
+close long example
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'sell',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+  positionId:1125899906842649789
+  close:true
+}
+*/</span>
+
 <span class="kd">let</span> <span class="nx">bodyStr</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">bodyStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
@@ -2301,6 +2329,33 @@ TICKER: The latest transaction information</p>
       <span class="s">'type'</span><span class="p">:</span><span class="s">'limit'</span><span class="p">,</span>
       <span class="s">'market'</span><span class="p">:</span><span class="s">'spot'</span><span class="p">,</span>
     <span class="p">}</span>
+    <span class="s">"""
+    mini trade 
+    open long example
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'buy',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+    }
+    close long example
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'sell',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+      'positionId':1125899906842649789
+      'close':true
+    }
+    """</span>
     <span class="n">body_str</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">body_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -2331,7 +2386,8 @@ TICKER: The latest transaction information</p>
   </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
   </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
-  </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GTC"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">mini</span><span class="w"> </span><span class="err">trade</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w">  </span><span class="err">long</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">short</span><span class="w">
@@ -2420,6 +2476,12 @@ TICKER: The latest transaction information</p>
 <td>string</td>
 <td>No</td>
 <td>Contract must be isolate position by position, cross full position</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>bool</td>
+<td>No</td>
+<td>mini trade ,if is true , must be positionMerge=none&amp;&amp;marginMethod=isolate&amp;&amp;type=limit</td>
 </tr>
 <tr>
 <td>leverage</td>
@@ -2532,7 +2594,8 @@ If there are more than 20 transactions in the delegation, then the object only c
   </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
   </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
-  </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GTC"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">mini</span><span class="w"> </span><span class="err">trade</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="kc">false</span><span class="w">
   </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w">  </span><span class="err">long</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">short</span><span class="w">
@@ -2676,7 +2739,8 @@ If there are more than 20 transactions in the delegation, then the object only c
     </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
     </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
-    </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GTC"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">mini</span><span class="w"> </span><span class="err">trade</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="kc">false</span><span class="w">
     </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w">  </span><span class="err">long</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">short</span><span class="w">
@@ -2884,7 +2948,8 @@ If there are more than 20 transactions in the delegation, then the object only c
     </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
     </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
-    </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GTC"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">mini</span><span class="w"> </span><span class="err">trade</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="kc">false</span><span class="w">
     </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w">  </span><span class="err">long</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">short</span><span class="w">
@@ -3674,7 +3739,8 @@ After successfully establishing a connection, the client will receive informatio
       </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">quantity</span><span class="w">
       </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">The</span><span class="w"> </span><span class="err">commission</span><span class="w"> </span><span class="err">price</span><span class="w">
-      </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GTC"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"timeInforce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">is</span><span class="w"> </span><span class="err">mini</span><span class="w"> </span><span class="err">trade</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="kc">false</span><span class="w">
       </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">position</span><span class="w"> </span><span class="err">mode</span><span class="w">  </span><span class="err">long</span><span class="w"> </span><span class="err">or</span><span class="w"> </span><span class="err">short</span><span class="w">
