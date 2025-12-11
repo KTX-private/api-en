@@ -1643,6 +1643,34 @@ const param = {
     market:'spot',
 }
 
+/* 
+mini trade 
+open long example
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'buy',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+}
+close long example
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'sell',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+  positionId:1125899906842649789
+  close:true
+}
+*/
+
 let bodyStr = JSON.stringify(param);
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
@@ -1692,6 +1720,33 @@ def do_request():
       'type':'limit',
       'market':'spot',
     }
+    """
+    mini trade 
+    open long example
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'buy',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+    }
+    close long example
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'sell',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+      'positionId':1125899906842649789
+      'close':true
+    }
+    """
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
@@ -1723,7 +1778,8 @@ if __name__ == '__main__':
   "quantity": "0.01", // quantity
   "stf": "disabled",
   "price": "10300", // The commission price
-  "timeInforce": "GTC",
+  "timeInforce": "gtc",
+  "mini":"false", // is mini trade true or false
   "cancelAfter": 0,
   "postOnly": false,
   "positionMerge": "long", // position mode  long or short
@@ -1754,7 +1810,7 @@ if __name__ == '__main__':
 | Parameter Name  | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                            |
 |-----------------|----------------|---------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | symbol          | string         | Yes                       | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                 |
-| side            | string  | Yes                       | buy or sell                                                                                                                                                                                                                                                                                                                                                                                                            |
+| side            | string         | Yes                       | buy or sell                                                                                                                                                                                                                                                                                                                                                                                                            |
 | type            | string         | Yes                       | Delegate type, valid value limit market                                                                                                                                                                                                                                                                                                                                                                                |
 | quantity        | DECIMAL        | Yes                       | Delegate quantity                                                                                                                                                                                                                                                                                                                                                                                                      |
 | market          | string         | Yes                       | Must spot spot, lpc U-standard perpetual                                                                                                                                                                                                                                                                                                                                                                               |
@@ -1762,6 +1818,7 @@ if __name__ == '__main__':
 | price           | DECIMAL        | No                        | Entrusted price limit                                                                                                                                                                                                                                                                                                                                                                                                  |
 | positionMerge   | string         | No                        | long or short exp:open long(positionMerge=long,side=buy),close long(positionMerge=long,side=sell),open short(positionMerge=short,side=buy),close short(positionMerge=short,side=sell)                                                                                                                                                                                                                                  |
 | marginMethod    | string         | No                        | Contract must be isolate position by position, cross full position                                                                                                                                                                                                                                                                                                                                                     |
+| mini            | bool           | No                        | mini trade ,if is true , must be positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                                                                                                                                                                                                                                                                                                       |
 | leverage        | int            | No                        | Contract must be leverage multiple                                                                                                                                                                                                                                                                                                                                                                                     
 | close           | bool           | No                        | The contract must be true to close the warehouse receipt, false to open the warehouse receipt                                                                                                                                                                                                                                                                                                                          |
 | post_only       | bool           | No                        | ...                                                                                                                                                                                                                                                                                                                                                                                                                    |
@@ -1851,7 +1908,8 @@ if __name__ == '__main__':
   "quantity": "0.01", // quantity
   "stf": "disabled",
   "price": "10300", // The commission price
-  "timeInforce": "GTC",
+  "timeInforce": "gtc",
+  "mini":"false", // is mini trade true or false
   "cancelAfter": 0,
   "postOnly": false,
   "positionMerge": "long", // position mode  long or short
@@ -1989,7 +2047,8 @@ if __name__ == '__main__':
     "quantity": "0.01", // quantity
     "stf": "disabled",
     "price": "10300", // The commission price
-    "timeInforce": "GTC",
+    "timeInforce": "gtc",
+    "mini":"false", // is mini trade true or false
     "cancelAfter": 0,
     "postOnly": false,
     "positionMerge": "long", // position mode  long or short
@@ -2153,7 +2212,8 @@ if __name__ == '__main__':
     "quantity": "0.01", // quantity
     "stf": "disabled",
     "price": "10300", // The commission price
-    "timeInforce": "GTC",
+    "timeInforce": "gtc",
+    "mini":"false", // is mini trade true or false
     "cancelAfter": 0,
     "postOnly": false,
     "positionMerge": "long", // position mode  long or short
@@ -2856,7 +2916,8 @@ wss://u-stream.ktx.com
       "quantity": "0.01", // quantity
       "stf": "disabled",
       "price": "10300", // The commission price
-      "timeInforce": "GTC",
+      "timeInforce": "gtc",
+      "mini":"false", // is mini trade true or false
       "cancelAfter": 0,
       "postOnly": false,
       "positionMerge": "long", // position mode  long or short
