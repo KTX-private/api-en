@@ -1320,6 +1320,304 @@ if __name__ == '__main__':
 
 Cache
 
+## Get Coins
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/coins`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/coins'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "general_name": "USDT", // asset name
+    "valid_decimals": 8, // asset decimals
+    "enable_transfer": 1, // allow transfer
+    "chains": [
+      {
+        "coin_symbol": "USDT", // coin symbol
+        "chain_type": "Tron (TRC20)", // network
+        "enable_withdraw": 1, // allow withdraw
+        "enable_deposit": 1, // allow deposit
+        "original_decimals": 6 // decimal
+      },
+      {
+        "coin_symbol": "eUSDT",
+        "chain_type": "Ethereum (ERC20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      },
+      {
+        "coin_symbol": "bUSDT",
+        "chain_type": "BNB Smart Chain (BEP20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 18
+      },
+      {
+        "coin_symbol": "sUSDT",
+        "chain_type": "Solana",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      }
+    ]
+  } 
+]
+```
+
+**Get coins**
+
+* Request method get
+* Request path /v1/coins
+* Request parameters
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description |
+| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
+
+## Get Addr
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    coin_symbol:'sUSDT'
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/depositAddr`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'coin_symbol': 'sUSDT'
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/depositAddr'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "addr": "74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw", // addr
+    "coin_id": "100", // coin id 
+    "coin_symbol": "sUSDT",// coin symbol
+    "chain_type":"Solana", // network
+    "general_name": "USDT" ,// asset name
+    "mx_uid": "de4a8cdc-6be5-3253-9f34-d2c61a89286f"
+  }
+]
+```
+
+**Get Addr**
+
+* Request method post
+* Request path /v1/depositAddr
+* Permissions: View
+* Request parameters
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description |
+|-------------| ---------- |------|---------------------------------------------|
+| coin_symbol | string | No    | coin_symbol from /v1/coins ,like USDT,sUSDT,BTC ... |
+
+## Withdraw
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    coin_symbol:"BTC",
+    amount:"0.001",
+    addr:"bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm"
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/withdraw`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'coin_symbol':'BTC',
+        'amount':'0.001',
+        'addr':'bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm'
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/withdraw'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "id": 624, // withdraw id
+    "to_address": "bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm", // to address
+    "amount_real": "9.00000000", // arrive amount
+    "amount": "10.00000000",  // amount
+    "fee": "1.00000000",  // fee
+    "chain_type": "Bitcoin", // network
+    "coin_symbol": 'BTC' // coin symbol
+  }
+]
+```
+
+**Withdraw**
+
+* Request method post
+* Request path /v1/withdraw
+* Permissions: Withdraw
+* Request parameters
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description |
+|-------------|--------|------|-----------------------------------------------------|
+| coin_symbol | string | No    | coin_symbol from /v1/coins ,like USDT,sUSDT,BTC ... |
+| addr        | string | No    | to addr                                             |
+| amount      | number | No    | amount                                              |
+| memo        | string | No   | memo                                                |
 
 ## Get Main Account Asset
 
