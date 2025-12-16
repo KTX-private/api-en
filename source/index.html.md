@@ -287,10 +287,94 @@ if __name__ == '__main__':
 ```
 
 
+## Get Coins
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/coins`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/coins'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "general_name": "USDT", // asset name
+    "valid_decimals": 8, // asset decimals
+    "enable_transfer": 1, // allow transfer
+    "chains": [
+      {
+        "coin_symbol": "USDT", // coin symbol
+        "chain_type": "Tron (TRC20)", // network
+        "enable_withdraw": 1, // allow withdraw
+        "enable_deposit": 1, // allow deposit
+        "original_decimals": 6 // decimal
+      },
+      {
+        "coin_symbol": "eUSDT",
+        "chain_type": "Ethereum (ERC20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      },
+      {
+        "coin_symbol": "bUSDT",
+        "chain_type": "BNB Smart Chain (BEP20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 18
+      },
+      {
+        "coin_symbol": "sUSDT",
+        "chain_type": "Solana",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      }
+    ]
+  } 
+]
+```
+
+**Get coins**
+
+* Request method get
+* Request path /v1/coins
+* Request parameters
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description |
+| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
 
 
 
-## Get Listed Pairs
+## Get products
 
 > Request
 
@@ -343,7 +427,7 @@ if __name__ == '__main__':
 ]
 ```
 
-**Get the currency list**
+**Get the product list**
 
 * Request method get
 * Request path /v1/products
@@ -1320,90 +1404,6 @@ if __name__ == '__main__':
 
 Cache
 
-## Get Coins
-
-> Request
-
-```javascript
-let request = require("request");
-const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/coins`
-request.get(url,
-        function optionalCallback(err, httpResponse, body) {
-          if (err) {
-            return console.error('upload failed:', err);
-          }
-
-          console.log(body)
-
-        });
-```
-
-```python
-import requests
-
-END_POINT = 'https://api.ktx.com/api';
-
-def do_request():
-    path = '/v1/coins'
-    resp = requests.get(END_POINT + path)
-    print(resp.text)
-  
-if __name__ == '__main__':
-    do_request()
-```
-
-> Response
-
-```json
-[
-  {
-    "general_name": "USDT", // asset name
-    "valid_decimals": 8, // asset decimals
-    "enable_transfer": 1, // allow transfer
-    "chains": [
-      {
-        "coin_symbol": "USDT", // coin symbol
-        "chain_type": "Tron (TRC20)", // network
-        "enable_withdraw": 1, // allow withdraw
-        "enable_deposit": 1, // allow deposit
-        "original_decimals": 6 // decimal
-      },
-      {
-        "coin_symbol": "eUSDT",
-        "chain_type": "Ethereum (ERC20)",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
-        "original_decimals": 6
-      },
-      {
-        "coin_symbol": "bUSDT",
-        "chain_type": "BNB Smart Chain (BEP20)",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
-        "original_decimals": 18
-      },
-      {
-        "coin_symbol": "sUSDT",
-        "chain_type": "Solana",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
-        "original_decimals": 6
-      }
-    ]
-  } 
-]
-```
-
-**Get coins**
-
-* Request method get
-* Request path /v1/coins
-* Request parameters
-
-
-| Parameter name | Parameter type | Whether to pass it? | Description |
-| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
 
 ## Get Addr
 
@@ -1613,11 +1613,12 @@ if __name__ == '__main__':
 
 
 | Parameter name | Parameter type | Whether to pass it? | Description |
-|-------------|--------|------|-----------------------------------------------------|
-| coin_symbol | string | No    | coin_symbol from /v1/coins ,like USDT,sUSDT,BTC ... |
-| addr        | string | No    | to addr                                             |
-| amount      | number | No    | amount                                              |
-| memo        | string | No   | memo                                                |
+|----------------|--------|---------------------|-----------------------------------------------------|
+| coin_symbol    | string | No                  | coin_symbol from /v1/coins ,like USDT,sUSDT,BTC ... |
+| addr           | string | No                  | to addr                                             |
+| amount         | number | No                  | amount                                              |
+| memo           | string | No                  | memo                                                |
+| withdraw_id    | string | No                  | user define id                                                                                                                                        |
 
 ## Get Main Account Asset
 
@@ -1779,7 +1780,7 @@ def do_request():
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
-    path = '/v1/tf/transfer'
+    path = '/v1/transfer'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
@@ -1810,9 +1811,116 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                           |
 |----------------|----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol         | string         | Yes | Asset code, such as BTC, ETH                                                                                                                          |
-| amount         | number         | Yes | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
-| type           | string         | Yes | If type is WALLET_TRADE ,transfer from main account to trade account <br/> If type is TRADE_WALLET , transfer from trade account to main account      |
+| symbol         | string         | Yes                 | Asset code, such as BTC, ETH                                                                                                                          |
+| amount         | number         | Yes                 | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
+| type           | string         | Yes                 | If type is WALLET_TRADE ,transfer from main account to trade account <br/> If type is TRADE_WALLET , transfer from trade account to main account      |
+| transfer_id | string | No                  | user define id                                                                                                                                        |
+
+## Sub Account Asset Transfer
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+  'symbol':'BTC',
+  'amount':'0.001',
+  'sub_user_id':30000416,
+  'side':'in',
+  'transfer_id':'userdefineid001',
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/subaccount/transfer`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/api'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'symbol':'BTC',
+        'amount':'0.001',
+        'sub_user_id':30000416,
+        'side':'in',
+        'transfer_id':'userdefineid001',
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/transfer'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{}
+```
+
+**Sub account Asset Tranfer**
+
+* Request method POST
+* Request path /v1/subaccount/transfer
+* Permissions: Trade
+* Request parameters
+
+
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                           |
+|----------------|----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol         | string         | Yes                 | Asset code, such as BTC, ETH                                                                                                                          |
+| amount         | number         | Yes                 | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
+| sub_user_id      | number | Yes                 | sub account id                                                                                                                                        |
+| side        | string | Yes                 | in mean transfer in sub account  and out mean transfer from sub account                                                                               |
+| transfer_id | string | No                  | user define id                                                                                                                                        |
 
 
 ## Get an account's ledger
