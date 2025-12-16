@@ -325,7 +325,7 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "general_name": "USDT", // asset name
+    "asset": "USDT", // asset name
     "valid_decimals": 8, // asset decimals
     "enable_transfer": 1, // allow transfer
     "chains": [
