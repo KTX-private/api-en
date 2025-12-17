@@ -1798,7 +1798,10 @@ if __name__ == '__main__':
 > Response
 
 ```json
-{}
+{
+  "asset": "BTC",
+  "balance": "1.123"
+}
 ```
 
 **Asset Tranfer**
@@ -1903,7 +1906,10 @@ if __name__ == '__main__':
 > Response
 
 ```json
-{}
+{
+  "asset": "BTC",
+  "balance": "1.123"
+}
 ```
 
 **Sub account Asset Tranfer**
