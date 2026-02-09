@@ -1398,7 +1398,7 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description |
 | ---------- | ---------- | ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------|
-| asset | string | No | Asset code, such as BTC, ETH, etc.<br/> Multiple asset codes can be specified in the following two forms<br/>1. /v1/accounts?asset=BTC,ETH<br/> 2. /v1/accounts?asset=BTC&asset=ETH <br/> If the asset parameter is not specified, the information of all assets will be returned |
+| asset | string | No | Asset code, such as BTC, ETH, etc.<br/> Multiple asset codes can be specified in the following two forms<br/>1. accounts?asset=BTC,ETH<br/> 2. accounts?asset=BTC&asset=ETH <br/> If the asset parameter is not specified, the information of all assets will be returned |
 
 * Data Source
 
