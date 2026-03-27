@@ -2335,7 +2335,7 @@ TICKER: The latest transaction information</p>
 <span class="kd">const</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">symbol</span><span class="p">:</span><span class="dl">'</span><span class="s1">USDT</span><span class="dl">'</span><span class="p">,</span>
     <span class="na">amount</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-    <span class="na">type</span><span class="p">:</span><span class="mi">1</span>
+    <span class="na">type</span><span class="p">:</span><span class="dl">'</span><span class="s1">WALLET_TRADE</span><span class="dl">'</span>
 <span class="p">}</span>
 
 <span class="kd">let</span> <span class="nx">bodyStr</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
@@ -2368,7 +2368,7 @@ TICKER: The latest transaction information</p>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/papi'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -2377,7 +2377,7 @@ TICKER: The latest transaction information</p>
     <span class="n">param</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'symbol'</span><span class="p">:</span> <span class="s">'USDT'</span><span class="p">,</span>
         <span class="s">'amount'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-        <span class="s">'type'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+        <span class="s">'type'</span><span class="p">:</span><span class="s">'WALLET_TRADE'</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">body_str</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
