@@ -1730,7 +1730,7 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 const param = {
     symbol:'USDT',
     amount: 10,
-    type:1
+    type:'WALLET_TRADE'
 }
 
 let bodyStr = JSON.stringify(param);
@@ -1766,7 +1766,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1775,7 +1775,7 @@ def do_request():
     param = {
         'symbol': 'USDT',
         'amount': 10,
-        'type':1,
+        'type':'WALLET_TRADE',
     }
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
