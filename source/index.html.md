@@ -2333,7 +2333,8 @@ if __name__ == '__main__':
   "status": "Filled", // Order status
   "executedQty": "0.01", //
   "profit": "0", // profit
-  "origin":0, // origin         
+  "origin":0, // origin    
+  "markPrice": "10000", // Represents the liquidation price when origin = -1
   "brokerId":0, // broker id     
   "update_id":'1125899907137993336', // update id
   "executedCost": "103", // The transaction value has
@@ -2472,7 +2473,8 @@ if __name__ == '__main__':
     "status": "Filled", // Order status
     "executedQty": "0.01", //
     "profit": "0", // profit
-    "origin":0, // origin         
+    "origin":0, // origin   
+    "markPrice": "10000", // Represents the liquidation price when origin = -1
     "brokerId":0, // broker id     
     "update_id":'1125899907137993336', // update id
     "executedCost": "103", // The transaction value has
@@ -3341,7 +3343,8 @@ wss://u-stream.ktx.com
       "status": "Filled", // Order status
       "executedQty": "0.01", //
       "profit": "0", // profit
-      "origin":0, // origin         
+      "origin":0, // origin 
+      "markPrice": "10000", // Represents the liquidation price when origin = -1
       "brokerId":0, // broker id     
       "update_id":'1125899907137993336', // update id
       "executedCost": "103", // The transaction value has
