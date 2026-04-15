@@ -2064,6 +2064,7 @@ const param = {
   quantity:'0.0001',
   type:'market',
   market:'lpc',
+  leverage:20,
   mini:true,
   positionMerge:'none',
   marginMethod:'isolate'
@@ -2075,6 +2076,7 @@ const param = {
   quantity:'0.0001',
   type:'market',
   market:'lpc',
+  leverage:20,
   mini:true,
   positionMerge:'none',
   marginMethod:'isolate'
@@ -2092,6 +2094,7 @@ const param = {
   type:'stop', // stop Loss
   trigger_price:'50000', // the price < last price
   market:'lpc',
+  leverage:20,
   positionMerge:'long',
   marginMethod:'cross'
   positionId:1125899906842649789
@@ -2105,6 +2108,7 @@ const param = {
   type:'take-profit', // take profit
   trigger_price:'100000', // the price > last price
   market:'lpc',
+  leverage:20,
   positionMerge:'long',
   marginMethod:'cross'
   positionId:1125899906842649789
@@ -2121,6 +2125,7 @@ const param = {
   price:'73816.6',
   type:'limit', 
   market:'lpc',
+  leverage:20,
   positionMerge:'long',
   marginMethod:'cross'
   close:false,
@@ -2192,6 +2197,7 @@ def do_request():
       'quantity':'0.0001',
       'type':'market',
       'market':'lpc',
+      'leverage':20,
       'mini':true
       'positionMerge':'none',
       'marginMethod':'isolate'
@@ -2203,6 +2209,7 @@ def do_request():
       'quantity':'0.0001',
       'type':'market',
       'market':'lpc',
+      'leverage':20,
       'mini':true
       'positionMerge':'none',
       'marginMethod':'isolate'
