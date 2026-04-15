@@ -2081,6 +2081,57 @@ const param = {
   positionId:1125899906842649789
   close:true
 }
+
+
+close position with take profit or stop loss
+stop loss one long position 
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'sell',
+  quantity:'0.0001',
+  type:'stop', // stop Loss
+  trigger_price:'50000', // the price < last price
+  market:'lpc',
+  positionMerge:'long',
+  marginMethod:'cross'
+  positionId:1125899906842649789
+  close:true
+}
+take profit one long position 
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'sell',
+  quantity:'0.0001',
+  type:'take-profit', // take profit
+  trigger_price:'100000', // the price > last price
+  market:'lpc',
+  positionMerge:'long',
+  marginMethod:'cross'
+  positionId:1125899906842649789
+  close:true
+}
+
+open position with take profit or stop loss
+
+open long
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'bug',
+  quantity:'0.0001',
+  price:'73816.6',
+  type:'limit', 
+  market:'lpc',
+  positionMerge:'long',
+  marginMethod:'cross'
+  close:false,
+  tpo_trigger:1, // enable take profit
+  tpo_trigger_value:'80000', // the price > last price
+  slo_trigger:1, // enable stop loss
+  slo_trigger_value:'50000', // the price < last price
+}
+
+空仓止盈止损 trigger_price,tpo_trigger_value,slo_trigger_value的处理和多仓相反
+
 */
 
 let bodyStr = JSON.stringify(param);
@@ -2220,22 +2271,27 @@ if __name__ == '__main__':
 
 
 | Parameter Name  | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
-|-----------------|----------------|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol          | string         | Yes                       | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                     |
-| side            | string         | Yes                       | buy or sell                                                                                                                                                                                                                                                                                                                                                                                                                |
-| type            | string         | Yes                       | Delegate type, valid value limit market                                                                                                                                                                                                                                                                                                                                                                                    |
-| quantity        | DECIMAL        | Yes                       | Delegate quantity                                                                                                                                                                                                                                                                                                                                                                                                          |
-| market          | string         | Yes                       | Must spot spot, lpc U-standard perpetual                                                                                                                                                                                                                                                                                                                                                                                   |
-| client_order_id | string         | No                        | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate                                                                                                                                                                                                                                                                                        |
-| price           | DECIMAL        | No                        | Entrusted price limit                                                                                                                                                                                                                                                                                                                                                                                                      |
-| positionMerge   | string         | No                        | long or short exp:open long(positionMerge=long,side=buy),close long(positionMerge=long,side=sell),open short(positionMerge=short,side=sell),close short(positionMerge=short,side=buy)                                                                                                                                                                                                                                      |
-| marginMethod    | string         | No                        | Contract must be isolate position by position, cross full position                                                                                                                                                                                                                                                                                                                                                         |
-| mini            | bool           | No                        | mini trade ,if is true , must be positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                                                                                                                                                                                                                                                      |
-| leverage        | int            | No                        | Contract must be leverage multiple                                                                                                                                                                                                                                                                                                                                                                                         
-| close           | bool           | No                        | The contract must be true to close the warehouse receipt, false to open the warehouse receipt                                                                                                                                                                                                                                                                                                                              |
-| post_only       | bool           | No                        | post only                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| time_in_Force   | string         | No                        | Effective time performance <br/> Effective value GTC, IOC,FOK <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC |
-| positionId      | string         | No                        | Warehouse ID                                                                                                                                                                                                                                                                                                                                                                                                               |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol          | string         | Yes                      | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                     |
+| side            | string         | Yes                      | buy or sell                                                                                                                                                                                                                                                                                                                                                                                                                |
+| type            | string         | Yes                      | Delegate type, valid value limit or market or take-profit or stop                                                                                                                                                                                                                                                                                                                                                          |
+| quantity        | DECIMAL        | Yes                      | Delegate quantity                                                                                                                                                                                                                                                                                                                                                                                                          |
+| market          | string         | Yes                      | Must spot spot, lpc U-standard perpetual                                                                                                                                                                                                                                                                                                                                                                                   |
+| client_order_id | string         | No                       | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate                                                                                                                                                                                                                                                                                        |
+| price           | DECIMAL        | No                       | Entrusted price limit                                                                                                                                                                                                                                                                                                                                                                                                      |
+| positionMerge   | string         | No                       | long or short exp:open long(positionMerge=long,side=buy),close long(positionMerge=long,side=sell),open short(positionMerge=short,side=sell),close short(positionMerge=short,side=buy)                                                                                                                                                                                                                                      |
+| marginMethod    | string         | No                       | Contract must be isolate position by position, cross full position                                                                                                                                                                                                                                                                                                                                                         |
+| mini            | bool           | No                       | mini trade ,if is true , must be positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                                                                                                                                                                                                                                                      |
+| leverage        | int            | No                       | Contract must be leverage multiple                                                                                                                                                                                                                                                                                                                                                                                         
+| close           | bool           | No                       | The contract must be true to close the warehouse receipt, false to open the warehouse receipt                                                                                                                                                                                                                                                                                                                              |
+| post_only       | bool           | No                       | post only                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| time_in_Force   | string         | No                       | Effective time performance <br/> Effective value GTC, IOC,FOK <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC |
+| positionId      | string         | No                       | Warehouse ID                                                                                                                                                                                                                                                                                                                                                                                                               |
+| trigger_price         | decimal | No       | take profit or stop loss order use this price                                                                                                                                                                                                                                                                                                                                                                              |
+| tpo_trigger         | int     | No                         | open position with take profit,need use with tpo_trigger_value    0 disabled 1 enable                                                                                                                                                                                                                                                                                                                                      |
+| slo_trigger         | int     | No                        | open position with stop loss,need use with slo_trigger_value    0 disabled 1 enable                                                                                                                                                                                                                                                                                                                                        |
+| tpo_trigger_value         | decimal | No                        | open position  take profit price                                                                                                                                                                                                                                                                                                                                                                                           |
+| slo_trigger_value         | decimal | No                        | open position  stop loss price                                                                                                                                                                                                                                                                                                                                                                                             |
 
 > Delegate object
 > It contains up to 20 transactions entrusted
