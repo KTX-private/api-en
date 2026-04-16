@@ -2780,7 +2780,7 @@ const param = {
   symbol:'BTC_USDT_SWAP',
   side:'sell',
   quantity:'0.0001',
-  type:'stop', // stop Loss
+  type:'stop', // stop loss with market price,if you want to trigger with limit price you can set this val: stop-limit,and also set price param to define your limit price
   trigger_price:'50000', // the price &lt; last price
   market:'lpc',
   leverage:20,
@@ -2794,7 +2794,7 @@ const param = {
   symbol:'BTC_USDT_SWAP',
   side:'sell',
   quantity:'0.0001',
-  type:'take-profit', // take profit
+  type:'take-profit', // take profit with market price,if you want to trigger with limit price you can set this val: take-profit-limit,and also set price param to define your limit price
   trigger_price:'100000', // the price &gt; last price
   market:'lpc',
   leverage:20,
@@ -2986,7 +2986,7 @@ const param = {
 <td>type</td>
 <td>string</td>
 <td>Yes</td>
-<td>Delegate type, valid value limit or market or take-profit or stop</td>
+<td>Delegate type, valid value limit or market or take-profit or stop or take-profit-limit(need define price param after trigger) or stop-limit (need define price param after trigger)</td>
 </tr>
 <tr>
 <td>quantity</td>
