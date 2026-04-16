@@ -2091,7 +2091,7 @@ const param = {
   symbol:'BTC_USDT_SWAP',
   side:'sell',
   quantity:'0.0001',
-  type:'stop', // stop Loss
+  type:'stop', // stop loss with market price,if you want to trigger with limit price you can set this val: stop-limit,and also set price param to define your limit price
   trigger_price:'50000', // the price < last price
   market:'lpc',
   leverage:20,
@@ -2105,7 +2105,7 @@ const param = {
   symbol:'BTC_USDT_SWAP',
   side:'sell',
   quantity:'0.0001',
-  type:'take-profit', // take profit
+  type:'take-profit', // take profit with market price,if you want to trigger with limit price you can set this val: take-profit-limit,and also set price param to define your limit price
   trigger_price:'100000', // the price > last price
   market:'lpc',
   leverage:20,
@@ -2281,7 +2281,7 @@ if __name__ == '__main__':
 |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | symbol          | string         | Yes                      | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                     |
 | side            | string         | Yes                      | buy or sell                                                                                                                                                                                                                                                                                                                                                                                                                |
-| type            | string         | Yes                      | Delegate type, valid value limit or market or take-profit or stop                                                                                                                                                                                                                                                                                                                                                          |
+| type            | string         | Yes                      | Delegate type, valid value limit or market or take-profit or stop or take-profit-limit(need define price param after trigger) or stop-limit (need define price param after trigger)                                                                                                                                                                                                                                             |
 | quantity        | DECIMAL        | Yes                      | Delegate quantity                                                                                                                                                                                                                                                                                                                                                                                                          |
 | market          | string         | Yes                      | Must spot spot, lpc U-standard perpetual                                                                                                                                                                                                                                                                                                                                                                                   |
 | client_order_id | string         | No                       | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate                                                                                                                                                                                                                                                                                        |
