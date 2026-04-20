@@ -2378,8 +2378,8 @@ if __name__ == '__main__':
   "clientOrderId": "", // Custom ID
   "createTime": "1733390630904", // Creation time
   "product": "BTC_USDT_SWAP", // Transaction to the code to the code
-  "type": "Limit", // Order type
-  "side": "Buy", // Trading direction
+  "type": "limit", // Order type
+  "side": "buy", // Trading direction
   "quantity": "0.01", // quantity
   "stf": "disabled",
   "price": "10300", // The commission price
@@ -2518,8 +2518,8 @@ if __name__ == '__main__':
     "clientOrderId": "", // Custom ID
     "createTime": "1733390630904", // Creation time
     "product": "BTC_USDT_SWAP", // Transaction to the code to the code
-    "type": "Limit", // Order type
-    "side": "Buy", // Trading direction
+    "type": "limit", // Order type
+    "side": "buy", // Trading direction
     "quantity": "0.01", // quantity
     "stf": "disabled",
     "price": "10300", // The commission price
@@ -2684,8 +2684,8 @@ if __name__ == '__main__':
     "clientOrderId": "", // Custom ID
     "createTime": "1733390630904", // Creation time
     "product": "BTC_USDT_SWAP", // Transaction to the code to the code
-    "type": "Limit", // Order type
-    "side": "Buy", // Trading direction
+    "type": "limit", // Order type
+    "side": "buy", // Trading direction
     "quantity": "0.01", // quantity
     "stf": "disabled",
     "price": "10300", // The commission price
@@ -3388,8 +3388,8 @@ wss://u-stream.ktx.com
       "clientOrderId": "", // Custom ID
       "createTime": "1733390630904", // Creation time
       "Product": "BTC_USDT_SWAP", // Transaction to the code to the code
-      "type": "Limit", // Order type
-      "side": "Buy", // Trading direction
+      "type": "limit", // Order type
+      "side": "buy", // Trading direction
       "quantity": "0.01", // quantity
       "stf": "disabled",
       "price": "10300", // The commission price
