@@ -3008,6 +3008,7 @@ if __name__ == '__main__':
     "symbol": "BTC_USDT_SWAP", // symbol
     "leverage": "10.0", // leverage
     "maintMargin": "0.0050000000", // maint margin rate
+    "side": "short",
     "quantity": "0.100", // margin quantity short 0.1
     "posMargin": "1093.989", // margin
     "marginMethod": "cross", // margin method 
@@ -3363,7 +3364,8 @@ wss://u-stream.ktx.com
   "data": {
   "id": "1125899906842624003", // position ID
   "symbol": "BTC_USDT_SWAP", // Transaction to the code to the code
-  "quantity": "0", // quantity
+  "side": "long",
+  "quantity": "0.1", // quantity
   "entryPrice":"0", // Average price for opening positions
   "mergeMode": "long", // position mode long or short
   "marginMethod":"isolate",//margin mode
