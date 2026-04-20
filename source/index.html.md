@@ -2120,7 +2120,7 @@ open position with take profit or stop loss
 open long
 const param = {
   symbol:'BTC_USDT_SWAP',
-  side:'bug',
+  side:'buy',
   quantity:'0.0001',
   price:'73816.6',
   type:'limit', 
