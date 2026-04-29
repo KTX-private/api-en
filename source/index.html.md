@@ -668,16 +668,9 @@ do_request()
   "i": 17122255, // Transaction ID
   "p": "46125.7", // The transaction price
   "q": "0.079045", // Transaction volume
-  "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
+  "s": 1, // Taker's transaction direction 1 represents buy -1 representative sells
   "t": "1628738748319" // Transaction time
   },
-  {
-    "i": 17122254, // Transaction ID
-    "p": "46125", // The transaction price
-    "q": "0.079047", // Transaction volume
-    "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
-    "t": "1628738748318" // Transaction time
-  }
   ...
 ]
 ```
@@ -1163,16 +1156,9 @@ if __name__ == "__main__":
     "i": 17122255, // Transaction ID
       "p": "46125.7", // The transaction price
       "q": "0.079045", // Transaction volume
-      "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
+      "s": 1, // Taker's transaction direction 1 represents buy -1 representative sells
       "t": "1628738748319" // Transaction time
   },
-  {
-    "i": 17122254, // Transaction ID
-    "p": "46125", // The transaction price
-    "q": "0.079047", // Transaction volume
-    "s": "1", // Taker's transaction direction 1 represents buy -1 representative sells
-    "t": "1628738748318" // Transaction time
-  }
 ...
 }
 ```
