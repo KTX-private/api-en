@@ -3010,7 +3010,6 @@ if __name__ == '__main__':
 | id | string         | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. | |
 | market | string         | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
 
-> If the delegate with the specified id has been settled, or if the delegate with the specified id does not exist, you will receive an error -30001.
 
 ## Cancel all Orders
 
