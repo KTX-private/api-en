@@ -189,7 +189,7 @@ Before sending the request, first determine the message used for the signature. 
 * Step 3: Convert the result to a hex string
   Convert the HMAC result into a hexadecimal string format.
 * Step 4: Add headers
- Use the hex string as the value for the api-sign header, and set the expiration timestamp as the value for the api-expire-time header.
+  Use the hex string as the value for the api-sign header, and set the expiration timestamp as the value for the api-expire-time header.
 
 ## Api Key Permissions
 
@@ -327,13 +327,13 @@ if __name__ == '__main__':
   {
     "asset": "USDT", // asset name
     "valid_decimals": 8, // asset decimals
-    "enable_transfer": 1, // allow transfer
+    "enable_transfer": 1, // Allow transfer [0: No | 1: Yes]
     "chains": [
       {
-        "coin_symbol": "USDT", // coin symbol
+        "coin_symbol": "USDT", // Coin symbol
         "chain_type": "Tron (TRC20)", // network
-        "enable_withdraw": 1, // allow withdraw
-        "enable_deposit": 1, // allow deposit
+        "enable_withdraw": 1, // Allow withdraw [0: No | 1: Yes]
+        "enable_deposit": 1, // Allow deposit [0: No | 1: Yes]
         "original_decimals": 6 // decimal
       },
       {
@@ -371,8 +371,6 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description |
 | ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
-
-
 
 ## Get products
 
@@ -413,14 +411,14 @@ if __name__ == '__main__':
 [
   {
     "ID": 5 // ID
-    "market": "lpc", // spot orlpc spot or contract
+    "market": "lpc", // Transaction pair market [spot: Spot | lpc: USDT-margined perpetual]
     "Symbol": "BTC_USDT_SWAP", // Transaction pair
-    "takerFee": "0.001", // Taker handling fee
-    "Makerfee": "0.001", // Maker's handling fee
+    "takerFee": "0.001", // Taker fee rate
+    "Makerfee": "0.001", // Maker fee rate
     "minOrderSize": "0.0001", // Minimum order quantity
     "maxOrderSize": "10000000", // Maximum order quantity
-    "quantityScale": 4, // Quantity accuracy
-    "priceScale": 4, // Price accuracy
+    "quantityScale": 4, // Quantity scale
+    "priceScale": 4, // Price scale
     "minOrderValue": "0.0001", // Minimum order value
     "maxOrderValue": "1000000000" // Maximum order value
   }
@@ -436,8 +434,8 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                      |
 |--------|----------------|------|--------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract |
-| Symbol | string         | No | Transaction to code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                              
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
+| Symbol | string         | No | Trading pair code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                              
 
 * Data source
 
@@ -480,35 +478,35 @@ do_request()
 
 ```json
 {
-"i": 1027024, // update id
+"i": 1027024, // Update ID
 "t": "1644558642100", // update time
-"b": [// Buy the market
+"b": [// Bids
   [
-  "46125.7", // The commission price
-  "0.079045" // quantity
+  "46125.7", // Order price
+  "0.079045" // Order quantity
   ],,,
   [
-  "46125.7", // The commission price
-  "0.079045" // quantity
+  "46125.7", // Order price
+  "0.079045" // Order quantity
   ],,,
   [
-  "46125.7", // The commission price
-  "0.079045" // quantity
+  "46125.7", // Order price
+  "0.079045" // Order quantity
   ]
   ...
   ],
-"a": [// Selling the disk
+"a": [// Asks
   [
-  "46125.7", // The commission price
-  "0.079045" // quantity
+  "46125.7", // Order price
+  "0.079045" // Order quantity
   ],,,
   [
-  "46125.7", // The commission price
-  "0.079045" // quantity
+  "46125.7", // Order price
+  "0.079045" // Order quantity
   ],,,
   [
-  "46125.7", // The commission price
-  "0.079045" // quantity
+  "46125.7", // Order price
+  "0.079045" // Order quantity
   ]
   ...
   ]
@@ -524,7 +522,7 @@ do_request()
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |----------------|----------------| ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract |
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol         | string         | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | level          | int32          | No | How many level depth is specified? <br/> Effective value 1, 2, 5, 10, 20, 50, 100, 500, 1000 <br/> The default value 100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | price_scale    | Integer        | No | Specify the depth of the price by the price, such as the price of the specified transaction pair contains up to 4 digits <br/> Price_scale = 0 The price returned to the price up to 4 digits, <br/> price_scale = 1 to return to return. The price contains a maximum of 3 decimal numbers. The entrusted measurement is the price range of the price range 0.0010 and the price of <br/> price_scale = 2 to 2 contains up to 2 decimal numbers. br/> price_scale = 3 to 3 to include a maximum number of decimal numbers. The sum of all delegations in 1.0000<br/>Valid values ​​0, 1, 2, 3, 4, 5<br/>Default value 0 |
@@ -609,9 +607,9 @@ if __name__ == '__main__':
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                         |
 |----------------|----------------| ---------- |---------------------------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract |
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol         | string         | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                        |
-| time_frame     | string         | Yes | The time cycle of the K -line data <br/> The valid value is 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M |
+| time_frame     | string         | Yes | Kline period [1m | 3m | 5m | 15m | 30m | 1h | 2h | 4h | 6h | 12h | 1d | 1W | 1M] |
 | before         | int64          | No | utc time<br/>Limit the latest time of return to the K-line record                                                   |
 | after          | int64          | No | UTC Time <br/> Limited to return the earliest time of the K -line records                                           |
 | limit          | Integer        | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000                 |
@@ -668,7 +666,7 @@ do_request()
   "i": 17122255, // Transaction ID
   "p": "46125.7", // The transaction price
   "q": "0.079045", // Transaction volume
-  "s": 1, // Taker's transaction direction 1 represents buy -1 representative sells
+  "s": 1, // Taker direction [1: Buy | -1: Sell]
   "t": "1628738748319" // Transaction time
   },
   ...
@@ -684,11 +682,11 @@ do_request()
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                       |
 |----------------| ---------- |---------------------------|---------------------------------------------------------------------------------------------------|
-| market | string | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract |
-| symbol         | string | Yes                       | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                            |
+| market | string | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
+| symbol         | string | Yes                       | Trading pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                            |
 | start_time     | int64 | No                        | The earliest time of limited returning transaction records                                        |
 | end_time       | int64 | No                        | Limited recent time of returning transaction records                                              |
-| before         | int64 | No                        | Transaction record id<br/> Limited to return the maximum id of the transaction record             |
+| before         | int64 | No                        | Transaction record ID<br/> Limited to return the maximum id of the transaction record             |
 | after          | int64 | No                        | Trading record ID <br/> Limit the maximum ID of returning transaction records                     |
 | limit          | Integer | No                        | The maximum number of obtaining records <br/> The default value is 100, the maximum value is 1000 |
 
@@ -787,7 +785,7 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                          |
 |----------------|----------------| ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, lpc is U-standard contract |
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol         | string         | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
@@ -932,7 +930,7 @@ if __name__ == "__main__":
 
 ```json
 {
-  "result": "success", // Back results
+  "result": "success", // Result
   "op":"SUBSCRIBE",
   "id": 123, // Request ID given by the client
   "events":["spot.BTC_USDT.order_book.5"]
@@ -954,7 +952,7 @@ if __name__ == "__main__":
 ```json
 {
 "stream": "spot.BTC_USDT.order_book.5", // Data flow name
-"data": ..., // data
+"data": ..., // Data
 }
 ```
 
@@ -1156,7 +1154,7 @@ if __name__ == "__main__":
     "i": 17122255, // Transaction ID
       "p": "46125.7", // The transaction price
       "q": "0.079045", // Transaction volume
-      "s": 1, // Taker's transaction direction 1 represents buy -1 representative sells
+      "s": 1, // Taker direction [1: Buy | -1: Sell]
       "t": "1628738748319" // Transaction time
   },
 ...
@@ -1358,19 +1356,23 @@ if __name__ == '__main__':
     "locked":"0",  // Freeze amount
     "free":"100",  //  Available Amount
     "withdrawable":"100",// Transferable
-    "collateral":false,// Collateral
-    "discountForMargin":"1", // optional col ,discount for margin,if the asset support discount
-    "discountForFee":"1" // optional col, discount for fee,if the asset support discount
+    "collateral":false,// Is collateral [true: Yes | false: No]
+    "discountForMargin":"1", // Margin discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
+    "discountForFee":"1" // Fee discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
   },
   {
-    "asset":"USDT",  // Asset code
+    "asset":"BTC",  // Asset code
     "balance":"100",  // Total amount
     "locked":"0",  // Freeze amount
     "free":"100",  //  Available Amount
     "withdrawable":"100",// Transferable
-    "collateral":false,// Collateral
+    "collateral":false,// Is collateral [true: Yes | false: No]
   },
   ...
+]
+```
+},
+...
 ]
 ```
 
@@ -1389,7 +1391,6 @@ if __name__ == '__main__':
 * Data Source
 
 Cache
-
 
 ## Get Addr
 
@@ -1472,9 +1473,9 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "addr": "74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw", // addr
-    "coin_id": "100", // coin id 
-    "coin_symbol": "sUSDT",// coin symbol
+    "addr": "74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw", // Address
+    "coin_id": "100", // Coin ID 
+    "coin_symbol": "sUSDT",// Coin symbol
     "chain_type":"Solana", // network
     "general_name": "USDT" ,// asset name
     "mx_uid": "de4a8cdc-6be5-3253-9f34-d2c61a89286f"
@@ -1579,13 +1580,13 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "id": 624, // withdraw id
+    "id": 624, // Withdraw ID
     "to_address": "bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm", // to address
     "amount_real": "9.00000000", // arrive amount
     "amount": "10.00000000",  // amount
     "fee": "1.00000000",  // fee
     "chain_type": "Bitcoin", // network
-    "coin_symbol": 'BTC' // coin symbol
+    "coin_symbol": 'BTC' // Coin symbol
   }
 ]
 ```
@@ -1604,7 +1605,7 @@ if __name__ == '__main__':
 | addr           | string | No                  | to addr                                             |
 | amount         | number | No                  | amount                                              |
 | memo           | string | No                  | memo                                                |
-| withdraw_id    | string | No                  | user define id                                                                                                                                        |
+| withdraw_id    | string | No                  | User defined ID                                                                                                                                        |
 
 ## Get Main Account Asset
 
@@ -1803,7 +1804,7 @@ if __name__ == '__main__':
 | symbol         | string         | Yes                 | Asset code, such as BTC, ETH                                                                                                                          |
 | amount         | number         | Yes                 | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
 | type           | string         | Yes                 | If type is WALLET_TRADE ,transfer from main account to trade account <br/> If type is TRADE_WALLET , transfer from trade account to main account      |
-| transfer_id | string | No                  | user define id                                                                                                                                        |
+| transfer_id | string | No                  | User defined ID                                                                                                                                        |
 
 ## Sub Account Asset Transfer
 
@@ -1910,10 +1911,9 @@ if __name__ == '__main__':
 |----------------|----------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | symbol         | string         | Yes                 | Asset code, such as BTC, ETH                                                                                                                          |
 | amount         | number         | Yes                 | Transfer Amount, such as 10, -10, <br/> If > 0, transfer from main account to trade account <br/> If < 0, transfer from trade account to main account |
-| sub_user_id      | number | Yes                 | sub account id                                                                                                                                        |
+| sub_user_id      | number | Yes                 | Sub account ID                                                                                                                                        |
 | side        | string | Yes                 | in mean transfer in sub account  and out mean transfer from sub account                                                                               |
-| transfer_id | string | No                  | user define id                                                                                                                                        |
-
+| transfer_id | string | No                  | User defined ID                                                                                                                                        |
 
 ## Get an account's ledger
 
@@ -1991,7 +1991,7 @@ if __name__ == '__main__':
   "amount": "10000", // The number of changes
   "balance": "10000", // balance
   "id": "1125899906842624029", // ID
-  "time": "1733468814795", // time
+  "time": "1733468814795", // Time (ms)
   "asset": "USDT", // Asset code
   "type": "Transfer" // Bill type
   }
@@ -2225,27 +2225,30 @@ if __name__ == '__main__':
 
 ```json
 {
-  "orderId": "4611767382287843330", // Order id
-  "clientOrderId": "", // Custom ID
+  "orderId": "4611767382287843330", // Order ID
+  "clientOrderId": "", // Client Order ID
   "createTime": "1733390630904", // Creation time
-  "product": "BTC_USDT", // Transaction to the code to the code
-  "type": "Limit", // Order type
-  "side": "Buy", // Trading direction
-  "quantity": "0.01", // quantity
-  "stf": "disabled",
+  "product": "BTC_USDT", // Transaction pair
+  "type": "Limit", // Order type [limit: Limit | market: Market | take-profit: Take profit | stop: Stop | take-profit-limit: Take profit limit | stop-limit: Stop limit]
+  "side": "Buy", // Trading direction [buy: Buy | sell: Sell]
+  "quantity": "0.01", // Quantity
+  "stf": "disabled", // Self-trading prevention [0: disabled Disable self-trade prevention | 1: dc Decrease and Cancel | 2: co Cancel Oldest | 3: cn Cancel Newest | 4: cb Cancel Both]
   "price": "10300", // The commission price
-  "timeInforce": "gtc",
-  "mini":"false", // is mini trade true or false
-  "cancelAfter": 0,
-  "postOnly": false,
-  "positionMerge": "long", // position mode  long or short
+  "timeInforce": "gtc", // Time in force [gtc: Good till cancel | ioc: Immediate or cancel | fok: Fill or kill]
+  "mini":"false", // Is mini contract [true: Yes | false: No]
+  "cancelAfter": 0, // Cancel after N seconds [>0: Cancel after N seconds | 0: Never auto-cancel]
+  "postOnly": false, // Post only [true: Yes | false: No]
+  "positionMerge": "long", // Position merge mode [long: Merge long | short: Merge short | none: Split]
   "positionId": 0, // Submitted position id
-  "close": false, // Is it a flat order
+  "close": false, // Is close position [true: Close | false: Open]
   "leverage": 0, // Leverage multiple
-  "action": "unknown", // position behavior
-  "status": "accepted", // Order status
+  "action": "unknown", // Position behavior [unknown: Unknown | increase_long: Open Long | reduce_long: Close Long | increase_short: Open Short | reduce_short: Close Short]
+  "status": "accepted", // Order status [accepted: Accepted | partial-filled: Partial Filled | filled: Filled | cancelled: Cancelled | rejected: Rejected | partially-cancelled: Partially Cancelled]
   "executedQty": "0", // executed quantity
-  "Profit": "0", // return
+  "profit": "0", // return
+  "origin":0, // Origin [when origin=-1, this order is a liquidation order]
+  "brokerId":0, // broker id
+  "update_id":'1125899907137993336', // update id
   "executedCost": "0", // The transaction value has
   "fillCount": 1, // Number of transactions
   "fills": [],// transaction details
@@ -2265,22 +2268,22 @@ if __name__ == '__main__':
 
 | Parameter Name  | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
 |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol          | string         | Yes                      | Transaction pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                     |
+| symbol          | string         | Yes                      | Trading pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                     |
 | side            | string         | Yes                      | buy or sell                                                                                                                                                                                                                                                                                                                                                                                                                |
 | type            | string         | Yes                      | Delegate type, valid value limit or market or take-profit or stop or take-profit-limit(need define price param after trigger) or stop-limit (need define price param after trigger)                                                                                                                                                                                                                                             |
 | quantity        | DECIMAL        | Yes                      | Delegate quantity                                                                                                                                                                                                                                                                                                                                                                                                          |
-| market          | string         | Yes                      | Must spot spot, lpc U-standard perpetual                                                                                                                                                                                                                                                                                                                                                                                   |
-| client_order_id | string         | No                       | Delegate id, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate                                                                                                                                                                                                                                                                                        |
+| market          | string         | Yes                      | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]                                                                                                                                                                                                                                                                                                                                                                                   |
+| client_order_id | string         | No                       | Delegate ID, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate                                                                                                                                                                                                                                                                                        |
 | price           | DECIMAL        | No                       | Entrusted price limit                                                                                                                                                                                                                                                                                                                                                                                                      |
 | positionMerge   | string         | No                       | long or short exp:open long(positionMerge=long,side=buy),close long(positionMerge=long,side=sell),open short(positionMerge=short,side=sell),close short(positionMerge=short,side=buy)                                                                                                                                                                                                                                      |
 | marginMethod    | string         | No                       | Contract must be isolate position by position, cross full position                                                                                                                                                                                                                                                                                                                                                         |
 | mini            | bool           | No                       | mini trade ,if is true , must be positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                                                                                                                                                                                                                                                      |
-| leverage        | int            | No                       | Contract must be leverage multiple                                                                                                                                                                                                                                                                                                                                                                                         
+| leverage        | int            | No                       | Leverage                                                                                                                                                                                                                                                                                                                                                                                         
 | close           | bool           | No                       | The contract must be true to close the warehouse receipt, false to open the warehouse receipt                                                                                                                                                                                                                                                                                                                              |
-| post_only       | bool           | No                       | post only                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| post_only       | bool           | No                       | Post only                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | time_in_Force   | string         | No                       | Effective time performance <br/> Effective value GTC, IOC,FOK <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC |
-| positionId      | string         | No                       | Warehouse ID                                                                                                                                                                                                                                                                                                                                                                                                               |
-| trigger_price         | decimal | No       | take profit or stop loss order use this price                                                                                                                                                                                                                                                                                                                                                                              |
+| positionId      | string         | No                       | Position ID                                                                                                                                                                                                                                                                                                                                                                                                               |
+| trigger_price         | decimal | No       | TP/SL trigger price                                                                                                                                                                                                                                                                                                                                                                              |
 | tpo_trigger         | int     | No                         | open position with take profit,need use with tpo_trigger_value    0 disabled 1 enable                                                                                                                                                                                                                                                                                                                                      |
 | slo_trigger         | int     | No                        | open position with stop loss,need use with slo_trigger_value    0 disabled 1 enable                                                                                                                                                                                                                                                                                                                                        |
 | tpo_trigger_value         | decimal | No                        | open position  take profit price                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -2360,31 +2363,31 @@ if __name__ == '__main__':
 
 ```json
 {
-  "orderId": "4611767382287843330", // Order id
-  "clientOrderId": "", // Custom ID
+  "orderId": "4611767382287843330", // Order ID
+  "clientOrderId": "", // Client Order ID
   "createTime": "1733390630904", // Creation time
-  "product": "BTC_USDT_SWAP", // Transaction to the code to the code
-  "type": "limit", // Order type
-  "side": "buy", // Trading direction
-  "quantity": "0.01", // quantity
-  "stf": "disabled",
-  "price": "10300", // The commission price
-  "timeInforce": "gtc",
-  "mini":"false", // is mini trade true or false
-  "cancelAfter": 0,
-  "postOnly": false,
-  "positionMerge": "long", // position mode  long or short
+  "product": "BTC_USDT_SWAP", // Transaction pair code
+  "type": "limit", // Order type [limit: Limit | market: Market | take-profit: Take profit | stop: Stop | take-profit-limit: Take profit limit | stop-limit: Stop limit]
+  "side": "buy", // Trading direction [buy: Buy | sell: Sell]
+  "quantity": "0.01", // Quantity
+  "stf": "disabled", // Self-trading prevention [0: disabled Disable self-trade prevention | 1: dc Decrease and Cancel | 2: co Cancel Oldest | 3: cn Cancel Newest | 4: cb Cancel Both]
+  "price": "10300", // Order price
+  "timeInforce": "gtc", // Time in force [gtc: Good till cancel | ioc: Immediate or cancel | fok: Fill or kill]
+  "mini":"false", // Is mini contract [true: Yes | false: No]
+  "cancelAfter": 0, // Cancel after N seconds [>0: Cancel after N seconds | 0: Never auto-cancel]
+  "postOnly": false, // Post only [true: Yes | false: No]
+  "positionMerge": "long", // Position merge mode [long: Merge long | short: Merge short | none: Split]
   "positionId": 0, // Submitted position id
-  "marginMethod": "cross", // margin method
-  "close": false, // Is it a flat order
+  "marginMethod": "cross", // Margin mode [isolate: Isolated | cross: Cross]
+  "close": false, // Is close position [true: Close | false: Open]
   "leverage": 0, // Leverage multiple
-  "action": "unknown", // position behavior
-  "status": "Filled", // Order status
-  "executedQty": "0.01", //
-  "profit": "0", // profit
-  "origin":0, // origin    
-  "markPrice": "10000", // Represents the liquidation price when origin = -1
-  "brokerId":0, // broker id     
+  "action": "unknown", // Position behavior [unknown: Unknown | increase_long: Open Long | reduce_long: Close Long | increase_short: Open Short | reduce_short: Close Short]
+  "status": "Filled", // Order status [accepted: Accepted | partial-filled: Partial Filled | filled: Filled | cancelled: Cancelled | rejected: Rejected | partially-cancelled: Partially Cancelled]
+  "executedQty": "0.01", // Executed quantity
+  "profit": "0", // return
+  "origin":0, // Origin [when origin=-1, this order is a liquidation order]
+  "markPrice": "10000", // When origin=-1, represents the mark price at the time of liquidation
+  "brokerId":0, // broker id
   "update_id":'1125899907137993336', // update id
   "executedCost": "103", // The transaction value has
   "fillCount": 1, // Number of transactions
@@ -2395,8 +2398,8 @@ if __name__ == '__main__':
       "price": "10300",
       "quantity": "0.01",
       "profit": "0",
-      "taker": false,
-      "side":"buy",
+      "taker": false, // Is Taker [true: Yes | false: No]
+      "side":"buy", // Trading direction [buy: Buy | sell: Sell]
       "fees": [
         {
           "amount": "0.103", // Number of assets
@@ -2500,31 +2503,31 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "orderId": "4611767382287843330", // Order id
-    "clientOrderId": "", // Custom ID
+    "orderId": "4611767382287843330", // Order ID
+    "clientOrderId": "", // Client Order ID
     "createTime": "1733390630904", // Creation time
-    "product": "BTC_USDT_SWAP", // Transaction to the code to the code
-    "type": "limit", // Order type
-    "side": "buy", // Trading direction
-    "quantity": "0.01", // quantity
-    "stf": "disabled",
-    "price": "10300", // The commission price
-    "timeInforce": "gtc",
-    "mini":"false", // is mini trade true or false
-    "cancelAfter": 0,
-    "postOnly": false,
-    "positionMerge": "long", // position mode  long or short
+    "product": "BTC_USDT_SWAP", // Transaction pair code
+    "type": "limit", // Order type [limit: Limit | market: Market | take-profit: Take profit | stop: Stop | take-profit-limit: Take profit limit | stop-limit: Stop limit]
+    "side": "buy", // Trading direction [buy: Buy | sell: Sell]
+    "quantity": "0.01", // Quantity
+    "stf": "disabled", // Self-trading prevention [0: disabled Disable self-trade prevention | 1: dc Decrease and Cancel | 2: co Cancel Oldest | 3: cn Cancel Newest | 4: cb Cancel Both]
+    "price": "10300", // Order price
+    "timeInforce": "gtc", // Time in force [gtc: Good till cancel | ioc: Immediate or cancel | fok: Fill or kill]
+    "mini":"false", // Is mini contract [true: Yes | false: No]
+    "cancelAfter": 0, // Cancel after N seconds [>0: Cancel after N seconds | 0: Never auto-cancel]
+    "postOnly": false, // Post only [true: Yes | false: No]
+    "positionMerge": "long", // Position merge mode [long: Merge long | short: Merge short | none: Split]
     "positionId": 0, // Submitted position id
-    "marginMethod": "cross", // margin method
-    "close": false, // Is it a flat order
+    "marginMethod": "cross", // Margin mode [isolate: Isolated | cross: Cross]
+    "close": false, // Is close position [true: Close | false: Open]
     "leverage": 0, // Leverage multiple
-    "action": "unknown", // position behavior
-    "status": "Filled", // Order status
-    "executedQty": "0.01", //
-    "profit": "0", // profit
-    "origin":0, // origin   
-    "markPrice": "10000", // Represents the liquidation price when origin = -1
-    "brokerId":0, // broker id     
+    "action": "unknown", // Position behavior [unknown: Unknown | increase_long: Open Long | reduce_long: Close Long | increase_short: Open Short | reduce_short: Close Short]
+    "status": "Filled", // Order status [accepted: Accepted | partial-filled: Partial Filled | filled: Filled | cancelled: Cancelled | rejected: Rejected | partially-cancelled: Partially Cancelled]
+    "executedQty": "0.01", // Executed quantity
+    "profit": "0", // return
+    "origin":0, // Origin [when origin=-1, this order is a liquidation order]
+    "markPrice": "10000", // When origin=-1, represents the mark price at the time of liquidation
+    "brokerId":0, // broker id
     "update_id":'1125899907137993336', // update id
     "executedCost": "103", // The transaction value has
     "fillCount": 1, // Number of transactions
@@ -2535,8 +2538,8 @@ if __name__ == '__main__':
         "price": "10300",
         "quantity": "0.01",
         "profit": "0",
-        "taker": false,
-        "side":"buy",
+        "taker": false, // Is Taker [true: Yes | false: No]
+        "side":"buy", // Trading direction [buy: Buy | sell: Sell]
         "fees": [
           {
             "amount": "0.103", // Number of assets
@@ -2572,7 +2575,7 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                      |
 |----------------|----------------|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market         | string         | Yes                 | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/>                                                                                              |
+| market         | string         | Yes                 | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]<br/>                                                                                              |
 | Symbol         | string         | No                  | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
 | start_time     | long           | No                  | Limited return to the last creation time of the delegation                                                                                                                                                       |
 | end_time       | long           | No                  | Limited return to the last creation time of the delegation                                                                                                                                                       |
@@ -2666,30 +2669,30 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "orderId": "4611767382287843330", // Order id
-    "clientOrderId": "", // Custom ID
+    "orderId": "4611767382287843330", // Order ID
+    "clientOrderId": "", // Client Order ID
     "createTime": "1733390630904", // Creation time
-    "product": "BTC_USDT_SWAP", // Transaction to the code to the code
-    "type": "limit", // Order type
-    "side": "buy", // Trading direction
-    "quantity": "0.01", // quantity
-    "stf": "disabled",
-    "price": "10300", // The commission price
-    "timeInforce": "gtc",
-    "mini":"false", // is mini trade true or false
-    "cancelAfter": 0,
-    "postOnly": false,
-    "positionMerge": "long", // position mode  long or short
-    "positionId": 0, // Submitted position id
-    "marginMethod": "cross", // margin method
-    "close": false, // Is it a flat order
-    "leverage": 0, // Leverage multiple
-    "action": "unknown", // position behavior
-    "status": "accepted", // Order status
+    "product": "BTC_USDT_SWAP", // Transaction pair code
+  "type": "limit", // Order type [limit: Limit | market: Market | take-profit: Take profit | stop: Stop | take-profit-limit: Take profit limit | stop-limit: Stop limit]
+  "side": "buy", // Trading direction [buy: Buy | sell: Sell]
+  "quantity": "0.01", // Quantity
+  "stf": "disabled", // Self-trading prevention [0: disabled Disable self-trade prevention | 1: dc Decrease and Cancel | 2: co Cancel Oldest | 3: cn Cancel Newest | 4: cb Cancel Both]
+  "price": "10300", // The commission price
+  "timeInforce": "gtc", // Time in force [gtc: Good till cancel | ioc: Immediate or cancel | fok: Fill or kill]
+  "mini":"false", // Is mini contract [true: Yes | false: No]
+  "cancelAfter": 0, // Cancel after N seconds [>0: Cancel after N seconds | 0: Never auto-cancel]
+  "postOnly": false, // Post only [true: Yes | false: No]
+  "positionMerge": "long", // Position merge mode [long: Merge long | short: Merge short | none: Split]
+  "positionId": 0, // Submitted position id
+  "marginMethod": "cross", // Margin mode [isolate: Isolated | cross: Cross]
+  "close": false, // Is close position [true: Close | false: Open]
+  "leverage": 0, // Leverage multiple
+  "action": "unknown", // Position behavior [unknown: Unknown | increase_long: Open Long | reduce_long: Close Long | increase_short: Open Short | reduce_short: Close Short]
+  "status": "accepted", // Order status [accepted: Accepted | partial-filled: Partial Filled | filled: Filled | cancelled: Cancelled | rejected: Rejected | partially-cancelled: Partially Cancelled]
     "executedQty": "0", // executed quantity
     "profit": "0", // return
-    "origin":0, // origin         
-    "brokerId":0, // broker id     
+    "origin":0, // Origin [when origin=-1, this order is a liquidation order]
+    "brokerId":0, // broker id
     "update_id":'1125899907137993336', // update id
     "executedCost": "0", // The transaction value has
     "fillCount": 1, // Number of transactions
@@ -2710,7 +2713,7 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                      |
 |----------------|----------------|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market         | string         | Yes                 | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract<br/>                                                                                              |
+| market         | string         | Yes                 | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]<br/>                                                                                              |
 | Symbol         | string         | No                  | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
 
 
@@ -3008,7 +3011,7 @@ if __name__ == '__main__':
 | Parameter Name | Parameter Type | Whether it must be passed | Description |
 |----------------|----------------|-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | id | string         | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. | |
-| market | string         | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract |
+| market | string         | Yes | Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 
 
 ## Cancel all Orders
@@ -3107,8 +3110,8 @@ if __name__ == '__main__':
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                             |
 |--------|----------------|-----|-----------------------------------------------------------------------------------------|
-| market | string         | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract |
-| symbol | string         | Yes | Transaction pair code<br/>such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                |
+| market | string         | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
+| symbol | string         | Yes | Trading pair code<br/>such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                |
 | Side | string         | No | Buy or Sell                                                                             |
 
 > If the request is executed correctly, return an empty array, otherwise return an error message
@@ -3187,19 +3190,19 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "entryPrice": "109398.9", // entry price
-    "symbol": "BTC_USDT_SWAP", // symbol
-    "leverage": "10.0", // leverage
-    "maintMargin": "0.0050000000", // maint margin rate
-    "side": "short",
-    "quantity": "0.100", // margin quantity short 0.1
-    "posMargin": "1093.989", // margin
-    "marginMethod": "cross", // margin method 
-    "closableQty": "0.100", // closable quantity
-    "initMargin": "0.1000000000", // init margin rate
-    "id": "1125899906842624158", // id
-    "orderMargin": "0",  // order margin
-    "mergeMode": "short"  // position mode short
+    "entryPrice": "109398.9", // Entry price
+    "symbol": "BTC_USDT_SWAP", // Transaction pair
+    "leverage": "10.0", // Leverage
+    "maintMargin": "0.0050000000", // Maintenance margin ratio
+    "side": "short", // Position direction [long: Long | short: Short]
+    "quantity": "0.100", // Position quantity
+    "posMargin": "1093.989", // Position margin
+    "marginMethod": "cross", // Margin mode [isolate: Isolated | cross: Cross]
+    "closableQty": "0.100", // Closable quantity
+    "initMargin": "0.1000000000", // Initial margin rate
+    "id": "1125899906842624158", // Position ID
+    "orderMargin": "0",  // Order margin
+    "mergeMode": "short"  // Position merge mode [long: Merge long | short: Merge short]
   }
   ...
 ]
@@ -3216,9 +3219,32 @@ if __name__ == '__main__':
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                  |
 | ------------ | ---------- |---------------------------|----------------------------------------------------------------------------------------------|
-| position_id   | string   | No                        | position id , the main param                                                                 |
-| market | string   | No                        | trading pair markets, such as spot, lpc, etc., spot is spot, lpc is U-standard contract      |
+| position_id   | string   | No                        | Position ID, the main param                                                                 |
+| market | string   | No                        | trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual]      |
 | symbol     | string   | No                        | use symbol with market param ,transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP |
+
+### Response Parameters Enum Values
+
+#### side (Position Side)
+
+| Value | Description |
+|----|------|
+| long | Long position, bullish position |
+| short | Short position, bearish position |
+
+#### marginMethod (Margin Mode)
+
+| Value | Description |
+|----|------|
+| isolate | Isolated margin, each position has independent margin |
+| cross | Cross margin, all positions share margin pool |
+
+#### mergeMode (Position Merge Mode)
+
+| Value | Description |
+|----|------|
+| long | Merge to long, multiple same-direction long positions merged |
+| short | Merge to short, multiple same-direction short positions merged |
 
 ## Get fills
 
@@ -3295,12 +3321,12 @@ if __name__ == '__main__':
 [
   {
   "product":"BTC_USDT_SWAP", // Transaction pair code
-  "side":"buy",
+  "side":"buy", // Trading direction [buy: Buy | sell: Sell]
   "fees": [{"amount": "10", "asset": "usdt", "value": "10"}], // fees
   "quantity": "0.01", // The number of transactions
-  "orderId":"4611772879845982371", // Order id
+  "orderId":"4611772879845982371", // Order ID
   "fillId":"4611471874845582393", // Fill id
-  "price":"1000000", // Transaction price
+  "price":"1000000", // Trade price
   "time":"1733541360859", // Transaction time
   "taker":true, // Is it a order
   "profit":"-9060", // Revenue
@@ -3320,9 +3346,9 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                                |
 |----------------|----------------| ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market         | string         | Yes | Trading to the market, such as spot, LPC, etc., spot is spot, LPC is a U -based contract                                                                                                                                   |
-| order_id       | string         | No | Delegation id assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol                                                |
-| symbol         | string         | No | Transaction pair code<br/>For example, BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.<br/>Limit only return transaction records for the specified transaction pair<br/>If this parameter is not specified, please specify order_id |
+| market         | string         | Yes | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]                                                                                                                                   |
+| order_id       | string         | No | Delegation ID assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol                                                |
+| symbol         | string         | No | Trading pair code<br/>For example, BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.<br/>Limit only return transaction records for the specified trading pair<br/>If this parameter is not specified, please specify order_id |
 | start_time     | int64          | No | The earliest time of the return transaction records                                                                                                                                                                        |
 | end_time       | int64          | No | Limited to return the latest time of transaction record                                                                                                                                                                    |
 | beFore         | int64          | No | fillId <br/> Limited to return the maximum ID of the transaction record                                                                                                                                                    |
@@ -3349,6 +3375,15 @@ if __name__ == '__main__':
 * order_id + before + limit  --> database
 
 > Return results sorted from small to large by transaction record id
+
+### Response Parameters Enum Values
+
+#### taker (Is Taker)
+
+| Value | Description |
+|----|------|
+| true | Taker, active party who takes liquidity |
+| false | Maker, passive party who provides liquidity |
 
 # User Data Streams
 
@@ -3530,9 +3565,9 @@ wss://u-stream.ktx.com
     "locked":"0",  // Freeze amount
     "free":"100",  //  Available Amount
     "withdrawable":"100",// Transferable
-    "collateral":false,// Collateral
-    "discountForMargin":"1", // optional col ,discount for margin,if the asset support discount
-    "discountForFee":"1" // optional col, discount for fee,if the asset support discount
+    "collateral":false,// Is collateral [true: Yes | false: No]
+    "discountForMargin":"1", // Margin discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
+    "discountForFee":"1" // Fee discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
   }
 }
 ```
@@ -3546,13 +3581,13 @@ wss://u-stream.ktx.com
   "stream": "position",
   "data": {
   "id": "1125899906842624003", // position ID
-  "symbol": "BTC_USDT_SWAP", // Transaction to the code to the code
-  "side": "long",
+  "symbol": "BTC_USDT_SWAP", // Transaction pair code
+  "side":"long", // Position direction [long: Long | short: Short]
   "quantity": "0.1", // quantity
   "entryPrice":"0", // Average price for opening positions
-  "mergeMode": "long", // position mode long or short
-  "marginMethod":"isolate",//margin mode
-  "leverage":"10.0", // bar
+  "mergeMode": "long", // Position merge mode [long: Merge long | short: Merge short]
+  "marginMethod":"isolate",// Margin mode [isolate: Isolated | cross: Cross]
+  "leverage":"10.0", // Leverage
   "initMargin":"0.1", // Start margin rate
   "maintMargin": "0.005", // Maintain the margin rate
   "posMargin": "0", // Press margin
@@ -3569,58 +3604,58 @@ wss://u-stream.ktx.com
 {
 "stream": "order",
 "data":{
-      "orderId": "4611767382287843330", // Order id
-      "clientOrderId": "", // Custom ID
+      "orderId": "4611767382287843330", // Order ID
+      "clientOrderId": "", // Client Order ID
       "createTime": "1733390630904", // Creation time
-      "Product": "BTC_USDT_SWAP", // Transaction to the code to the code
-      "type": "limit", // Order type
-      "side": "buy", // Trading direction
-      "quantity": "0.01", // quantity
-      "stf": "disabled",
-      "price": "10300", // The commission price
-      "timeInforce": "gtc",
-      "mini":"false", // is mini trade true or false
-      "cancelAfter": 0,
-      "postOnly": false,
-      "positionMerge": "long", // position mode  long or short
+      "Product": "BTC_USDT_SWAP", // Transaction pair code
+      "type": "limit", // Order type [limit: Limit | market: Market | take-profit: Take profit | stop: Stop | take-profit-limit: Take profit limit | stop-limit: Stop limit]
+      "side": "buy", // Trading direction [buy: Buy | sell: Sell]
+      "quantity": "0.01", // Quantity
+      "stf": "disabled", // Self-trading prevention [0: disabled Disable self-trade prevention | 1: dc Decrease and Cancel | 2: co Cancel Oldest | 3: cn Cancel Newest | 4: cb Cancel Both]
+      "price": "10300", // Order price
+      "timeInforce": "gtc", // Time in force [gtc: Good till cancel | ioc: Immediate or cancel | fok: Fill or kill]
+      "mini":"false", // Is mini contract [true: Yes | false: No]
+      "cancelAfter": 0, // Cancel after N seconds [>0: Cancel after N seconds | 0: Never auto-cancel]
+      "postOnly": false, // Post only [true: Yes | false: No]
+      "positionMerge": "long", // Position merge mode [long: Merge long | short: Merge short | none: Split]
       "positionId": 0, // Submitted position id
-      "marginMethod": "cross", // margin method
-      "close": false, // Is it a flat order
+      "marginMethod": "cross", // Margin mode [isolate: Isolated | cross: Cross]
+      "close": false, // Is close position [true: Close | false: Open]
       "leverage": 0, // Leverage multiple
-      "action": "unknown", // position behavior
-      "status": "Filled", // Order status
-      "executedQty": "0.01", //
-      "profit": "0", // profit
-      "origin":0, // origin 
-      "markPrice": "10000", // Represents the liquidation price when origin = -1
-      "brokerId":0, // broker id     
+      "action": "unknown", // Position behavior [unknown: Unknown | increase_long: Open Long | reduce_long: Close Long | increase_short: Open Short | reduce_short: Close Short]
+      "status": "Filled", // Order status [accepted: Accepted | partial-filled: Partial Filled | filled: Filled | cancelled: Cancelled | rejected: Rejected | partially-cancelled: Partially Cancelled]
+      "executedQty": "0.01", // Executed quantity
+      "profit": "0", // return
+      "origin":0, // Origin [when origin=-1, this order is a liquidation order]
+      "markPrice": "10000", // When origin=-1, represents the mark price at the time of liquidation
+      "brokerId":0, // broker id
       "update_id":'1125899907137993336', // update id
       "executedCost": "103", // The transaction value has
       "fillCount": 1, // Number of transactions
       "fills": [// transaction details
-      {
-        "tradeId": 1,
-        "time": "1733390650379",
-        "price": "10300",
-        "quantity": "0.01",
-        "profit": "0",
-        "taker": false,
-        "fees": [
-          {
-            "amount": "0.103", // Number of assets
-            "asset": "USDT", // Asset code
-            "value": "0.103" // Valuation
-          }
-        ]
-      }
-    ],
+        {
+          "tradeId": 1,
+          "time": "1733390650379",
+          "price": "10300",
+          "quantity": "0.01",
+          "profit": "0",
+          "taker": false, // Is Taker [true: Yes | false: No]
+          "fees": [
+            {
+              "amount": "0.103", // Number of assets
+              "asset": "USDT", // Asset code
+              "value": "0.103" // Valuation
+            }
+          ]
+        }
+      ],
       "fees": [// handle fee
-      {
-        "amount": "0.103", // Number of assets
-        "asset": "USDT", // Asset code
-        "value": "0.103" // Valuation
-      }
-    ],
+        {
+          "amount": "0.103", // Number of assets
+          "asset": "USDT", // Asset code
+          "value": "0.103" // Valuation
+        }
+      ],
       "updateTime": "1733390650379" // Update time
   }
 }
