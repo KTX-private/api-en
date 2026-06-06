@@ -419,7 +419,7 @@
                     <a href="#get-history-orders" class="toc-h2 toc-link" data-title="Get History Orders">Get History Orders</a>
                   </li>
                   <li>
-                    <a href="#ef41056898" class="toc-h2 toc-link" data-title="获取未成交订单列表">获取未成交订单列表</a>
+                    <a href="#get-pending-orders" class="toc-h2 toc-link" data-title="Get Pending Orders">Get Pending Orders</a>
                   </li>
                   <li>
                     <a href="#set-position-leverage" class="toc-h2 toc-link" data-title="Set Position leverage">Set Position leverage</a>
@@ -850,7 +850,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 </blockquote>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
-    </span><span class="nl">"ID"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">ID</span><span class="w">
+    </span><span class="nl">"ID"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">ID</span><span class="w">
     </span><span class="nl">"market"</span><span class="p">:</span><span class="w"> </span><span class="s2">"lpc"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">pair</span><span class="w"> </span><span class="err">market</span><span class="w"> </span><span class="p">[</span><span class="err">spot:</span><span class="w"> </span><span class="err">Spot</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">lpc:</span><span class="w"> </span><span class="err">USDT-margined</span><span class="w"> </span><span class="err">perpetual</span><span class="p">]</span><span class="w">
     </span><span class="nl">"Symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Transaction</span><span class="w"> </span><span class="err">pair</span><span class="w">
     </span><span class="nl">"takerFee"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.001"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Taker</span><span class="w"> </span><span class="err">fee</span><span class="w"> </span><span class="err">rate</span><span class="w">
@@ -884,7 +884,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>market</td>
 <td>string</td>
 <td>No</td>
-<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>Symbol</td>
@@ -985,7 +985,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>market</td>
 <td>string</td>
 <td>No</td>
-<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -1003,7 +1003,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>price_scale</td>
 <td>Integer</td>
 <td>No</td>
-<td>Specify the depth of the price by the price, such as the price of the specified transaction pair contains up to 4 digits <br/> Price_scale = 0 The price returned to the price up to 4 digits, <br/> price_scale = 1 to return to return. The price contains a maximum of 3 decimal numbers. The entrusted measurement is the price range of the price range 0.0010 and the price of <br/> price_scale = 2 to 2 contains up to 2 decimal numbers. br/&gt; price_scale = 3 to 3 to include a maximum number of decimal numbers. The sum of all delegations in 1.0000<br/>Valid values ​​0, 1, 2, 3, 4, 5<br/>Default value 0</td>
+<td>Price precision merge [0: 4 decimals; 1: 3 decimals; 2: 2 decimals; 3: 1 decimal; 4: 0 decimals]. Default value: 0</td>
 </tr>
 </tbody></table>
 
@@ -1095,7 +1095,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>market</td>
 <td>string</td>
 <td>No</td>
-<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -1107,7 +1107,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>time_frame</td>
 <td>string</td>
 <td>Yes</td>
-<td>Kline period [1m</td>
+<td>Kline period [1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W, 1M]</td>
 </tr>
 <tr>
 <td>before</td>
@@ -1136,7 +1136,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <ol>
 <li>market + symbol + time_frame  --&gt; cache</li>
 <li>market + symbol + time_frame + limit  --&gt; cache</li>
-<li>market + market + symbol + time_frame + before  --&gt; database</li>
+<li>market + symbol + time_frame + before  --&gt; database</li>
 <li>market + symbol + time_frame + before + limit  --&gt; database</li>
 <li>market + symbol + time_frame + after  --&gt; database</li>
 <li>market + symbol + time_frame + after + limit  --&gt; database</li>
@@ -1207,7 +1207,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>market</td>
 <td>string</td>
 <td>No</td>
-<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -1237,7 +1237,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>after</td>
 <td>int64</td>
 <td>No</td>
-<td>Trading record ID <br/> Limit the maximum ID of returning transaction records</td>
+<td>Trading record ID <br/>Transaction record ID, limit the minimum ID of returning transaction records</td>
 </tr>
 <tr>
 <td>limit</td>
@@ -1354,7 +1354,7 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 <td>market</td>
 <td>string</td>
 <td>No</td>
-<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot</td>
+<td>trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -2288,7 +2288,7 @@ TICKER: The latest transaction information</p>
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//Asset</span><span class="w"> </span><span class="err">code</span><span class="w">
     </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Total</span><span class="w"> </span><span class="err">Amount</span><span class="w">
-    </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">Amount</span><span class="w">
+    </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">Freeze</span><span class="w"> </span><span class="err">Amount</span><span class="w">
     </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="err">//</span><span class="w"> </span><span class="err">Available</span><span class="w"> </span><span class="err">Amount</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -2998,7 +2998,7 @@ const param = {
 <td>market</td>
 <td>string</td>
 <td>Yes</td>
-<td>Trading pair market [spot: Spot</td>
+<td>Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>client_order_id</td>
@@ -3392,7 +3392,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>market</td>
 <td>string</td>
 <td>Yes</td>
-<td>Trading pair market [spot: Spot</td>
+<td>Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>Symbol</td>
@@ -3410,13 +3410,13 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>end_time</td>
 <td>long</td>
 <td>No</td>
-<td>Limited return to the last creation time of the delegation</td>
+<td>Limit the earliest creation time of returned orders</td>
 </tr>
 <tr>
 <td>beFore</td>
 <td>int64</td>
 <td>No</td>
-<td>Entrust update ID <br/> Limited to return to the maximum update ID</td>
+<td>Entrust update ID <br/>Order update ID, limit the maximum update ID of returned orders</td>
 </tr>
 <tr>
 <td>after</td>
@@ -3452,7 +3452,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <blockquote>
 <p>The returned settled delegation is sorted from early to near according to settlement time</p>
 </blockquote>
-<h2 id='ef41056898'>获取未成交订单列表</h2>
+<h2 id='get-pending-orders'>Get Pending Orders</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -3572,7 +3572,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>market</td>
 <td>string</td>
 <td>Yes</td>
-<td>Trading pair market [spot: Spot</td>
+<td>Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>Symbol</td>
@@ -3912,7 +3912,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>market</td>
 <td>string</td>
 <td>Yes</td>
-<td>Trading pair market [spot: Spot</td>
+<td>Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 </tbody></table>
 <h2 id='cancel-all-orders'>Cancel all Orders</h2>
@@ -4016,7 +4016,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>market</td>
 <td>string</td>
 <td>Yes</td>
-<td>trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: Spot</td>
+<td>trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -4148,7 +4148,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>market</td>
 <td>string</td>
 <td>No</td>
-<td>trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: Spot</td>
+<td>trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -4310,7 +4310,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 <td>market</td>
 <td>string</td>
 <td>Yes</td>
-<td>Trading pair market [spot: Spot</td>
+<td>Trading pair market [spot: spot; lpc: USDT-M perpetual]</td>
 </tr>
 <tr>
 <td>order_id</td>
