@@ -410,7 +410,7 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "ID": 5,// ID
+    "ID": 5 // ID
     "market": "lpc", // Transaction pair market [spot: Spot | lpc: USDT-margined perpetual]
     "Symbol": "BTC_USDT_SWAP", // Transaction pair
     "takerFee": "0.001", // Taker fee rate
@@ -434,8 +434,8 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                      |
 |--------|----------------|------|--------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
-| Symbol | string         | No | Trading pair code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                              |
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
+| Symbol | string         | No | Trading pair code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                              
 
 * Data source
 
@@ -522,10 +522,10 @@ do_request()
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 |----------------|----------------| ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol         | string         | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| level          | int32          | No | How many level depth is specified? <br/> Effective value 1, 2, 5, 10, 20, 50, 100, 500, 1000 <br/> The default value 100 |
-| price_scale    | Integer        | No | Price precision merge [0: 4 decimals; 1: 3 decimals; 2: 2 decimals; 3: 1 decimal; 4: 0 decimals]. Default value: 0 |
+| level          | int32          | No | How many level depth is specified? <br/> Effective value 1, 2, 5, 10, 20, 50, 100, 500, 1000 <br/> The default value 100                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| price_scale    | Integer        | No | Specify the depth of the price by the price, such as the price of the specified transaction pair contains up to 4 digits <br/> Price_scale = 0 The price returned to the price up to 4 digits, <br/> price_scale = 1 to return to return. The price contains a maximum of 3 decimal numbers. The entrusted measurement is the price range of the price range 0.0010 and the price of <br/> price_scale = 2 to 2 contains up to 2 decimal numbers. br/> price_scale = 3 to 3 to include a maximum number of decimal numbers. The sum of all delegations in 1.0000<br/>Valid values ​​0, 1, 2, 3, 4, 5<br/>Default value 0 |
 
 > Note: The data are sorted by the best price, that is, the buy side depth is sorted from large to small, and the sell side depth is sorted from small to large
 
@@ -607,9 +607,9 @@ if __name__ == '__main__':
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                         |
 |----------------|----------------| ---------- |---------------------------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol         | string         | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                                                        |
-| time_frame     | string         | Yes | Kline period [1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W, 1M] |
+| time_frame     | string         | Yes | Kline period [1m | 3m | 5m | 15m | 30m | 1h | 2h | 4h | 6h | 12h | 1d | 1W | 1M] |
 | before         | int64          | No | utc time<br/>Limit the latest time of return to the K-line record                                                   |
 | after          | int64          | No | UTC Time <br/> Limited to return the earliest time of the K -line records                                           |
 | limit          | Integer        | No | Get the maximum number of K -line records <br/> The default value is 100, the maximum value is 1000                 |
@@ -618,7 +618,7 @@ if __name__ == '__main__':
 
 1. market + symbol + time_frame  --> cache
 2. market + symbol + time_frame + limit  --> cache
-3. market + symbol + time_frame + before  --> database
+3. market + market + symbol + time_frame + before  --> database
 4. market + symbol + time_frame + before + limit  --> database
 5. market + symbol + time_frame + after  --> database
 6. market + symbol + time_frame + after + limit  --> database
@@ -682,12 +682,12 @@ do_request()
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                       |
 |----------------| ---------- |---------------------------|---------------------------------------------------------------------------------------------------|
-| market | string | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market | string | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol         | string | Yes                       | Trading pair codes, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                            |
 | start_time     | int64 | No                        | The earliest time of limited returning transaction records                                        |
 | end_time       | int64 | No                        | Limited recent time of returning transaction records                                              |
 | before         | int64 | No                        | Transaction record ID<br/> Limited to return the maximum id of the transaction record             |
-| after          | int64 | No                        | Trading record ID <br/>Transaction record ID, limit the minimum ID of returning transaction records |
+| after          | int64 | No                        | Trading record ID <br/> Limit the maximum ID of returning transaction records                     |
 | limit          | Integer | No                        | The maximum number of obtaining records <br/> The default value is 100, the maximum value is 1000 |
 
 * Parameter combinations and data sources supported by this interface
@@ -785,7 +785,7 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                          |
 |----------------|----------------| ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market | string         | No                        | trading pair markets, such as spot(default), lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol         | string         | Yes | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> You can specify multiple transactions in the following two forms <br/> 1.symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
@@ -1682,7 +1682,7 @@ if __name__ == '__main__':
   {
     "asset": "USDT", //Asset code
     "balance": "100", // Total Amount
-    "locked": "0",// Freeze Amount
+    "locked": "0"// Freeze Amount
     "free": "100"// Available Amount
   }
 ]
@@ -2272,13 +2272,13 @@ if __name__ == '__main__':
 | side            | string         | Yes                      | buy or sell                                                                                                                                                                                                                                                                                                                                                                                                                |
 | type            | string         | Yes                      | Delegate type, valid value limit or market or take-profit or stop or take-profit-limit(need define price param after trigger) or stop-limit (need define price param after trigger)                                                                                                                                                                                                                                             |
 | quantity        | DECIMAL        | Yes                      | Delegate quantity                                                                                                                                                                                                                                                                                                                                                                                                          |
-| market          | string         | Yes                      | Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market          | string         | Yes                      | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]                                                                                                                                                                                                                                                                                                                                                                                   |
 | client_order_id | string         | No                       | Delegate ID, a string with a valid value of int64 integer, it is recommended to use the Unix timestamp when submitting the delegate                                                                                                                                                                                                                                                                                        |
 | price           | DECIMAL        | No                       | Entrusted price limit                                                                                                                                                                                                                                                                                                                                                                                                      |
 | positionMerge   | string         | No                       | long or short exp:open long(positionMerge=long,side=buy),close long(positionMerge=long,side=sell),open short(positionMerge=short,side=sell),close short(positionMerge=short,side=buy)                                                                                                                                                                                                                                      |
 | marginMethod    | string         | No                       | Contract must be isolate position by position, cross full position                                                                                                                                                                                                                                                                                                                                                         |
 | mini            | bool           | No                       | mini trade ,if is true , must be positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                                                                                                                                                                                                                                                      |
-| leverage        | int            | No                       | Leverage                                                                                                                                                                                                                                                                                                                                                                                         |
+| leverage        | int            | No                       | Leverage                                                                                                                                                                                                                                                                                                                                                                                         
 | close           | bool           | No                       | The contract must be true to close the warehouse receipt, false to open the warehouse receipt                                                                                                                                                                                                                                                                                                                              |
 | post_only       | bool           | No                       | Post only                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | time_in_Force   | string         | No                       | Effective time performance <br/> Effective value GTC, IOC,FOK <br/> GTC indicates that the commission that has not been fully transaction will always be effective until the user revokes the commission <br/> IOC indicating that the matching will be immediately revoked to the bottom below The commission that cannot be completely sold at all times, <br/> Any transaction will be retained <br/> default value GTC |
@@ -2573,15 +2573,15 @@ if __name__ == '__main__':
 * Permanent: View, Trade
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description                                                  |
-| -------------- | -------------- | ------------------- | ------------------------------------------------------------ |
-| market         | string         | Yes                 | Trading pair market [spot: spot; lpc: USDT-M perpetual]      |
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                      |
+|----------------|----------------|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | string         | Yes                 | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]<br/>                                                                                              |
 | Symbol         | string         | No                  | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
-| start_time     | long           | No                  | Limited return to the last creation time of the delegation   |
-| end_time       | long           | No                  | Limit the earliest creation time of returned orders          |
-| beFore         | int64          | No                  | Entrust update ID <br/>Order update ID, limit the maximum update ID of returned orders |
-| after          | int64          | No                  | Entrust update ID <br/> Limited to the minimum update ID of the entrustment |
-| limit          | long           | No                  | How many commissioneds are the specified?                    |
+| start_time     | long           | No                  | Limited return to the last creation time of the delegation                                                                                                                                                       |
+| end_time       | long           | No                  | Limited return to the last creation time of the delegation                                                                                                                                                       |
+| beFore         | int64          | No                  | Entrust update ID <br/> Limited to return to the maximum update ID                                                                                                                                               |
+| after          | int64          | No                  | Entrust update ID <br/> Limited to the minimum update ID of the entrustment                                                                                                                                      |
+| limit          | long           | No                  | How many commissioneds are the specified?                                                                                                                                                                        
 
 * Parameter combinations and data sources supported by this interface
 
@@ -2598,7 +2598,7 @@ if __name__ == '__main__':
 
 > The returned settled delegation is sorted from early to near according to settlement time
 
-## Get Pending Orders
+## 获取未成交订单列表
 
 > Request
 
@@ -2711,9 +2711,9 @@ if __name__ == '__main__':
 * Permanent: View, Trade
 
 
-| Parameter name | Parameter type | Whether to pass it? | Description                                                  |
-| -------------- | -------------- | ------------------- | ------------------------------------------------------------ |
-| market         | string         | Yes                 | Trading pair market [spot: spot; lpc: USDT-M perpetual]      |
+| Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                      |
+|----------------|----------------|---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | string         | Yes                 | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]<br/>                                                                                              |
 | Symbol         | string         | No                  | Trading code, such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc. <br/> When status = unsettled, Symbol will return to all the uncomfortable commissioned entrustment of all transaction pairs <br/> Symbol parameter |
 
 
@@ -3010,8 +3010,8 @@ if __name__ == '__main__':
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description |
 |----------------|----------------|-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| id | string         | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. |
-| market | string         | Yes | Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| id | string         | Yes | Entrusted ID <br> The entrusted ID can be allocated by the exchange, <br/> It can also be customized by the user (using the client_order_id parameter when submitting the commission). <br>When using a custom id, you need to add the "c:" prefix before the id. <br/>For example: the custom id "123" is used when submitting the delegation, and when revoking the delegation, "c:123" is required. | |
+| market | string         | Yes | Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 
 
 ## Cancel all Orders
@@ -3110,7 +3110,7 @@ if __name__ == '__main__':
 
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                             |
 |--------|----------------|-----|-----------------------------------------------------------------------------------------|
-| market | string         | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market | string         | Yes | trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual] |
 | symbol | string         | Yes | Trading pair code<br/>such as BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.                |
 | Side | string         | No | Buy or Sell                                                                             |
 
@@ -3220,7 +3220,7 @@ if __name__ == '__main__':
 | Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                  |
 | ------------ | ---------- |---------------------------|----------------------------------------------------------------------------------------------|
 | position_id   | string   | No                        | Position ID, the main param                                                                 |
-| market | string   | No                        | trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market | string   | No                        | trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: Spot | lpc: USDT-margined perpetual]      |
 | symbol     | string   | No                        | use symbol with market param ,transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP |
 
 ### Response Parameters Enum Values
@@ -3346,7 +3346,7 @@ if __name__ == '__main__':
 
 | Parameter name | Parameter type | Whether to pass it? | Description                                                                                                                                                                                                                |
 |----------------|----------------| ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market         | string         | Yes | Trading pair market [spot: spot; lpc: USDT-M perpetual] |
+| market         | string         | Yes | Trading pair market [spot: Spot | lpc: USDT-margined perpetual]                                                                                                                                   |
 | order_id       | string         | No | Delegation ID assigned by the exchange<br/>Limit only return transaction records for the specified delegation<br/>If this parameter is not specified, please specify symbol                                                |
 | symbol         | string         | No | Trading pair code<br/>For example, BTC_USDT, ETH_USDT, BTC_USDT_SWAP etc.<br/>Limit only return transaction records for the specified trading pair<br/>If this parameter is not specified, please specify order_id |
 | start_time     | int64          | No | The earliest time of the return transaction records                                                                                                                                                                        |
@@ -3660,3 +3660,376 @@ wss://u-stream.ktx.com
   }
 }
 ```
+
+# FORECAST
+## Get Event
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/events`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/forecast/events'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "endDate": "1781204400000", // End time
+    "description": "This event is for the upcoming FIFA World Cup game, scheduled for Thursday, June 11, 2026 between Mexico and South Africa.", // Description
+    "id": "351715", // ID
+    "title": "Mexico vs. South Africa", // Title
+    "slug": "fifwc-mex-rsa-2026-06-11", // Slug
+    "startDate": "1775515727000", // Start time
+    "status": "active" // Market status [active: active | completed: completed]
+  }
+  ...
+]
+```
+
+**Get events**
+
+* Request Method: `GET`
+* Request Path: `/v1/forecast/events`
+
+---
+
+## Get Events Details
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/event/detail`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/forecast/event/detail'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "endDate": "1781204400000", // End time
+    "description": "This event is for the upcoming FIFA World Cup game, scheduled for Thursday, June 11, 2026 between Mexico and South Africa.", // Description
+    "id": "351715", // ID
+    "title": "Mexico vs. South Africa", // Title
+    "slug": "fifwc-mex-rsa-2026-06-11", // Slug
+    "startDate": "1775515727000", // Start time
+    "status": "active" // Market status [active: active | completed: completed]
+    "markets": [ // May contain multiple markets
+      {
+        "eventId": "351715", // Event ID
+        "symbol": "1897034_FORECAST", // Trading symbol
+        "question": "Will Mexico win on 2026-06-11?", // Market question
+        "takerFee": "0", // Taker fee rate
+        "endDate": "1781204400000", // End time
+        "outcomes": [ // Available answer options
+          "Yes", // Corresponds to the long order parameter
+          "No"   // Corresponds to the short order parameter
+        ],
+        "winningOutcome": 0, // [0: unresolved | 1: yes (long) wins | -1: no (short) wins | 2: draw]
+        "makerFee": "0.00040000", // Maker fee rate
+        "quantityScale": 0, // Quantity precision
+        "priceScale": 2, // Price precision
+        "id": "1897034", // Market ID
+        "slug": "fifwc-mex-rsa-2026-06-11-mex", // Slug
+        "startDate": "1775515619000", // Start time
+        "status": "active" // Market status [active: active | resolved: settled]
+      }
+      ...
+    ],
+  }
+  ...
+]
+```
+
+**Get events details**
+
+* Request Method: `GET`
+* Request Path: `/v1/forecast/event/detail`
+* Request parameters
+
+| 参数名称 | 参数类型 | 是否必传 | 说明          |
+|------| ---------- |------|-------------|
+| id    | string   | 是    | 指定的event id |
+
+## Get market
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/markets`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/forecast/markets'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "id": "1897034", // Market ID
+    "eventId": "351715", // Associated event ID
+    "slug": "fifwc-mex-rsa-2026-06-11-mex", // Unique market identifier
+    "symbol": "1897034_FORECAST", // Trading symbol
+    "question": "Will Mexico win on 2026-06-11?", // Prediction question [Format: Will {event subject} {outcome} on {date}?]
+    "outcomes": [ // Prediction outcome options
+      "Yes", // Yes / Win [corresponds to the long order parameter]
+      "No"   // No / Lose [corresponds to the short order parameter]
+    ],
+    "winningOutcome": 0, // Settlement result [0: unresolved | 1: Yes wins | -1: No wins | 2: draw]
+    "status": "active", // Market status [active: active | resolved: settled]
+    "startDate": "1775515619000", // Trading start time [millisecond timestamp]
+    "endDate": "1781204400000", // End / settlement time [millisecond timestamp]
+    "takerFee": "0", // Taker fee rate [fee charged to liquidity takers]
+    "makerFee": "0.00040000", // Maker fee rate [fee charged to liquidity providers]
+    "quantityScale": 0, // Quantity precision [number of decimal places; 0 means integers only]
+    "priceScale": 2 // Price precision [number of decimal places; 2 means keep 2 decimal places]
+  }
+]
+```
+
+**Get market**
+
+* Request Method: `GET`
+* Request Path: `/v1/forecast/markets`
+* Request parameters
+
+
+| Parameter Name | Type | Required | Description |
+| -------- | -------- | -------- | ------------------------------------------------------------ |
+| eventId  | string   | No       | Specific event ID |
+| symbol   | string   | No       | Prediction market trading symbol in the format `{marketId}_FORECAST`, such as `1897034_FORECAST` or `2362124_FORECAST` |
+
+---
+
+## Get ticker
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/ticker/get_all?market=forecast`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/ticker/get_all?market=forecast'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "state": 0, // Response status [0: success | non-zero: failure]
+  "result": [
+    {
+      "productId": 759, // Trading pair ID
+      "product": "CFG_USDT", // Trading symbol [format: {event code}_{quote currency}]
+      "time": "1780644690000", // Timestamp [milliseconds]
+      "last": "0.2235", // Last traded price [prediction market price, range 0-1, representing the probability of the event occurring]
+      "lastQty": "15.1", // Most recent trade quantity [number of contracts]
+      "bidPrice": "0.2234", // Best bid price [highest buy price, representing the buyer's view of the event probability]
+      "bidQty": "4.7", // Best bid quantity [number of contracts on the best bid]
+      "askPrice": "0.2237", // Best ask price [lowest sell price, representing the seller's view of the event probability]
+      "askQty": "4.7", // Best ask quantity [number of contracts on the best ask]
+      "open": "0.2435", // 24h opening price [price 24 hours ago]
+      "high": "0.2440", // 24h highest price [highest probability]
+      "low": "0.2227", // 24h lowest price [lowest probability]
+      "change": "-0.0818", // 24h price change [positive: increase | negative: decrease, representing the absolute change in implied probability]
+      "volume": "112068.8", // 24h trading volume [number of contracts]
+      "amount": "26181.59142", // 24h traded amount [quote currency amount, such as USDT]
+      "tradeCount": 9496, // 24h trade count [number of matched trades]
+      "firstTradeId": 194285 // First trade ID
+    }
+  ]
+}
+```
+
+**Get ticker**
+
+* Request Method: `GET`
+* Request Path: `/v1/ticker/get_all`
+* Request Parameters
+
+| Parameter Name | Type | Required | Description |
+| -------- | -------- | -------- | ------------------------------------------------------------ |
+| market   | string   | Yes      | Trading market [forecast: prediction market] |
+
+---
+
+## Get Order Book
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "i": 1027024, // Update ID [order book version number, incremented on each change]
+  "t": "1644558642100", // Update time [update timestamp, milliseconds]
+  "b": [ // Bid book [buy-side order queue, sorted from highest price to lowest price, representing the probability price buyers are willing to buy at]
+    [
+      "0.65", // Order price [price buyers are willing to pay, implying a 65% probability of the event occurring]
+      "100.5" // Order quantity [number of contracts to buy]
+    ],
+    [
+      "0.64", // Order price [price buyers are willing to pay, implying a 64% probability of the event occurring]
+      "200.3" // Order quantity [number of contracts to buy]
+    ],
+    [
+      "0.63", // Order price [price buyers are willing to pay, implying a 63% probability of the event occurring]
+      "150.2" // Order quantity [number of contracts to buy]
+    ]
+  ],
+  "a": [ // Ask book [sell-side order queue, sorted from lowest price to highest price, representing the probability price sellers are willing to sell at]
+    [
+      "0.66", // Order price [price sellers are willing to accept, implying a 66% probability of the event occurring]
+      "80.4" // Order quantity [number of contracts to sell]
+    ],
+    [
+      "0.67", // Order price [price sellers are willing to accept, implying a 67% probability of the event occurring]
+      "120.6" // Order quantity [number of contracts to sell]
+    ],
+    [
+      "0.68", // Order price [price sellers are willing to accept, implying a 68% probability of the event occurring]
+      "90.1" // Order quantity [number of contracts to sell]
+    ]
+  ]
+}
+```
+
+**Get order book**
+
+* Request Method: `GET`
+* Request Path: `/v1/order_book`
+* Request Parameters
+
+| Parameter Name | Type | Required | Description |
+| :---------- | :------- | :------- | :----------------------------------------------------------- |
+| market      | string   | No       | Trading market [forecast: prediction market] |
+| symbol      | string   | Yes      | Prediction market trading symbol in the format `{marketId}_FORECAST`, such as `1897034_FORECAST` or `2362124_FORECAST` |
+| level       | int32    | No       | Maximum returned depth level. For batch queries, you can use `symbol=1897034_FORECAST,1897035_FORECAST`. Valid values: `1`, `2`, `5`, `10`, `20`, `50`, `100`, `200`, `500`, `1000`. Default value: `100` |
+| price_scale | integer  | No       | Aggregated price precision. 0=4 decimal places, 1=3 decimal places, 2=2 decimal places, 3=1 decimal place, 4=0 decimal places. Default value: 0 |
+| side        | string   | No       | Order book side (buy: bid book (long direction); sell: ask book (short direction)). Default value: buy |
+
+> Note: The returned order book is default displayed from the `Yes` (`long`) perspective.

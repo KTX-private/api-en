@@ -3660,3 +3660,376 @@ wss://u-stream.ktx.com
   }
 }
 ```
+
+# FORECAST
+## Get Event
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/events`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/forecast/events'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "endDate": "1781204400000", // End time
+    "description": "This event is for the upcoming FIFA World Cup game, scheduled for Thursday, June 11, 2026 between Mexico and South Africa.", // Description
+    "id": "351715", // ID
+    "title": "Mexico vs. South Africa", // Title
+    "slug": "fifwc-mex-rsa-2026-06-11", // Slug
+    "startDate": "1775515727000", // Start time
+    "status": "active" // Market status [active: active | completed: completed]
+  }
+  ...
+]
+```
+
+**Get events**
+
+* Request Method: `GET`
+* Request Path: `/v1/forecast/events`
+
+---
+
+## Get Events Details
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/event/detail`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/forecast/event/detail'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "endDate": "1781204400000", // End time
+    "description": "This event is for the upcoming FIFA World Cup game, scheduled for Thursday, June 11, 2026 between Mexico and South Africa.", // Description
+    "id": "351715", // ID
+    "title": "Mexico vs. South Africa", // Title
+    "slug": "fifwc-mex-rsa-2026-06-11", // Slug
+    "startDate": "1775515727000", // Start time
+    "status": "active" // Market status [active: active | completed: completed]
+    "markets": [ // May contain multiple markets
+      {
+        "eventId": "351715", // Event ID
+        "symbol": "1897034_FORECAST", // Trading symbol
+        "question": "Will Mexico win on 2026-06-11?", // Market question
+        "takerFee": "0", // Taker fee rate
+        "endDate": "1781204400000", // End time
+        "outcomes": [ // Available answer options
+          "Yes", // Corresponds to the long order parameter
+          "No"   // Corresponds to the short order parameter
+        ],
+        "winningOutcome": 0, // [0: unresolved | 1: yes (long) wins | -1: no (short) wins | 2: draw]
+        "makerFee": "0.00040000", // Maker fee rate
+        "quantityScale": 0, // Quantity precision
+        "priceScale": 2, // Price precision
+        "id": "1897034", // Market ID
+        "slug": "fifwc-mex-rsa-2026-06-11-mex", // Slug
+        "startDate": "1775515619000", // Start time
+        "status": "active" // Market status [active: active | resolved: settled]
+      }
+      ...
+    ],
+  }
+  ...
+]
+```
+
+**Get events details**
+
+* Request Method: `GET`
+* Request Path: `/v1/forecast/event/detail`
+* Request parameters
+
+| Parameter Name | Parameter Type | Required | Description            |
+|------| ---------- |------|-------------|
+| id             | string         | Yes      | The specified event ID |
+
+## Get market
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/markets`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/forecast/markets'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "id": "1897034", // Market ID
+    "eventId": "351715", // Associated event ID
+    "slug": "fifwc-mex-rsa-2026-06-11-mex", // Unique market identifier
+    "symbol": "1897034_FORECAST", // Trading symbol
+    "question": "Will Mexico win on 2026-06-11?", // Prediction question [Format: Will {event subject} {outcome} on {date}?]
+    "outcomes": [ // Prediction outcome options
+      "Yes", // Yes / Win [corresponds to the long order parameter]
+      "No"   // No / Lose [corresponds to the short order parameter]
+    ],
+    "winningOutcome": 0, // Settlement result [0: unresolved | 1: Yes wins | -1: No wins | 2: draw]
+    "status": "active", // Market status [active: active | resolved: settled]
+    "startDate": "1775515619000", // Trading start time [millisecond timestamp]
+    "endDate": "1781204400000", // End / settlement time [millisecond timestamp]
+    "takerFee": "0", // Taker fee rate [fee charged to liquidity takers]
+    "makerFee": "0.00040000", // Maker fee rate [fee charged to liquidity providers]
+    "quantityScale": 0, // Quantity precision [number of decimal places; 0 means integers only]
+    "priceScale": 2 // Price precision [number of decimal places; 2 means keep 2 decimal places]
+  }
+]
+```
+
+**Get market**
+
+* Request Method: `GET`
+* Request Path: `/v1/forecast/markets`
+* Request parameters
+
+
+| Parameter Name | Type | Required | Description |
+| -------- | -------- | -------- | ------------------------------------------------------------ |
+| eventId  | string   | No       | Specific event ID |
+| symbol   | string   | No       | Prediction market trading symbol in the format `{marketId}_FORECAST`, such as `1897034_FORECAST` or `2362124_FORECAST` |
+
+---
+
+## Get ticker
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/ticker/get_all?market=forecast`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/ticker/get_all?market=forecast'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "state": 0, // Response status [0: success | non-zero: failure]
+  "result": [
+    {
+      "productId": 759, // Trading pair ID
+      "product": "CFG_USDT", // Trading symbol [format: {event code}_{quote currency}]
+      "time": "1780644690000", // Timestamp [milliseconds]
+      "last": "0.2235", // Last traded price [prediction market price, range 0-1, representing the probability of the event occurring]
+      "lastQty": "15.1", // Most recent trade quantity [number of contracts]
+      "bidPrice": "0.2234", // Best bid price [highest buy price, representing the buyer's view of the event probability]
+      "bidQty": "4.7", // Best bid quantity [number of contracts on the best bid]
+      "askPrice": "0.2237", // Best ask price [lowest sell price, representing the seller's view of the event probability]
+      "askQty": "4.7", // Best ask quantity [number of contracts on the best ask]
+      "open": "0.2435", // 24h opening price [price 24 hours ago]
+      "high": "0.2440", // 24h highest price [highest probability]
+      "low": "0.2227", // 24h lowest price [lowest probability]
+      "change": "-0.0818", // 24h price change [positive: increase | negative: decrease, representing the absolute change in implied probability]
+      "volume": "112068.8", // 24h trading volume [number of contracts]
+      "amount": "26181.59142", // 24h traded amount [quote currency amount, such as USDT]
+      "tradeCount": 9496, // 24h trade count [number of matched trades]
+      "firstTradeId": 194285 // First trade ID
+    }
+  ]
+}
+```
+
+**Get ticker**
+
+* Request Method: `GET`
+* Request Path: `/v1/ticker/get_all`
+* Request Parameters
+
+| Parameter Name | Type | Required | Description |
+| -------- | -------- | -------- | ------------------------------------------------------------ |
+| market   | string   | Yes      | Trading market [forecast: prediction market] |
+
+---
+
+## Get Order Book
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell`;
+request.get(url, function optionalCallback(err, httpResponse, body) {
+  if (err) {
+    return console.error('request failed:', err);
+  }
+
+  console.log(body);
+});
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api'
+
+
+def do_request():
+    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "i": 1027024, // Update ID [order book version number, incremented on each change]
+  "t": "1644558642100", // Update time [update timestamp, milliseconds]
+  "b": [ // Bid book [buy-side order queue, sorted from highest price to lowest price, representing the probability price buyers are willing to buy at]
+    [
+      "0.65", // Order price [price buyers are willing to pay, implying a 65% probability of the event occurring]
+      "100.5" // Order quantity [number of contracts to buy]
+    ],
+    [
+      "0.64", // Order price [price buyers are willing to pay, implying a 64% probability of the event occurring]
+      "200.3" // Order quantity [number of contracts to buy]
+    ],
+    [
+      "0.63", // Order price [price buyers are willing to pay, implying a 63% probability of the event occurring]
+      "150.2" // Order quantity [number of contracts to buy]
+    ]
+  ],
+  "a": [ // Ask book [sell-side order queue, sorted from lowest price to highest price, representing the probability price sellers are willing to sell at]
+    [
+      "0.66", // Order price [price sellers are willing to accept, implying a 66% probability of the event occurring]
+      "80.4" // Order quantity [number of contracts to sell]
+    ],
+    [
+      "0.67", // Order price [price sellers are willing to accept, implying a 67% probability of the event occurring]
+      "120.6" // Order quantity [number of contracts to sell]
+    ],
+    [
+      "0.68", // Order price [price sellers are willing to accept, implying a 68% probability of the event occurring]
+      "90.1" // Order quantity [number of contracts to sell]
+    ]
+  ]
+}
+```
+
+**Get order book**
+
+* Request Method: `GET`
+* Request Path: `/v1/order_book`
+* Request Parameters
+
+| Parameter Name | Type | Required | Description |
+| :---------- | :------- | :------- | :----------------------------------------------------------- |
+| market      | string   | No       | Trading market [forecast: prediction market] |
+| symbol      | string   | Yes      | Prediction market trading symbol in the format `{marketId}_FORECAST`, such as `1897034_FORECAST` or `2362124_FORECAST` |
+| level       | int32    | No       | Maximum returned depth level. For batch queries, you can use `symbol=1897034_FORECAST,1897035_FORECAST`. Valid values: `1`, `2`, `5`, `10`, `20`, `50`, `100`, `200`, `500`, `1000`. Default value: `100` |
+| price_scale | integer  | No       | Aggregated price precision. 0=4 decimal places, 1=3 decimal places, 2=2 decimal places, 3=1 decimal place, 4=0 decimal places. Default value: 0 |
+| side        | string   | No       | Order book side (buy: bid book (long direction); sell: ask book (short direction)). Default value: buy |
+
+> Note: The returned order book is default displayed from the `Yes` (`long`) perspective.
