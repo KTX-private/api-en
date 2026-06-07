@@ -5278,16 +5278,63 @@ const param = {
 <li><p>Request Parameters</p></li>
 </ul>
 
-<p>| Parameter Name | Parameter Type | Required | Description                                                                                          |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market         | string        | Yes     | Market type [forecast: prediction market]                                                            |
-  | symbol         | string        | Yes     | Trading pair code, e.g., <code>2362124_FORECAST</code>                                                          |
-  | type           | string        | Yes     | Order type [limit: limit order; market: market order]                                                |
-  | quantity       | decimal       | Yes     | Order quantity (number of contracts)                                                                 |
-  | forecastSide   | string        | Yes     | Prediction direction [buy_long: buy yes; buy_short: buy no; sell_long: sell yes; sell_short: sell no] |
-  | client_order_id | string        | No      | Custom order ID, valid as int64 string, recommended to use Unix timestamp                            |
-  | price          | decimal       | No      | Order price (probability, range 0-1, mean win rate, required for limit orders)                       |
-  | time_in_force  | string        | No      | Time in force [gtc: Good till cancel; ioc: Immediate or cancel; fok: Fill or kill]. Default: <code>gtc</code>   |</p>
+<table><thead>
+<tr>
+<th>Parameter Name</th>
+<th>Parameter Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>Yes</td>
+<td>Market type [forecast: prediction market]</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>Yes</td>
+<td>Trading pair code, e.g., <code>2362124_FORECAST</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Yes</td>
+<td>Order type [limit: limit order; market: market order]</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>decimal</td>
+<td>Yes</td>
+<td>Order quantity (number of contracts)</td>
+</tr>
+<tr>
+<td>forecastSide</td>
+<td>string</td>
+<td>Yes</td>
+<td>Prediction direction [buy_long: buy yes; buy_short: buy no; sell_long: sell yes; sell_short: sell no]</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>No</td>
+<td>Custom order ID, valid as int64 string, recommended to use Unix timestamp</td>
+</tr>
+<tr>
+<td>price</td>
+<td>decimal</td>
+<td>No</td>
+<td>Order price (probability, range 0-1, mean win rate, required for limit orders)</td>
+</tr>
+<tr>
+<td>time_in_force</td>
+<td>string</td>
+<td>No</td>
+<td>Time in force [gtc: Good till cancel; ioc: Immediate or cancel; fok: Fill or kill]. Default: <code>gtc</code></td>
+</tr>
+</tbody></table>
 <h2 id='get-order-details'>Get Order Details</h2>
 <blockquote>
 <p>Request</p>
@@ -5561,15 +5608,57 @@ const param = {
 <li><p>Request Parameters</p></li>
 </ul>
 
-<p>| Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market        | string        | No      | Trading pair market [forecast: prediction market]           |
-  | symbol        | string        | No      | Trading pair code, e.g., <code>2362124_FORECAST</code> When <code>status=unsettled</code>, not specifying symbol will return all unsettled orders of all trading pairs When <code>status=settled</code>, the symbol parameter is required |
-  | start_time    | long          | No      | Limit the earliest creation time of returned orders         |
-  | end_time      | long          | No      | Limit the latest creation time of returned orders           |
-  | before        | int64         | No      | Order update ID, limit the maximum update ID of returned orders |
-  | after         | int64         | No      | Order update ID, limit the minimum update ID of returned orders |
-  | limit         | long          | No      | Specify the maximum number of orders to return              |</p>
+<table><thead>
+<tr>
+<th>Parameter Name</th>
+<th>Parameter Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>No</td>
+<td>Trading pair market [forecast: prediction market]</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>No</td>
+<td>Trading pair code, e.g., <code>2362124_FORECAST</code> When <code>status=unsettled</code>, not specifying symbol will return all unsettled orders of all trading pairs When <code>status=settled</code>, the symbol parameter is required</td>
+</tr>
+<tr>
+<td>start_time</td>
+<td>long</td>
+<td>No</td>
+<td>Limit the earliest creation time of returned orders</td>
+</tr>
+<tr>
+<td>end_time</td>
+<td>long</td>
+<td>No</td>
+<td>Limit the latest creation time of returned orders</td>
+</tr>
+<tr>
+<td>before</td>
+<td>int64</td>
+<td>No</td>
+<td>Order update ID, limit the maximum update ID of returned orders</td>
+</tr>
+<tr>
+<td>after</td>
+<td>int64</td>
+<td>No</td>
+<td>Order update ID, limit the minimum update ID of returned orders</td>
+</tr>
+<tr>
+<td>limit</td>
+<td>long</td>
+<td>No</td>
+<td>Specify the maximum number of orders to return</td>
+</tr>
+</tbody></table>
 <h2 id='get-open-orders'>Get Open Orders</h2>
 <blockquote>
 <p>Request</p>
@@ -5674,10 +5763,27 @@ const param = {
 <li><p>Request Parameters</p></li>
 </ul>
 
-<p>| Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
-  | symbol        | string        | No      | Trading pair code, e.g., <code>2434164_FORECAST</code> When <code>status=unsettled</code>, not specifying symbol will return all unsettled orders of all trading pairs When <code>status=settled</code>, the symbol parameter is required |</p>
+<table><thead>
+<tr>
+<th>Parameter Name</th>
+<th>Parameter Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>Yes</td>
+<td>Trading pair market [forecast: prediction market]</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>No</td>
+<td>Trading pair code, e.g., <code>2434164_FORECAST</code> When <code>status=unsettled</code>, not specifying symbol will return all unsettled orders of all trading pairs When <code>status=settled</code>, the symbol parameter is required</td>
+</tr>
+</tbody></table>
 <h2 id='cancel-order'>Cancel Order</h2>
 <blockquote>
 <p>Request</p>
@@ -5763,9 +5869,21 @@ const param = {
 <li><p>Request Parameters</p></li>
 </ul>
 
-<p>| Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | id            | string        | Yes     | Order ID, supports multiple IDs concatenated The order ID can be assigned by the exchange, or customized by the user (using the client_order_id parameter when submitting the order). When using a custom ID, you need to add the &quot;c:&quot; prefix before the ID. For example: if you used custom ID &quot;123&quot; when submitting the order, use &quot;c:123&quot; when canceling the order. |</p>
+<table><thead>
+<tr>
+<th>Parameter Name</th>
+<th>Parameter Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>Yes</td>
+<td>Order ID, supports multiple IDs concatenated The order ID can be assigned by the exchange, or customized by the user (using the client_order_id parameter when submitting the order). When using a custom ID, you need to add the &quot;c:&quot; prefix before the ID. For example: if you used custom ID &quot;123&quot; when submitting the order, use &quot;c:123&quot; when canceling the order.</td>
+</tr>
+</tbody></table>
 <h2 id='get-positions-2'>Get Positions</h2>
 <blockquote>
 <p>Request</p>
@@ -5862,11 +5980,33 @@ const param = {
 <li><p>Request Parameters</p></li>
 </ul>
 
-<p>| Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | position_id   | string        | No      | Position ID. If this parameter exists, it has the highest priority |
-  | market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
-  | symbol        | string        | No      | Use with market parameter. Trading pair code, e.g., <code>2434164_FORECAST</code> |</p>
+<table><thead>
+<tr>
+<th>Parameter Name</th>
+<th>Parameter Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>position_id</td>
+<td>string</td>
+<td>No</td>
+<td>Position ID. If this parameter exists, it has the highest priority</td>
+</tr>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>Yes</td>
+<td>Trading pair market [forecast: prediction market]</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>No</td>
+<td>Use with market parameter. Trading pair code, e.g., <code>2434164_FORECAST</code></td>
+</tr>
+</tbody></table>
 <h2 id='mergesplit'>MergeSplit</h2>
 <blockquote>
 <p>Request</p>
@@ -5952,12 +6092,39 @@ const param = {
 <li><p>Request Parameters</p></li>
 </ul>
 
-<p>| Parameter Name | Parameter Type | Required | Description                                        |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market         | string         | Yes      | Trading pair market [forecast: prediction market]  |
-  | symbol         | string         | No       | Trading pair code, e.g., <code>2434164_FORECAST</code>        |
-  | type           | string         | Yes      | split or merge                                     |
-  | quantity       | decimal        | Yes      | Quantity to split or merge                         |</p>
+<table><thead>
+<tr>
+<th>Parameter Name</th>
+<th>Parameter Type</th>
+<th>Whether it must be passed</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>Yes</td>
+<td>Trading pair market [forecast: prediction market]</td>
+</tr>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>No</td>
+<td>Trading pair code, e.g., <code>2434164_FORECAST</code></td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>Yes</td>
+<td>split or merge</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>decimal</td>
+<td>Yes</td>
+<td>Quantity to split or merge</td>
+</tr>
+</tbody></table>
 <h2 id='get-fill-details'>Get Fill Details</h2>
 <blockquote>
 <p>Request</p>
