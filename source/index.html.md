@@ -5027,7 +5027,7 @@ if __name__ == '__main__':
 | after          | int64          | No       | Fill ID, limit the minimum ID of returned fills              |
 | limit          | int32          | No       | Limit the maximum number of returned results Default value: 100 |
 
-## 关于推送
 
-* 在公开数据推送,订阅的格式只需要替换对应的market和symbol即可,返回的价格数据都是yes方向的价格,如order book的订阅：{"method":"SUBSCRIBE","params":["forecast.2434164_FORECAST.order_book.5"]}
-* 在用户私有数据推送中,推送的的order 和 position和上面预测市场接口请求仓位和订单接口返回格式一致
+## Data Streams
+* For public data subscriptions, you only need to replace the corresponding market and symbol in the format. The returned price data always represents the price for the YES direction. For example, the subscription for the order book is：{"method":"SUBSCRIBE","params":["forecast.2434164_FORECAST.order_book.5"]}
+* User Private Data Push: The format of the pushed order and position data is identical to the response format of the order and position APIs requested in the prediction market interface above.
