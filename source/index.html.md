@@ -4024,13 +4024,13 @@ if __name__ == '__main__':
 * Request Path: `/v1/order_book`
 * Request Parameters
 
-| Parameter Name | Type | Required | Description                                                                                                                                                                                               |
-|:---------------| :------- | :------- |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market         | string   | No       | Trading market [forecast: prediction market]                                                                                                                                                              |
-| symbol         | string   | Yes      | Prediction market trading symbol in the format `{marketId}_FORECAST`, such as `1897034_FORECAST` or `2362124_FORECAST`                                                                                    |
-| level          | int32    | No       | Maximum returned depth level. For batch queries, you can use `symbol=1897034_FORECAST,1897035_FORECAST`. Valid values: `1`, `2`, `5`, `10`, `20`, `50`, `100`, `200`, `500`, `1000`. Default value: `100` |
-| price_scale    | integer  | No       | Aggregated price precision. 0=4 decimal places, 1=3 decimal places, 2=2 decimal places, 3=1 decimal place, 4=0 decimal places. Default value: 0                                                           |
-| forecastSide   | string   | No       | Order book side (yes: yes direction; no: no direction). Default value: yes                                                                                                                                |
+| Parameter Name | Type | Required | Description                                                                                                                                                                                              |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market        | string  | No      | Trading market [forecast: prediction market]                                                                                                                                                             |
+| symbol        | string  | Yes     | Prediction market trading symbol in the format `{marketId}_FORECAST`, such as `1897034_FORECAST` or `2362124_FORECAST`                                                                                   |
+| level         | int32   | No      | Maximum returned depth level. For batch queries, you can use `symbol=1897034_FORECAST,1897035_FORECAST`. Valid values: `1`, `2`, `5`, `10`, `20`, `50`, `100`, `200`, `500`, `1000`. Default value: `100` |
+| price_scale   | integer | No      | Aggregated price precision. 0=4 decimal places, 1=3 decimal places, 2=2 decimal places, 3=1 decimal place, 4=0 decimal places. Default value: 0                                                          |
+| forecastSide  | string  | No      | Order book side (yes: yes direction; no: no direction). Default value: yes                                                                                                                               |
 
 > Note: The returned order book is default displayed from the `Yes` (`long`) perspective.
 
@@ -4202,16 +4202,16 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name  | Parameter Type | Required | Description                                                                                           |
-    | :-------------- | :------------- | :------- |:------------------------------------------------------------------------------------------------------|
-  | market          | string         | Yes      | Market type [forecast: prediction market]                                                             |
-  | symbol          | string         | Yes      | Trading pair code, e.g., `2362124_FORECAST`                                                           |
-  | type            | string         | Yes      | Order type [limit: limit order; market: market order]                                                 |
-  | quantity        | decimal        | Yes      | Order quantity (number of contracts)                                                                  |
-  | forecastSide    | string         | Yes      | Prediction direction [buy_long: buy yes; buy_short: buy no; sell_long: sell yes; sell_short: sell no] |
-  | client_order_id | string         | No       | Custom order ID, valid as int64 string, recommended to use Unix timestamp                             |
-  | price           | decimal        | No       | Order price (probability, range 0-1, mean win rate, required for limit orders)                        |
-  | time_in_force   | string         | No       | Time in force [gtc: Good till cancel; ioc: Immediate or cancel; fok: Fill or kill]. Default: `gtc`    |
+  | Parameter Name | Parameter Type | Required | Description                                                                                          |
+  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | market         | string        | Yes     | Market type [forecast: prediction market]                                                            |
+  | symbol         | string        | Yes     | Trading pair code, e.g., `2362124_FORECAST`                                                          |
+  | type           | string        | Yes     | Order type [limit: limit order; market: market order]                                                |
+  | quantity       | decimal       | Yes     | Order quantity (number of contracts)                                                                 |
+  | forecastSide   | string        | Yes     | Prediction direction [buy_long: buy yes; buy_short: buy no; sell_long: sell yes; sell_short: sell no] |
+  | client_order_id | string        | No      | Custom order ID, valid as int64 string, recommended to use Unix timestamp                            |
+  | price          | decimal       | No      | Order price (probability, range 0-1, mean win rate, required for limit orders)                       |
+  | time_in_force  | string        | No      | Time in force [gtc: Good till cancel; ioc: Immediate or cancel; fok: Fill or kill]. Default: `gtc`   |
 
 
 ## Get Order Details
@@ -4343,7 +4343,7 @@ if __name__ == '__main__':
 
 
 | Parameter Name | Parameter Type | Required | Description                                                  |
-| ---------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | market         | string         | No       | Trading pair market [forecast: prediction market]            |
 | id             | string         | Yes      | Order ID The order ID can be assigned by the exchange, or customized by the user (using the client_order_id parameter when submitting the order). When using a custom ID, you need to add the "c:" prefix before the ID. For example: if you used custom ID "123" when submitting the order, use "c:123" when querying the order. |
 
@@ -4483,15 +4483,15 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                  |
-    | :------------- | :------------- | :------- | :----------------------------------------------------------- |
-  | market         | string         | No       | Trading pair market [forecast: prediction market]            |
-  | symbol         | string         | No       | Trading pair code, e.g., `2362124_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
-  | start_time     | long           | No       | Limit the earliest creation time of returned orders          |
-  | end_time       | long           | No       | Limit the latest creation time of returned orders            |
-  | before         | int64          | No       | Order update ID, limit the maximum update ID of returned orders |
-  | after          | int64          | No       | Order update ID, limit the minimum update ID of returned orders |
-  | limit          | long           | No       | Specify the maximum number of orders to return               |
+  | Parameter Name | Parameter Type | Required | Description                                                 |
+  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | market        | string        | No      | Trading pair market [forecast: prediction market]           |
+  | symbol        | string        | No      | Trading pair code, e.g., `2362124_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
+  | start_time    | long          | No      | Limit the earliest creation time of returned orders         |
+  | end_time      | long          | No      | Limit the latest creation time of returned orders           |
+  | before        | int64         | No      | Order update ID, limit the maximum update ID of returned orders |
+  | after         | int64         | No      | Order update ID, limit the minimum update ID of returned orders |
+  | limit         | long          | No      | Specify the maximum number of orders to return              |
 
 ## Get Open Orders
 
@@ -4604,10 +4604,10 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                  |
-    | :------------- | :------------- | :------- | :----------------------------------------------------------- |
-  | market         | string         | Yes      | Trading pair market [forecast: prediction market]            |
-  | symbol         | string         | No       | Trading pair code, e.g., `2434164_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
+  | Parameter Name | Parameter Type | Required | Description                                                 |
+  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
+  | symbol        | string        | No      | Trading pair code, e.g., `2434164_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
 
 ## Cancel Order
 
@@ -4701,9 +4701,9 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                  |
-    | :------------- | :------------- | :------- | :----------------------------------------------------------- |
-  | id             | string         | Yes      | Order ID, supports multiple IDs concatenated The order ID can be assigned by the exchange, or customized by the user (using the client_order_id parameter when submitting the order). When using a custom ID, you need to add the "c:" prefix before the ID. For example: if you used custom ID "123" when submitting the order, use "c:123" when canceling the order. |
+  | Parameter Name | Parameter Type | Required | Description                                                 |
+  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | id            | string        | Yes     | Order ID, supports multiple IDs concatenated The order ID can be assigned by the exchange, or customized by the user (using the client_order_id parameter when submitting the order). When using a custom ID, you need to add the "c:" prefix before the ID. For example: if you used custom ID "123" when submitting the order, use "c:123" when canceling the order. |
 
 
 ## Get Positions
@@ -4809,11 +4809,11 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                  |
-    | :------------- | :------------- | :------- | :----------------------------------------------------------- |
-  | position_id    | string         | No       | Position ID. If this parameter exists, it has the highest priority |
-  | market         | string         | Yes      | Trading pair market [forecast: prediction market]            |
-  | symbol         | string         | No       | Use with market parameter. Trading pair code, e.g., `2434164_FORECAST` |
+  | Parameter Name | Parameter Type | Required | Description                                                 |
+  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | position_id   | string        | No      | Position ID. If this parameter exists, it has the highest priority |
+  | market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
+  | symbol        | string        | No      | Use with market parameter. Trading pair code, e.g., `2434164_FORECAST` |
 
 ## MergeSplit
 
@@ -4907,12 +4907,12 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                       |
-    | :------------- | :------------- | :------- | :------------------------------------------------ |
-  | market         | string         | Yes      | Trading pair market [forecast: prediction market] |
-  | symbol         | string         | No       | Trading pair code, e.g., `2434164_FORECAST`       |
-  | type           | string         | Yes      | split or merge                                    |
-  | quantity       | decimal        | Yes      | Quantity to split or merge                        |
+  | Parameter Name | Parameter Type | Required | Description                                        |
+  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+  | market         | string         | Yes      | Trading pair market [forecast: prediction market]  |
+  | symbol         | string         | No       | Trading pair code, e.g., `2434164_FORECAST`        |
+  | type           | string         | Yes      | split or merge                                     |
+  | quantity       | decimal        | Yes      | Quantity to split or merge                         |
 
 ## Get Fill Details
 
@@ -5017,7 +5017,7 @@ if __name__ == '__main__':
 * Request Parameters(requires sorting)
 
 | Parameter Name | Parameter Type | Required | Description                                                  |
-| :------------- | :------------- | :------- | :----------------------------------------------------------- |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | market         | string         | Yes      | Trading pair market [forecast: prediction market]            |
 | order_id       | string         | No       | Order ID assigned by the exchange Limit to return only fills for the specified order If this parameter is not specified, please specify symbol |
 | symbol         | string         | No       | Trading pair code, e.g., `2434164_FORECAST` Limit to return only fills for the specified trading pair If this parameter is not specified, please specify order_id |
