@@ -2427,10 +2427,9 @@ if __name__ == '__main__':
 * Permissions: View
 * Request parameters
 
-
-| Parameter Name | Parameter Type | Whether it must be passed | Description |
-|----------------|----------------| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id             | string         | Yes | Entrusted ID <br/> The entrustment ID can be allocated by the exchange, <br/> can also be customized by users (using the client_order_id parameter when submitting the commission). When defining IDs, you need to add "C:" prefix before ID. <br/> For example: using a custom ID "123" when submitting commission, when obtaining the commission, you need to use "C: 123".
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|---------------|----------------| ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id            | string         | Yes | Entrusted ID <br/> The entrustment ID can be allocated by the exchange, <br/> can also be customized by users (using the client_order_id parameter when submitting the commission). When defining IDs, you need to add "C:" prefix before ID. <br/> For example: using a custom ID "123" when submitting commission, when obtaining the commission, you need to use "C: 123".
 
 ## Get History Orders
 
@@ -3216,9 +3215,8 @@ if __name__ == '__main__':
 * Permanent: View
 * Request parameters
 
-
-| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                  |
-| ------------ | ---------- |---------------------------|----------------------------------------------------------------------------------------------|
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|----------------|----------------| ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | position_id   | string   | No                        | Position ID, the main param                                                                 |
 | market | string   | No                        | trading pair markets, such as spot, lpc, etc., spot is spot, Trading pair market [spot: spot; lpc: USDT-M perpetual] |
 | symbol     | string   | No                        | use symbol with market param ,transaction pair code<br/>such as BTC_USDT_SWAP, ETH_USDT_SWAP |
@@ -4202,16 +4200,16 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                                                          |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market         | string        | Yes     | Market type [forecast: prediction market]                                                            |
-  | symbol         | string        | Yes     | Trading pair code, e.g., `2362124_FORECAST`                                                          |
-  | type           | string        | Yes     | Order type [limit: limit order; market: market order]                                                |
-  | quantity       | decimal       | Yes     | Order quantity (number of contracts)                                                                 |
-  | forecastSide   | string        | Yes     | Prediction direction [buy_long: buy yes; buy_short: buy no; sell_long: sell yes; sell_short: sell no] |
-  | client_order_id | string        | No      | Custom order ID, valid as int64 string, recommended to use Unix timestamp                            |
-  | price          | decimal       | No      | Order price (probability, range 0-1, mean win rate, required for limit orders)                       |
-  | time_in_force  | string        | No      | Time in force [gtc: Good till cancel; ioc: Immediate or cancel; fok: Fill or kill]. Default: `gtc`   |
+| Parameter Name | Parameter Type | Required | Description                                                                                          |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | string        | Yes     | Market type [forecast: prediction market]                                                            |
+| symbol         | string        | Yes     | Trading pair code, e.g., `2362124_FORECAST`                                                          |
+| type           | string        | Yes     | Order type [limit: limit order; market: market order]                                                |
+| quantity       | decimal       | Yes     | Order quantity (number of contracts)                                                                 |
+| forecastSide   | string        | Yes     | Prediction direction [buy_long: buy yes; buy_short: buy no; sell_long: sell yes; sell_short: sell no] |
+| client_order_id | string        | No      | Custom order ID, valid as int64 string, recommended to use Unix timestamp                            |
+| price          | decimal       | No      | Order price (probability, range 0-1, mean win rate, required for limit orders)                       |
+| time_in_force  | string        | No      | Time in force [gtc: Good till cancel; ioc: Immediate or cancel; fok: Fill or kill]. Default: `gtc`   |
 
 
 ## Get Order Details
@@ -4483,15 +4481,15 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market        | string        | No      | Trading pair market [forecast: prediction market]           |
-  | symbol        | string        | No      | Trading pair code, e.g., `2362124_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
-  | start_time    | long          | No      | Limit the earliest creation time of returned orders         |
-  | end_time      | long          | No      | Limit the latest creation time of returned orders           |
-  | before        | int64         | No      | Order update ID, limit the maximum update ID of returned orders |
-  | after         | int64         | No      | Order update ID, limit the minimum update ID of returned orders |
-  | limit         | long          | No      | Specify the maximum number of orders to return              |
+| Parameter Name | Parameter Type | Required | Description                                                 |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market        | string        | No      | Trading pair market [forecast: prediction market]           |
+| symbol        | string        | No      | Trading pair code, e.g., `2362124_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
+| start_time    | long          | No      | Limit the earliest creation time of returned orders         |
+| end_time      | long          | No      | Limit the latest creation time of returned orders           |
+| before        | int64         | No      | Order update ID, limit the maximum update ID of returned orders |
+| after         | int64         | No      | Order update ID, limit the minimum update ID of returned orders |
+| limit         | long          | No      | Specify the maximum number of orders to return              |
 
 ## Get Open Orders
 
@@ -4604,10 +4602,10 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
-  | symbol        | string        | No      | Trading pair code, e.g., `2434164_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
+| Parameter Name | Parameter Type | Required | Description                                                 |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
+| symbol        | string        | No      | Trading pair code, e.g., `2434164_FORECAST` When `status=unsettled`, not specifying symbol will return all unsettled orders of all trading pairs When `status=settled`, the symbol parameter is required |
 
 ## Cancel Order
 
@@ -4701,9 +4699,9 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | id            | string        | Yes     | Order ID, supports multiple IDs concatenated The order ID can be assigned by the exchange, or customized by the user (using the client_order_id parameter when submitting the order). When using a custom ID, you need to add the "c:" prefix before the ID. For example: if you used custom ID "123" when submitting the order, use "c:123" when canceling the order. |
+| Parameter Name | Parameter Type | Required | Description                                                 |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id            | string        | Yes     | Order ID, supports multiple IDs concatenated The order ID can be assigned by the exchange, or customized by the user (using the client_order_id parameter when submitting the order). When using a custom ID, you need to add the "c:" prefix before the ID. For example: if you used custom ID "123" when submitting the order, use "c:123" when canceling the order. |
 
 
 ## Get Positions
@@ -4809,11 +4807,11 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                                 |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | position_id   | string        | No      | Position ID. If this parameter exists, it has the highest priority |
-  | market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
-  | symbol        | string        | No      | Use with market parameter. Trading pair code, e.g., `2434164_FORECAST` |
+| Parameter Name | Parameter Type | Required | Description                                                 |
+|-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| position_id   | string        | No      | Position ID. If this parameter exists, it has the highest priority |
+| market        | string        | Yes     | Trading pair market [forecast: prediction market]           |
+| symbol        | string        | No      | Use with market parameter. Trading pair code, e.g., `2434164_FORECAST` |
 
 ## MergeSplit
 
@@ -4907,12 +4905,12 @@ if __name__ == '__main__':
 
 * Request Parameters
 
-  | Parameter Name | Parameter Type | Required | Description                                        |
-  |-----------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-  | market         | string         | Yes      | Trading pair market [forecast: prediction market]  |
-  | symbol         | string         | No       | Trading pair code, e.g., `2434164_FORECAST`        |
-  | type           | string         | Yes      | split or merge                                     |
-  | quantity       | decimal        | Yes      | Quantity to split or merge                         |
+| Parameter Name | Parameter Type | Whether it must be passed | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|----------------|----------------| ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| market         | string         | Yes      | Trading pair market [forecast: prediction market]  |
+| symbol         | string         | No       | Trading pair code, e.g., `2434164_FORECAST`        |
+| type           | string         | Yes      | split or merge                                     |
+| quantity       | decimal        | Yes      | Quantity to split or merge                         |
 
 ## Get Fill Details
 
