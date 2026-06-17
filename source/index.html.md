@@ -3913,7 +3913,7 @@ if __name__ == '__main__':
   "result": [
     {
       "productId": 759, // Trading pair ID
-      "product": "CFG_USDT", // Trading symbol [format: {event code}_{quote currency}]
+      "product": "2434164_FORECAST", // Trading symbol 
       "time": "1780644690000", // Timestamp [milliseconds]
       "last": "0.2235", // Last traded price [prediction market price, range 0-1, representing the probability of the event occurring]
       "lastQty": "15.1", // Most recent trade quantity [number of contracts]
