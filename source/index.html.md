@@ -3879,7 +3879,7 @@ if __name__ == '__main__':
 ```javascript
 let request = require("request");
 const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/ticker/get_all?market=forecast`;
+const url = `${endPoint}/v1/ticker/get_all?market=forecast&forecastSide=yes`;
 request.get(url, function optionalCallback(err, httpResponse, body) {
   if (err) {
     return console.error('request failed:', err);
@@ -3896,7 +3896,7 @@ END_POINT = 'https://api.ktx.com/api'
 
 
 def do_request():
-    path = '/v1/ticker/get_all?market=forecast'
+    path = '/v1/ticker/get_all?market=forecast&forecastSide=yes'
     resp = requests.get(END_POINT + path)
     print(resp.text)
 
@@ -3943,7 +3943,9 @@ if __name__ == '__main__':
 | Parameter Name | Type | Required | Description |
 | -------- | -------- | -------- | ------------------------------------------------------------ |
 | market   | string   | Yes      | Trading market [forecast: prediction market] |
+| forecastSide  | string  | No      | Order book side (yes: yes direction; no: no direction). Default value: yes                                                                                                                               |
 
+> Note: The returned ticker is default displayed from the `Yes` (`long`) perspective if without forecastSide.
 ---
 
 ## Get Order Book
@@ -3953,7 +3955,7 @@ if __name__ == '__main__':
 ```javascript
 let request = require("request");
 const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell`;
+const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&forecastSide=no`;
 request.get(url, function optionalCallback(err, httpResponse, body) {
   if (err) {
     return console.error('request failed:', err);
@@ -3970,7 +3972,7 @@ END_POINT = 'https://api.ktx.com/api'
 
 
 def do_request():
-    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell'
+    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&forecastSide=no'
     resp = requests.get(END_POINT + path)
     print(resp.text)
 
@@ -4030,7 +4032,7 @@ if __name__ == '__main__':
 | price_scale   | integer | No      | Aggregated price precision. 0=4 decimal places, 1=3 decimal places, 2=2 decimal places, 3=1 decimal place, 4=0 decimal places. Default value: 0                                                          |
 | forecastSide  | string  | No      | Order book side (yes: yes direction; no: no direction). Default value: yes                                                                                                                               |
 
-> Note: The returned order book is default displayed from the `Yes` (`long`) perspective.
+> Note: The returned order book is default displayed from the `Yes` (`long`) perspective  if without forecastSide.
 
 
 ## Create Prediction Market Order
