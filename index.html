@@ -474,6 +474,9 @@
                     <a href="#get-ticker" class="toc-h2 toc-link" data-title="Get ticker">Get ticker</a>
                   </li>
                   <li>
+                    <a href="#note-the-returned-ticker-is-default-displayed-from-the-yes-long-perspective-if-without-forecastside" class="toc-h2 toc-link" data-title="Note: The returned ticker is default displayed from the Yes (long) perspective if without forecastSide.">Note: The returned ticker is default displayed from the <code>Yes</code> (<code>long</code>) perspective if without forecastSide.</a>
+                  </li>
+                  <li>
                     <a href="#get-order-book-2" class="toc-h2 toc-link" data-title="Get Order Book">Get Order Book</a>
                   </li>
                   <li>
@@ -4928,7 +4931,7 @@ After successfully establishing a connection, the client will receive informatio
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">endPoint</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endPoint</span><span class="p">}</span><span class="s2">/v1/ticker/get_all?market=forecast`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endPoint</span><span class="p">}</span><span class="s2">/v1/ticker/get_all?market=forecast&amp;forecastSide=yes`</span><span class="p">;</span>
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">request failed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
@@ -4942,7 +4945,7 @@ After successfully establishing a connection, the client will receive informatio
 
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/ticker/get_all?market=forecast'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/ticker/get_all?market=forecast&amp;forecastSide=yes'</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -5000,16 +5003,23 @@ After successfully establishing a connection, the client will receive informatio
 <td>Yes</td>
 <td>Trading market [forecast: prediction market]</td>
 </tr>
+<tr>
+<td>forecastSide</td>
+<td>string</td>
+<td>No</td>
+<td>Order book side (yes: yes direction; no: no direction). Default value: yes</td>
+</tr>
 </tbody></table>
 
-<hr>
+<blockquote>
+<h2 id='note-the-returned-ticker-is-default-displayed-from-the-yes-long-perspective-if-without-forecastside'>Note: The returned ticker is default displayed from the <code>Yes</code> (<code>long</code>) perspective if without forecastSide.</h2></blockquote>
 <h2 id='get-order-book-2'>Get Order Book</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">endPoint</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endPoint</span><span class="p">}</span><span class="s2">/v1/order_book?market=forecast&amp;symbol=2362124_FORECAST&amp;side=sell`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endPoint</span><span class="p">}</span><span class="s2">/v1/order_book?market=forecast&amp;symbol=2362124_FORECAST&amp;forecastSide=no`</span><span class="p">;</span>
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">request failed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
@@ -5023,7 +5033,7 @@ After successfully establishing a connection, the client will receive informatio
 
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/order_book?market=forecast&amp;symbol=2362124_FORECAST&amp;side=sell'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/order_book?market=forecast&amp;symbol=2362124_FORECAST&amp;forecastSide=no'</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -5116,7 +5126,7 @@ After successfully establishing a connection, the client will receive informatio
 </tbody></table>
 
 <blockquote>
-<p>Note: The returned order book is default displayed from the <code>Yes</code> (<code>long</code>) perspective.</p>
+<p>Note: The returned order book is default displayed from the <code>Yes</code> (<code>long</code>) perspective  if without forecastSide.</p>
 </blockquote>
 <h2 id='create-prediction-market-order'>Create Prediction Market Order</h2>
 <blockquote>
