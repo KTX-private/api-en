@@ -419,7 +419,7 @@ if __name__ == '__main__':
 	"priceIncrement": "0.01", // Minimum price increment (tick size)
 	"active": 1, // Activation status [0: Disabled | 1: Enabled]
 	"maxOrderValue": "10000000000", // Maximum order value
-	"market": "spot", // Market type [spot: Spot | lpc: U-margined Contract | forecast: Forecast]
+	"market": "spot", // Market type [spot: Spot | lpc: U-margined Contract]
 	"followFundingRate": 0, // Follow funding rate flag [0: No | 1: Yes]
 	"makerFee": "0.001", // Maker fee rate
 	"quantityScale": 6, // Quantity precision (decimal places)
@@ -1357,26 +1357,44 @@ if __name__ == '__main__':
 
 ```json
 [
-  {
-    "asset":"USDT",  // Asset code
-    "balance":"100",  // Total amount
-    "locked":"0",  // Freeze amount
-    "free":"100",  //  Available Amount
-    "withdrawable":"100",// Transferable
-    "collateral":false,// Is collateral [true: Yes | false: No]
-    "discountForMargin":"1", // Margin discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
-    "discountForFee":"1" // Fee discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
-  },
-  {
-    "asset":"BTC",  // Asset code
-    "balance":"100",  // Total amount
-    "locked":"0",  // Freeze amount
-    "free":"100",  //  Available Amount
-    "withdrawable":"100",// Transferable
-    "collateral":false,// Is collateral [true: Yes | false: No]
-  },
-  ...
-]
+    {
+        "asset": "USDC", // Asset code
+        "total": "0", // Total balance
+        "balance": 0, // Available balance
+        "withdrawable": 0, // Withdrawable amount
+        "holds": 0, // Frozen amount
+        "collateral": true, // Can be used as margin [true: Yes | false: No]
+        "equsdt": "0", // Equivalent USDT value
+        "discountForMargin": 1, // Margin discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
+        "discountForFee": 1 // Fee discount rate [0: Unavailable | 0.5: 50% | 1: 100%]
+    }
+],
+"eq": {
+    "equsdt": "0.00", // Equivalent USDT
+    "eqbtc": "0.0000", // Equivalent BTC
+    "eqcny": "0.00" // Equivalent CNY
+},
+"assetmap": {
+    "USDC": {
+        "enable_deposit": 1, // Deposit enabled [0: No | 1: Yes]
+        "enable_withdraw": 1, // Withdraw enabled [0: No | 1: Yes]
+        "enable_transfer": 1, // Transfer enabled [0: No | 1: Yes]
+        "asset": "USDC", // Asset code
+        "name": "USDC", // Asset name
+        "icon_url": "/appimg/USDC.png", // Icon URL
+        "forbid_info": "" // Forbidden reason
+    }
+},
+"posmap": {
+    "USDC": {
+        "posMargin": 0, // Position margin
+        "unprofit": "0.0000" // Unrealized profit/loss
+    }
+},
+"profit": {
+    "trade": 0, // Trading profit/loss
+    "total": 0 // Total profit/loss
+}
 ```
 },
 ...
