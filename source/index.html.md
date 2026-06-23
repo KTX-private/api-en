@@ -3666,7 +3666,7 @@ wss://u-stream.ktx.com
 }
 ```
 
-# FORECAST
+# Prediction Market
 ## Get Event
 
 > Request
