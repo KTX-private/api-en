@@ -448,6 +448,76 @@ if __name__ == '__main__':
 
 Cache
 
+## Get Leverage and Margin Tiers Info
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/pu/getPositionTierRules  `
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/pu/getPositionTierRules'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "EOS_USDT_SWAP": [
+    {
+      "no": 1,    // no
+      "positionValue": "1000000", // position value<= 1000000
+      "maintainMarginRate": "0.005", // maintain margin rate
+      "initMarginRate": "0.01", // init  margin rate
+      "maxLeverage": "100" // max leverage
+    },
+    {
+      "no": 2,
+      "positionValue": "2000000",
+      "maintainMarginRate": "0.0075",
+      "initMarginRate": "0.015",
+      "maxLeverage": "67"
+    },
+    ...
+  ],
+  "BTC_USDT_SWAP": [
+    ...
+  ],
+  "ETH_USDT_SWAP": [
+    ...
+  ],
+  ...
+}
+```
+
+**Get Leverage and Margin Tiers Info**
+
+* Request method get
+* Request path /v1/products
+
+
 ## Get Order Book
 
 > Request
