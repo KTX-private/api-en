@@ -29,6 +29,8 @@
 | -20003 |            in use             |
 | -20004 |        limit exceeded         |
 | -20005 |         insufficient          |
+| -20006 |    CPU usage limit exceeded   |
+| -20007 |  access frequency limit exceeded  |
 | -21000 |            unknown            |
 | -21001 |              fok              |
 | -21002 |           post only           |
