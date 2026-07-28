@@ -376,9 +376,6 @@
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
                   </li>
                   <li>
-                    <a href="#market-data-heartbeat" class="toc-h2 toc-link" data-title="Market Data Heartbeat">Market Data Heartbeat</a>
-                  </li>
-                  <li>
                     <a href="#request-methods" class="toc-h2 toc-link" data-title="Request Methods">Request Methods</a>
                   </li>
                   <li>
@@ -392,6 +389,9 @@
                   </li>
                   <li>
                     <a href="#subscribe-tickers" class="toc-h2 toc-link" data-title="Subscribe Tickers">Subscribe Tickers</a>
+                  </li>
+                  <li>
+                    <a href="#marketdata-heartbeat" class="toc-h2 toc-link" data-title="MarketData Heartbeat">MarketData Heartbeat</a>
                   </li>
               </ul>
           </li>
@@ -458,9 +458,6 @@
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
                   </li>
                   <li>
-                    <a href="#user-data-heartbeat" class="toc-h2 toc-link" data-title="User Data Heartbeat">User Data Heartbeat</a>
-                  </li>
-                  <li>
                     <a href="#account" class="toc-h2 toc-link" data-title="Account">Account</a>
                   </li>
                   <li>
@@ -468,6 +465,9 @@
                   </li>
                   <li>
                     <a href="#order" class="toc-h2 toc-link" data-title="Order">Order</a>
+                  </li>
+                  <li>
+                    <a href="#userdata-heartbeat" class="toc-h2 toc-link" data-title="UserData Heartbeat">UserData Heartbeat</a>
                   </li>
               </ul>
           </li>
@@ -2019,23 +2019,7 @@ wss://m-stream.ktx.com</li>
 </span></code></pre></div>
 <blockquote>
 <p>After the connection, please send the request to the server first, and then the server will send the corresponding data stream to the client when the market changes.</p>
-</blockquote>
-<h2 id='market-data-heartbeat'>Market Data Heartbeat</h2>
-<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
 
-<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
-
-<blockquote>
-<p>Heartbeat request format</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>The server will respond with</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
 <p>&quot;Data Stream name&quot; is the name of the data stream, and the data stream name is a string in the following format.
 market.symbol.data_type.param1.param2...</p>
 
@@ -2343,6 +2327,20 @@ ticker: Latest transaction information</p>
     </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Opening</span><span class="w"> </span><span class="err">price</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='marketdata-heartbeat'>MarketData Heartbeat</h2>
+<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
+
+<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
+
+<blockquote>
+<p>Heartbeat request format</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>The server will respond with</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <hr>
 <h1 id='user-data-endpoints'>User Data Endpoints</h1><h2 id='get-trade-account-asset'>Get Trade Account Asset</h2>
@@ -5770,21 +5768,7 @@ If there are more than 20 transactions in the delegation, then the object only c
 </ul>
 
 <p><em>For specific methods, please refer to the <a href="#authentication">Authentication</a> chapter</em></p>
-<h2 id='user-data-heartbeat'>User Data Heartbeat</h2>
-<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
 
-<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
-
-<blockquote>
-<p>Heartbeat request format</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>The server will respond with</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
 <blockquote>
 <p>Data flow
 After successfully establishing a connection, the client will receive information and commission change information of the balance of the account of the APIKEY account. The format is as follows:</p>
@@ -5898,6 +5882,20 @@ After successfully establishing a connection, the client will receive informatio
       </span><span class="nl">"updateTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Update</span><span class="w"> </span><span class="err">time</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='userdata-heartbeat'>UserData Heartbeat</h2>
+<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
+
+<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
+
+<blockquote>
+<p>Heartbeat request format</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>The server will respond with</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='prediction-market'>Prediction Market</h1><h2 id='get-event'>Get Event</h2>
 <blockquote>
 <p>Request</p>
