@@ -197,24 +197,6 @@ wss://u-stream.ktx.com
 
 *For specific methods, please refer to the [Authentication](#authentication) chapter*
 
-## Heartbeat
-
-The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than **30 seconds**, it will actively disconnect.
-
-It is recommended to send a heartbeat message every **5-10 seconds**.
-
-> Heartbeat request format
-
-```json
-{"ping": 1785220808575}
-```
-
-> The server will respond with
-
-```json
-{"pong": 1785220808575}
-```
-
 > Data flow
 > After successfully establishing a connection, the client will receive information and commission change information of the balance of the account of the APIKEY account. The format is as follows:
 
@@ -348,5 +330,23 @@ It is recommended to send a heartbeat message every **5-10 seconds**.
       "updateTime": "1733390650379" // Update time
   }
 }
+```
+
+## UserData Heartbeat
+
+The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than **30 seconds**, it will actively disconnect.
+
+It is recommended to send a heartbeat message every **5-10 seconds**.
+
+> Heartbeat request format
+
+```json
+{"ping": 1785220808575}
+```
+
+> The server will respond with
+
+```json
+{"pong": 1785220808575}
 ```
 

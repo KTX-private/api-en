@@ -214,24 +214,6 @@ public class KtxWsExample {
 
 > After the connection, please send the request to the server first, and then the server will send the corresponding data stream to the client when the market changes.
 
-## Heartbeat
-
-The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than **30 seconds**, it will actively disconnect.
-
-It is recommended to send a heartbeat message every **5-10 seconds**.
-
-> Heartbeat request format
-
-```json
-{"ping": 1785220808575}
-```
-
-> The server will respond with
-
-```json
-{"pong": 1785220808575}
-```
-
 > "Data Stream name" is the name of the data stream, and the data stream name is a string in the following format.
 > market.symbol.data_type.param1.param2...
 
@@ -540,6 +522,24 @@ It is recommended to send a heartbeat message every **5-10 seconds**.
     "open": "98000" // Opening price
     }
 }
+```
+
+## MarketData Heartbeat
+
+The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than **30 seconds**, it will actively disconnect.
+
+It is recommended to send a heartbeat message every **5-10 seconds**.
+
+> Heartbeat request format
+
+```json
+{"ping": 1785220808575}
+```
+
+> The server will respond with
+
+```json
+{"pong": 1785220808575}
 ```
 
 ---
