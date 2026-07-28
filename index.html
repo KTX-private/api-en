@@ -376,6 +376,9 @@
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
                   </li>
                   <li>
+                    <a href="#market-data-heartbeat" class="toc-h2 toc-link" data-title="Market Data Heartbeat">Market Data Heartbeat</a>
+                  </li>
+                  <li>
                     <a href="#request-methods" class="toc-h2 toc-link" data-title="Request Methods">Request Methods</a>
                   </li>
                   <li>
@@ -453,6 +456,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
+                  </li>
+                  <li>
+                    <a href="#user-data-heartbeat" class="toc-h2 toc-link" data-title="User Data Heartbeat">User Data Heartbeat</a>
                   </li>
                   <li>
                     <a href="#account" class="toc-h2 toc-link" data-title="Account">Account</a>
@@ -1831,9 +1837,10 @@ Use the hex string as the value for the api-sign header, and set the expiration 
     <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">open</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">)</span>
         <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">SUBSCRIBE</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:[</span><span class="dl">"</span><span class="s2">spot.BTC_USDT.order_book.5</span><span class="dl">"</span><span class="p">]}));</span>
+        <span class="c1">// Send heartbeat every 5-10 seconds</span>
         <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-          <span class="nx">ws</span><span class="p">.</span><span class="nx">ping</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span>
-        <span class="p">},</span><span class="mi">30000</span><span class="p">)</span>
+          <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="dl">"</span><span class="s2">ping</span><span class="dl">"</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()}))</span>
+        <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="p">});</span>
 
     <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">close</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -1896,10 +1903,10 @@ Use the hex string as the value for the api-sign header, and set the expiration 
 
 <span class="k">def</span> <span class="nf">ping_loop</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
   <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># Recommended: send heartbeat every 5-10 seconds
+</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s">"ping"</span><span class="p">:</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+      <span class="s">"ping"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
@@ -1922,9 +1929,12 @@ Use the hex string as the value for the api-sign header, and set the expiration 
     <span class="n">connect</span><span class="p">()</span>
 
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">java.net.URI</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpClient</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.net.http.WebSocket</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.net.http.WebSocket.Listener</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.concurrent.CompletionStage</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ScheduledExecutorService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">KtxWsExample</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
@@ -1937,6 +1947,14 @@ Use the hex string as the value for the api-sign header, and set the expiration 
                         <span class="o">}</span>
                 <span class="o">)).</span><span class="na">join</span><span class="o">();</span>
         <span class="n">ws</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="s">"{\"method\":\"SUBSCRIBE\",\"params\":[\"spot.BTC_USDT.order_book.5\"]}"</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+        <span class="c1">// Send heartbeat every 5-10 seconds</span>
+        <span class="nc">ScheduledExecutorService</span> <span class="n">scheduler</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newSingleThreadScheduledExecutor</span><span class="o">();</span>
+        <span class="n">scheduler</span><span class="o">.</span><span class="na">scheduleAtFixedRate</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">ping</span> <span class="o">=</span> <span class="s">"{\"ping\":"</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span> <span class="s">"}"</span><span class="o">;</span>
+            <span class="n">ws</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="n">ping</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="o">},</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+
         <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">60000</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -2001,7 +2019,23 @@ wss://m-stream.ktx.com</li>
 </span></code></pre></div>
 <blockquote>
 <p>After the connection, please send the request to the server first, and then the server will send the corresponding data stream to the client when the market changes.</p>
+</blockquote>
+<h2 id='market-data-heartbeat'>Market Data Heartbeat</h2>
+<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
 
+<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
+
+<blockquote>
+<p>Heartbeat request format</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>The server will respond with</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
 <p>&quot;Data Stream name&quot; is the name of the data stream, and the data stream name is a string in the following format.
 market.symbol.data_type.param1.param2...</p>
 
@@ -5578,9 +5612,10 @@ If there are more than 20 transactions in the delegation, then the object only c
         <span class="dl">"</span><span class="s2">api-key</span><span class="dl">"</span><span class="p">:</span> <span class="nx">apiKey</span><span class="p">,</span> <span class="dl">"</span><span class="s2">api-sign</span><span class="dl">"</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
       <span class="p">}</span>
     <span class="p">}));</span>
+    <span class="c1">// Send heartbeat every 5-10 seconds</span>
     <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="nx">ws</span><span class="p">.</span><span class="nx">ping</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span>
-    <span class="p">},</span><span class="mi">30000</span><span class="p">)</span>
+      <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="dl">"</span><span class="s2">ping</span><span class="dl">"</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()}))</span>
+    <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span>
   <span class="p">});</span>
 
   <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">close</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -5638,10 +5673,10 @@ If there are more than 20 transactions in the delegation, then the object only c
 
 <span class="k">def</span> <span class="nf">ping_loop</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
   <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># Recommended: send heartbeat every 5-10 seconds
+</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s">"ping"</span><span class="p">:</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+      <span class="s">"ping"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
@@ -5674,9 +5709,12 @@ If there are more than 20 transactions in the delegation, then the object only c
 </code></pre></div><div class="highlight"><pre class="highlight java tab-java"><code><span class="kn">import</span> <span class="nn">javax.crypto.Mac</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">javax.crypto.spec.SecretKeySpec</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.net.URI</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.net.http.HttpClient</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.net.http.WebSocket</span><span class="o">;</span>
-<span class="kn">import</span> <span class="nn">java.net.http.WebSocket.Listener</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.concurrent.CompletionStage</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ScheduledExecutorService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">KtxWsExample</span> <span class="o">{</span>
     <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">API_KEY</span> <span class="o">=</span> <span class="s">"YOUR_API_KEY"</span><span class="o">;</span>
@@ -5703,6 +5741,14 @@ If there are more than 20 transactions in the delegation, then the object only c
                 <span class="o">)).</span><span class="na">join</span><span class="o">();</span>
         <span class="nc">String</span> <span class="n">login</span> <span class="o">=</span> <span class="s">"{\"method\":\"LOGIN\",\"auth\":{\"api-key\":\""</span> <span class="o">+</span> <span class="no">API_KEY</span> <span class="o">+</span> <span class="s">"\",\"api-sign\":\""</span> <span class="o">+</span> <span class="n">sign</span> <span class="o">+</span> <span class="s">"\"}}"</span><span class="o">;</span>
         <span class="n">ws</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="n">login</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+        <span class="c1">// Send heartbeat every 5-10 seconds</span>
+        <span class="nc">ScheduledExecutorService</span> <span class="n">scheduler</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newSingleThreadScheduledExecutor</span><span class="o">();</span>
+        <span class="n">scheduler</span><span class="o">.</span><span class="na">scheduleAtFixedRate</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">ping</span> <span class="o">=</span> <span class="s">"{\"ping\":"</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span> <span class="s">"}"</span><span class="o">;</span>
+            <span class="n">ws</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="n">ping</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="o">},</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
+
         <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">60000</span><span class="o">);</span>
     <span class="o">}</span>
 <span class="o">}</span>
@@ -5724,7 +5770,21 @@ If there are more than 20 transactions in the delegation, then the object only c
 </ul>
 
 <p><em>For specific methods, please refer to the <a href="#authentication">Authentication</a> chapter</em></p>
+<h2 id='user-data-heartbeat'>User Data Heartbeat</h2>
+<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
 
+<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
+
+<blockquote>
+<p>Heartbeat request format</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>The server will respond with</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <blockquote>
 <p>Data flow
 After successfully establishing a connection, the client will receive information and commission change information of the balance of the account of the APIKEY account. The format is as follows:</p>
