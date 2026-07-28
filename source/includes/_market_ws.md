@@ -22,9 +22,10 @@ wsClass.prototype._initWs = async function () {
     ws.on('open', function open() {
         console.log(new Date(), 'open')
         ws.send(JSON.stringify({"method":"SUBSCRIBE","params":["spot.BTC_USDT.order_book.5"]}));
+        // Send heartbeat every 5-10 seconds
         setInterval(function () {
-          ws.ping(Date.now())
-        },30000)
+          ws.send(JSON.stringify({"ping": Date.now()}))
+        }, 5000)
     });
 
     ws.on('close', data => {
@@ -90,10 +91,10 @@ def on_close(ws, close_status_code, close_msg):
 
 def ping_loop(ws):
   while True:
-    time.sleep(30)
+    time.sleep(5)  # Recommended: send heartbeat every 5-10 seconds
 
     data = {
-      "ping": datetime.now().timestamp() * 1000
+      "ping": int(datetime.now().timestamp() * 1000)
     }
     ws.send(json.dumps(data))
 
@@ -119,9 +120,12 @@ if __name__ == "__main__":
 
 ```java
 import java.net.URI;
+import java.net.http.HttpClient;
 import java.net.http.WebSocket;
-import java.net.http.WebSocket.Listener;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class KtxWsExample {
     public static void main(String[] args) throws Exception {
@@ -134,6 +138,14 @@ public class KtxWsExample {
                         }
                 )).join();
         ws.sendText("{\"method\":\"SUBSCRIBE\",\"params\":[\"spot.BTC_USDT.order_book.5\"]}", true);
+
+        // Send heartbeat every 5-10 seconds
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(() -> {
+            String ping = "{\"ping\":" + System.currentTimeMillis() + "}";
+            ws.sendText(ping, true);
+        }, 5, 5, TimeUnit.SECONDS);
+
         Thread.sleep(60000);
     }
 }
@@ -201,6 +213,24 @@ public class KtxWsExample {
 ```
 
 > After the connection, please send the request to the server first, and then the server will send the corresponding data stream to the client when the market changes.
+
+## Heartbeat
+
+The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than **30 seconds**, it will actively disconnect.
+
+It is recommended to send a heartbeat message every **5-10 seconds**.
+
+> Heartbeat request format
+
+```json
+{"ping": 1785220808575}
+```
+
+> The server will respond with
+
+```json
+{"pong": 1785220808575}
+```
 
 > "Data Stream name" is the name of the data stream, and the data stream name is a string in the following format.
 > market.symbol.data_type.param1.param2...
