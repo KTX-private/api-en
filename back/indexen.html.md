@@ -1478,6 +1478,7 @@ if __name__ == '__main__':
     "coin_symbol": "sUSDT",// Coin symbol
     "chain_type":"Solana", // network
     "general_name": "USDT" ,// asset name
+    "memo":"", // memo
     "mx_uid": "de4a8cdc-6be5-3253-9f34-d2c61a89286f"
   }
 ]
